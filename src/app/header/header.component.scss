@@ -1,0 +1,41 @@
+$paddingTitle : 0.3rem;
+
+header{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: rgba(22, 22, 23, .8);
+    font-family: sans-serif;
+    font-weight: bold;
+
+    h1{
+        width: 100%;
+        padding: $paddingTitle;
+        margin: 0;
+        text-align: center;
+        color: white;
+    }
+
+    ul{
+        list-style: none;
+        display: flex;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        color: rgb(172, 172, 172);
+
+        li{
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            height: 2.5rem;
+
+            &:hover{
+                background: rgb(128, 128, 128);
+                color: white;
+                cursor: pointer;
+            }
+        }
+    }
+}
