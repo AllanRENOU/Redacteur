@@ -1,0 +1,35 @@
+$arboSeparateur : 3px;
+$widthArbo : 15%;
+
+.globalContainer{
+
+    height: calc( 100% - 5.5rem );
+    display: flex;
+
+    &>*{
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .arboContainer{
+        width: $widthArbo;
+        border-right: solid black 1px;
+
+        background-color: rgba(22, 22, 23, 0.8);
+        color: white;
+
+        font-family: sans-serif;
+        font-weight: bold;
+    }
+
+    .contentContainer{
+        width: calc( 100% - $widthArbo - $arboSeparateur );
+    }
+
+    ul{
+        list-style: none;
+        padding-inline-start: 1rem;
+    }
+}
+

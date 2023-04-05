@@ -6,7 +6,8 @@ import { AccueilComponent } from './accueil/accueil.component';
 
 const routes: Routes = [
   { path : "", component : AccueilComponent },
-  { path: "encyclopedie", component : EncyclopedieComponent }
+  { path: "encyclopedie", title:"Encyclopédie", component : EncyclopedieComponent },
+  { path: "encyclopedie/:id", title:"Encyclopédie", component : EncyclopedieComponent }
 ];
 
 @NgModule({

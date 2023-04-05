@@ -1,0 +1,7 @@
+<span *ngIf="this.container" class="pageContainer" [ngClass]="this.isOpened?'arrowDown':''" (click)="onClickDeploy(this.container.titre)">{{this.container.titre}}</span>
+<ul *ngIf="this.container && this.isOpened" [className]="this.isOpened ? 'opened' :''">
+    <li *ngFor="let subContId of this.container.subContainer">
+        <app-arbo-page idContainer="{{subContId}}" (pageClicked)="onClickPage($event)"/>
+    </li>
+    <li *ngFor="let page of this.pages" class="page" (click)="onClickPage( page.id )">{{page.titre}}</li>
+</ul>

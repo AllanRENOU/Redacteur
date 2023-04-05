@@ -1,0 +1,44 @@
+$colorHover : rgba(22, 22, 23, 0.8);
+$verticalPadding : .3rem;
+
+ul{
+    margin: 0;
+    list-style: none;
+    padding: 0 0 0 .5rem;
+}
+
+li{
+}
+
+.page,.pageContainer{
+    cursor: pointer;
+    padding: $verticalPadding 0 $verticalPadding .5rem;
+
+    border-width: 0px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-style: solid;
+    border-image: linear-gradient(5deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0) 40%) 1;
+
+
+    &:hover{
+        background-color: $colorHover;
+        color: white;
+    }
+}
+
+.pageContainer{
+    background-image: url( '/assets/caret-right.svg');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 0.6rem;
+    padding-left: 1rem;
+    width: calc( 100% - 1rem );
+    display: block;
+}
+
+.arrowDown{
+    background-image: url( '/assets/caret-down.svg');
+    background-size: 0.8rem;
+    
+}

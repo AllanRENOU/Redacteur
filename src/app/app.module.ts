@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { EncyclopedieComponent } from './encyclopedie/encyclopedie.component';
 import { AccueilComponent } from './accueil/accueil.component';
+import { ArboPageComponent } from './encyclopedie/arbo-page/arbo-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     EncyclopedieComponent,
-    AccueilComponent
+    AccueilComponent,
+    ArboPageComponent
   ],
   imports: [
     BrowserModule,
