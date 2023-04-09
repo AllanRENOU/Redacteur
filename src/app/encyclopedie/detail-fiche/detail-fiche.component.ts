@@ -18,6 +18,8 @@ export class DetailFicheComponent implements OnInit {
   // Créer bloc 
   createPage = false;
   updatePage = false;
+  updateBloc : string = "";
+
   newTitle = "";
   newDesc = "";
 
@@ -76,6 +78,8 @@ export class DetailFicheComponent implements OnInit {
   private resetForms(){
     this.newTitle = "";
     this.newDesc = "";
+
+    this.updateBloc = "";
     this.createPage = false;
     this.updatePage = false;
   }
@@ -93,15 +97,23 @@ export class DetailFicheComponent implements OnInit {
     }else{
       console.log("Erreur, aucune page n'est actuellement affichée" );
     }
-    
+    console.log( this.page)
     this.resetForms();
   }
 
   onClickCancel(){
-    this.newTitle = "";
-    this.newDesc = "";
-    this.createPage = false;
-    this.updatePage = false;
+    this.resetForms();
+  }
+
+  onSubmitUpdateBloc( bloc : PageBloc ){
+    bloc.title = this.newTitle;
+    bloc.texte = this.newDesc;
+    
+    if( this.page ){
+      this.projectService.updatePage( this.page );
+    }
+
+    this.resetForms();
   }
 
   // More
@@ -128,8 +140,10 @@ export class DetailFicheComponent implements OnInit {
       switch( item ) {
 
         case MenuItem.UPDATE :{
-          alert( "Fonction non implémentée");
-            
+          this.updateBloc = bloc.id;
+          this.newTitle = bloc.texte;
+          this.newDesc = bloc.texte;
+
           break;
         }
         case MenuItem.UP :{
@@ -145,7 +159,9 @@ export class DetailFicheComponent implements OnInit {
           break;
         }
         case MenuItem.REMOVE :{
-          alert( "Fonction non implémentée");
+          console.log( "blopagec", this.page )
+          this.page.supprimerBloc( bloc );
+          this.projectService.updatePage( this.page );
             
           break;
         }

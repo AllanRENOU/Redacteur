@@ -8,6 +8,8 @@
             <app-float-menu *ngIf="idBlocMenu=='0'" (toHide)="onHideMenu()" (onClick)="onClickMenuPage( $event )" [values]="MENU_MORE_PAGE"></app-float-menu>
         </span>
     </h2>
+
+    <!-- Formulaire update page -->
     <form *ngIf="updatePage && !createPage" #updatePageForm="ngForm" (ngSubmit)="onSubmitUpdatePage()" id="formUpdatePage" >
         <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
         <textarea name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description de la fiche"></textarea>
@@ -30,14 +32,25 @@
 
     <!-- Blocs -->
     <div *ngFor="let bloc of page?.blocs" class="bloc">
-        <h4>
+        <h4 *ngIf="updateBloc != bloc.id">
             {{bloc.title}}
             <span class="more" (click)="onClickMore(bloc,  $event)">
                 ...
                 <app-float-menu *ngIf="idBlocMenu==bloc.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event, bloc )" [values]="MENU_MORE_BLOC"></app-float-menu>
             </span>
         </h4>
-        <div class="textContainer">{{bloc.texte}}</div>
+        <div  *ngIf="updateBloc != bloc.id" class="textContainer">{{bloc.texte}}</div>
+
+        <form *ngIf="updateBloc == bloc.id" #updateBlocForm="ngForm" (ngSubmit)="onSubmitUpdateBloc( bloc )" class="formUpdateBloc" >
+            <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
+            <textarea name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description"></textarea>
+            
+            <div class="form-group">
+                <button type="submit" [disabled]="!updateBlocForm.form.valid">Valider</button>
+                <button (click)="onClickCancel()">Annuler</button>
+            </div>
+        </form>
+        
     </div>
 
 

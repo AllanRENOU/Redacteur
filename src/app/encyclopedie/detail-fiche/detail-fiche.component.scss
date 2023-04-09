@@ -27,6 +27,27 @@ h2{
 }
 
 #formUpdatePage{
+    
+    input{
+        font-size: 1.5rem;
+    }
+    
+    textarea{
+        margin-top: 3.2rem;
+    }
+}
+
+.formUpdateBloc{
+    input{
+        font-size: 1rem;
+    }
+    
+    textarea{
+        margin-top: 1rem;
+    }
+}
+
+#formUpdatePage,.formUpdateBloc{
     margin-top: 1rem;
     margin-bottom: -1rem;
     margin-left: calc( $paddingpage / -2 );
@@ -39,14 +60,12 @@ h2{
     }
 
     input{
-        font-size: 1.5rem;
         font-weight: bold;
         background-color: $colorBG;
         border-color: rgba( 0, 0, 0, 0.2);
     }
 
     textarea{
-        margin-top: 3.2rem;
         width: calc( 100% - $paddingpage - $paddingpage );
         font-size: 1rem;
         font-family: sans-serif;
