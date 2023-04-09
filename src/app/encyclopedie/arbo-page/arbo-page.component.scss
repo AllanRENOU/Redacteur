@@ -4,7 +4,7 @@ $verticalPadding : .3rem;
 ul{
     margin: 0;
     list-style: none;
-    padding: 0 0 0 .5rem;
+    padding: 0 0 0 .5rem;    
 }
 
 .page,.pageContainer{
@@ -46,6 +46,11 @@ ul{
 
     position: relative;
 
+    
+    &:hover{ 
+        background-image: url( '/assets/caret-right-white.svg');
+    }
+
     .more{
         position: absolute;
         right: 0;
@@ -72,6 +77,9 @@ ul{
     background-image: url( '/assets/caret-down.svg');
     background-size: 0.8rem;
     
+    &:hover{ 
+        background-image: url( '/assets/caret-down-white.svg');
+    }
 }
 
 button{
