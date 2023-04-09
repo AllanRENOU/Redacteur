@@ -4,6 +4,6 @@
     </div>
     <div class="contentContainer">
         <app-detail-fiche *ngIf="!createFiche" [id]="currentIdPage"/>
-        <app-create-fiche *ngIf="createFiche" [folder]="parentFolder" />
+        <app-create-fiche *ngIf="createFiche" [folder]="parentFolder" (created)="onNewPageCreated( $event )" />
     </div>
 </div>

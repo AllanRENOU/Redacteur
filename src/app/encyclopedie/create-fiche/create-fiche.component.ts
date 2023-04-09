@@ -32,13 +32,17 @@ export class CreateFicheComponent implements OnInit{
 
   onSubmit(){
 
+    this.titre = this.titre[0].toUpperCase() + this.titre.slice( 1 );
+
     if( !this.id ){
       this.id = this.projectService.generateIdFromString( this.titre );
     }
     
     try{
-      this.projectService.createPage( this.id, this.titre, this.description, this.folder?.id );
+      let page = this.projectService.createPage( this.id, this.titre, this.description, this.folder?.id );
       console.log( "Nouvelle fiche : ", this.titre, " (", this.id, ") : ", this.description );
+
+      this.created.emit( page );
     }catch( error ){
       this.errorMessage = "Page non créée." + error;
       console.error("Page non créée.", error );

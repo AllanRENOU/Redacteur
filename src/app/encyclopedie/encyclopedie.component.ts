@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProjectService } from '../Services/project.service';
 import { PageConteneur } from '../Services/Beans/PageConteneur';
+import { Page } from '../Services/Beans/Page';
 
 @Component({
   selector: 'app-encyclopedie',
@@ -42,6 +43,10 @@ export class EncyclopedieComponent {
 
   onNewPageClicked( folder : PageConteneur ){
     this.createPage( folder );
+  }
+
+  onNewPageCreated( newPage : Page){
+    this.openPage( newPage.id );
   }
 
 }
