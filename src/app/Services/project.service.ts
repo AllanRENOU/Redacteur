@@ -145,6 +145,10 @@ export class ProjectService {
     console.log( "TODO : Ajout dans la page ", page.titre, " du bloc ", titleBloc, " : ", contentBloc );
   }
 
+  updatePage( page : Page ){
+    console.log( "TODO :  Sauvegarder les modifs du titre et de la description. (", page.titre, " : ", page.description, ")" );
+  }
+
   /**
    * Donne un id à partir d'un titre
    * @param texte 

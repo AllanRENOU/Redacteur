@@ -1,9 +1,11 @@
+import { PageBloc } from "./Page.bloc";
+
 export class Page{
 
     id : string;
     titre : string;
     description : string;
-    blocs : { title : string, texte : string}[] = [];
+    blocs : PageBloc[] = [];
 
     constructor( id : string, titre : string, description : string ){
         this.id = id.replaceAll( " ", "" ).replaceAll( "'", "" );
@@ -12,6 +14,6 @@ export class Page{
     }
 
     addBloc( titre : string, texte : string ){
-        this.blocs.push( { title : titre, texte : texte } );
+        this.blocs.push( new PageBloc( titre, texte, this.blocs.length ) );
     }
 }
