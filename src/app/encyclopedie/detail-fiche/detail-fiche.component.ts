@@ -13,6 +13,10 @@ export class DetailFicheComponent implements OnInit {
   id:string = "";
   page? : Page;
 
+  createPage = false;
+  newTitle = "";
+  newDesc = "";
+
   public constructor( private projectService : ProjectService ){
     
   }
@@ -30,8 +34,33 @@ export class DetailFicheComponent implements OnInit {
     let page = this.projectService.getPage( this.id );
     if( page ){
       this.page = page;
+      this.resetCreateBloc();
     }
   }
   
+  // Création d'un bloc
+
+  resetCreateBloc(){
+    this.newTitle = "";
+    this.newDesc = "";
+    this.createPage = false;
+  }
+
+  onClickCreateBloc(){
+    this.createPage = true;
+  }
+
+  onSubmitNewBloc(){
+    console.log( "Click créer bloc ", this.newTitle, " : ", this.newDesc );
+
+    if( this.page ){
+      this.projectService.addBlocInPage( this.page, this.newTitle, this.newDesc );
+    }else{
+      console.log("Erreur, aucune page n'est actuellement affichée" );
+    }
+    
+
+    this.resetCreateBloc();
+  }
 
 }

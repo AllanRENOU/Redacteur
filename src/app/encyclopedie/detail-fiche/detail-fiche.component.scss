@@ -82,3 +82,93 @@ h4{
         border-color : black;
     }
 }
+
+
+.floatingButton {
+    
+    height: 2rem;
+    width: auto;
+    margin-top: 1rem;
+    background-color: rgb(40, 44, 36);
+    color: white;
+    text-decoration: none;
+    border-radius: 1rem;
+    display: inline-flex;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.5;
+
+    max-width: 2rem;
+    transition: max-width 0.5s, height 0.5s;
+
+    &.creating{
+        max-width: calc( 100% - 2 * $paddingpage );
+        height: 12rem;
+        width: calc( 100% - 2 * $paddingpage );
+        opacity: 1;    
+        display: block;
+        padding-left: 1rem;
+        font-weight: bold;
+    }
+    
+
+    &:not(.creating):hover {
+        max-width: 300px;
+        opacity: 1;
+    }
+  
+    .icon {
+        margin-right: 0.5rem;
+        padding: 0 0.55rem;
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    
+    .text {
+        white-space: nowrap;
+        padding-right: 1rem;
+    }
+  }
+  
+
+.createBlocContainer{
+    width: 100%;
+
+    input{
+        display: block;
+        background-color: #d1d1d1;
+
+        &[name="newTitle"]{
+            border-color: rgba( 0, 0, 0, 0.2);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        &[name="newDesc"]{
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            min-height: 1.1rem;
+            width: calc( 100% - 2 * $paddingpage );
+            border: none;
+
+        }
+    }
+
+    button{
+        margin-top: 1rem;
+        color: black;
+        background: #d1d1d1;
+        height: 2rem;
+        cursor: pointer;
+
+        &:disabled{
+            background-color: rgba(61, 61, 61, 0.8);
+            color: white;
+            cursor: no-drop;
+        }
+    }
+}
+

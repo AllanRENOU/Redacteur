@@ -139,6 +139,12 @@ export class ProjectService {
     return page;
   }
 
+  addBlocInPage( page : Page, titleBloc : string, contentBloc : string ){
+    
+    page.addBloc( this.formatText( titleBloc ), this.formatText( contentBloc ) );
+    console.log( "TODO : Ajout dans la page ", page.titre, " du bloc ", titleBloc, " : ", contentBloc );
+  }
+
   /**
    * Donne un id à partir d'un titre
    * @param texte 
@@ -151,6 +157,15 @@ export class ProjectService {
       .replaceAll( '"', '')
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "") //Supprime les caractères spéciaux et accents
       .toLocaleUpperCase();
+  }
+
+  /**
+   * Ajoute une majuscule à la première lettre
+   * @param texte 
+   * @returns 
+   */
+  private formatText( texte : string ) : string{
+    return texte[0].toUpperCase() + texte.slice(1);
   }
 
   private getRootFolder() : PageConteneur{

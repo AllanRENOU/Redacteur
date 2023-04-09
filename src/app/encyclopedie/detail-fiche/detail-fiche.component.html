@@ -8,4 +8,18 @@
         <h4>{{bloc.title}}<span class="butonContainer"><button class="btEdit"></button></span></h4>
         <div class="textContainer">{{bloc.texte}}</div>
     </div>
+
+
+    <div class="floatingButton" *ngIf="page" [ngClass]="createPage?'creating':''" (click)="onClickCreateBloc()">
+        <span *ngIf="!createPage" class="icon">+</span>
+        <p class="text">Ajouter un bloc</p>
+
+        <div *ngIf="createPage" class="createBlocContainer">
+            <form #createBlocForm="ngForm" (ngSubmit)="onSubmitNewBloc()" >
+                <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
+                <input type="text" name="newDesc" ngModel [(ngModel)]="newDesc" placeholder="Description" autocomplete="off"/>
+                <button type="submit" [disabled]="!createBlocForm.form.valid">Valider</button>
+            </form>
+        </div>
+      </div>
 </div>
