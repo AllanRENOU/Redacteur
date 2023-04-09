@@ -147,6 +147,7 @@ export class ProjectService {
 
   updatePage( page : Page ){
     console.log( "TODO :  Sauvegarder les modifs du titre et de la description. (", page.titre, " : ", page.description, ")" );
+    // TODO : Faire aussi la sauvegarde des blocs
   }
 
   /**
@@ -169,7 +170,12 @@ export class ProjectService {
    * @returns 
    */
   private formatText( texte : string ) : string{
-    return texte[0].toUpperCase() + texte.slice(1);
+    if( texte ){
+      return texte[0].toUpperCase() + texte.slice(1);
+    }else{
+      return "";
+    }
+    
   }
 
   private getRootFolder() : PageConteneur{

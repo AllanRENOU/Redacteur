@@ -122,29 +122,33 @@ export class DetailFicheComponent implements OnInit {
   }
 
   
-  onClickMenu( item : MenuItem ){
+  onClickMenu( item : MenuItem, bloc : PageBloc ){
     
-    switch( item ) {
+    if( this.page ){
+      switch( item ) {
 
-      case MenuItem.UPDATE :{
-        alert( "Fonction non implémentée");
-          
-        break;
-      }
-      case MenuItem.UP :{
-        alert( "Fonction non implémentée");
-          
-        break;
-      }
-      case MenuItem.DOWN :{
-        alert( "Fonction non implémentée");
-          
-        break;
-      }
-      case MenuItem.REMOVE :{
-        alert( "Fonction non implémentée");
-          
-        break;
+        case MenuItem.UPDATE :{
+          alert( "Fonction non implémentée");
+            
+          break;
+        }
+        case MenuItem.UP :{
+          this.page.monterBloc( bloc );
+          this.projectService.updatePage( this.page );
+            
+          break;
+        }
+        case MenuItem.DOWN :{
+          this.page.descendreBloc( bloc );
+          this.projectService.updatePage( this.page );
+            
+          break;
+        }
+        case MenuItem.REMOVE :{
+          alert( "Fonction non implémentée");
+            
+          break;
+        }
       }
     }
   }

@@ -34,7 +34,7 @@
             {{bloc.title}}
             <span class="more" (click)="onClickMore(bloc,  $event)">
                 ...
-                <app-float-menu *ngIf="idBlocMenu==bloc.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event )" [values]="MENU_MORE_BLOC"></app-float-menu>
+                <app-float-menu *ngIf="idBlocMenu==bloc.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event, bloc )" [values]="MENU_MORE_BLOC"></app-float-menu>
             </span>
         </h4>
         <div class="textContainer">{{bloc.texte}}</div>
