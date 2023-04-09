@@ -6,6 +6,7 @@ export class Page{
     titre : string;
     description : string;
     blocs : PageBloc[] = [];
+    isRemoved = false;
 
     constructor( id : string, titre : string, description : string ){
         this.id = id.replaceAll( " ", "" ).replaceAll( "'", "" );
@@ -42,6 +43,19 @@ export class Page{
         }else{
             console.log( "Le bloc est déjà en bas" );
         }
+    }
+
+    supprimerBloc( blocASuppr : PageBloc ){
+
+        let pos = blocASuppr.position;
+
+        this.blocs.forEach( (bb, index) => {
+            if( bb.id == blocASuppr.id ){
+                this.blocs.splice( index, 1 );
+            }
+        });
+
+        this.blocs.filter( bb => bb.position > pos ).forEach(bb=>{bb.position--})
     }
 
     private refreshOrderBlocs(){
