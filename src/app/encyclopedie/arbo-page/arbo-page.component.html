@@ -1,19 +1,27 @@
+<!-- Nom du dossier-->
 <span *ngIf="this.container" class="pageContainer" [ngClass]="this.isOpened?'arrowDown':''" (click)="onClickDeploy(this.container.titre)">
     {{this.container.titre}}
     <span class="more" title="Options" (click)="onClickShowMenu( $event )" >...
         <app-float-menu *ngIf="showMenu" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event )" [values]="MENU_ITEMS"></app-float-menu>
     </span>
 </span>
+
 <ul *ngIf="this.container && this.isOpened" [className]="this.isOpened ? 'opened' :''">
+
+    <!-- Input nouveau dossier -->
     <li *ngIf="showCreateInput" class="page" >
         <form (ngSubmit)="onSubmit()">
             <input type="text" #inputNameNewItem name="inputNameNewItem" [(ngModel)]="nameNewItem"/>
             <button type="submit"></button>
         </form>
     </li>
-    <li *ngFor="let subContId of this.container.subContainer">
-        <app-arbo-page idContainer="{{subContId}}" (pageClicked)="onClickPage($event)" (createPageClicked)="onClickPageCreated($event)"/>
+
+    <!-- Liste des sous dossiers -->
+    <li *ngFor="let subCont of this.container.subContainer">
+        <app-arbo-page idContainer="{{subCont.id}}" (pageClicked)="onClickPage($event)" (createPageClicked)="onClickPageCreated($event)" (up)="moveChild( $event, true )" (down)="moveChild( $event, false )" />
     </li>
+
+    <!-- Liste des fichiers -->
     <li *ngFor="let page of this.pages" class="page" (click)="onClickPage( page.id )">
         {{page.titre}}
     </li>

@@ -35,12 +35,12 @@ export class ProjectService {
     // root
     cRoot.pages.push( this.pages[0].id );
     cRoot.pages.push( this.pages[1].id );
-    cRoot.subContainer.push( c01.id );
-    cRoot.subContainer.push( c02.id );
+    cRoot.addSubContainer( c01 );
+    cRoot.addSubContainer( c02 );
 
     // c01
     c01.pages.push( this.pages[2].id );
-    c01.subContainer.push( c11.id );
+    c01.addSubContainer( c11 );
 
     // c11
     c11.pages.push( this.pages[3].id );
@@ -97,11 +97,15 @@ export class ProjectService {
 
       console.log( "TODO : sauvegarde d'un nouveau dossier + lien parent - enfant");
       this.arboPage.push( newPageConteneur )
-      parentPC.subContainer.push( newPageConteneur.id );
+      parentPC.addSubContainer( newPageConteneur );
       console.log( "Nouveau dossier : ", newPageConteneur.titre, " (", newPageConteneur.id, ")")
     }else{
       console.error("Impossible de créer le dossier ", nom );
     }
+  }
+
+  updateArbo( dossier : PageConteneur ){
+    console.log( "TODO : sauvegarder nouvel etat du dossier ", dossier );
   }
 
   /**
@@ -146,8 +150,18 @@ export class ProjectService {
   }
 
   updatePage( page : Page ){
-    console.log( "TODO :  Sauvegarder les modifs du titre et de la description. (", page.titre, " : ", page.description, ")" );
-    // TODO : Faire aussi la sauvegarde des blocs
+    console.log( "TODO :  Sauvegarder les modifs du titre et de la description", page );
+    // TODO : Faire aussi la sauvegarde des blocs, et les attributs de la page
+  }
+
+  removePage( page : Page ){
+    page.isRemoved = true;
+    this.updatePage( page );
+    this.arboPage.forEach( dossier => { 
+      if( dossier.removePage( page.id) ){
+        this.updateArbo( dossier );
+      }
+    });
   }
 
   /**

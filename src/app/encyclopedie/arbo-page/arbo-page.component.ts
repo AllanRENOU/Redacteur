@@ -40,6 +40,10 @@ export class ArboPageComponent implements OnInit{
   pageClicked : EventEmitter<string> = new EventEmitter<string>();
   @Output()
   createPageClicked : EventEmitter<PageConteneur> = new EventEmitter<PageConteneur>();
+  @Output()
+  up : EventEmitter<PageConteneur> = new EventEmitter<PageConteneur>();
+  @Output()
+  down : EventEmitter<PageConteneur> = new EventEmitter<PageConteneur>();
 
   constructor( private projectService : ProjectService){
     
@@ -88,31 +92,46 @@ export class ArboPageComponent implements OnInit{
 
   onClickMenu( item : MenuItem ){
     
-    switch( item ) {
+    if( this.container ){
 
-      case MenuItem.ADD_FILE :{
-          if( this.container ){
-            console.log( "Création d'une fiche" );
-            this.createPageClicked.emit( this.container );
-            //this.focusInputNewItem();
-          }else{
-            console.log( "Impossible de créer une page. Parent inconnu");
-          }
-          
-        break;
-      }
+      switch( item ) {
+        case MenuItem.ADD_FILE :{
+              console.log( "Création d'une fiche" );
+              this.createPageClicked.emit( this.container );
+              //this.focusInputNewItem();
+          break;
+        }
 
-      case MenuItem.ADD_FOLDER :{
-        console.log( "Création d'un dossier" );
-        this.focusInputNewItem();
-        break;
-      }
+        case MenuItem.ADD_FOLDER :{
+          console.log( "Création d'un dossier" );
+          this.focusInputNewItem();
+          break;
+        }
 
-      case MenuItem.REMOVE :{
-        console.log( "Suppression du dossier" );
-        break;
+        case MenuItem.UP :{
+          console.log( "Monter" );
+          this.up.emit( this.container );
+
+          break;
+        }
+
+        case MenuItem.DOWN :{
+          console.log( "Descendre" );
+          this.down.emit( this.container );
+
+          break;
+        }
+
+        case MenuItem.REMOVE :{
+          console.log( "Suppression du dossier" );
+          break;
+        }
       }
+      
+    }else{
+      console.error( "Dossier inconnu");
     }
+  
   }
 
   onClickPageCreated( folder : PageConteneur ){
@@ -135,6 +154,19 @@ export class ArboPageComponent implements OnInit{
       this.showCreateInput = false;
     }else{
       console.log( "Dossier inconnue" )
+    }
+  }
+
+  moveChild( subFolder : PageConteneur, isUp : boolean ){
+
+    if( this.container ){
+      if( isUp ){
+        this.container.monter( subFolder );
+      }else{
+        this.container.descendre( subFolder );
+      }
+
+      this.projectService.updateArbo( this.container );
     }
   }
 }
