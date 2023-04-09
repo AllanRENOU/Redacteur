@@ -1,0 +1,81 @@
+$paddingpage : 1rem;
+$timeTransition : 0.5s;
+
+.createPageContainer{
+    position: absolute;
+    top: 0;
+
+    padding: $paddingpage;
+    margin: 0;
+    width: calc( 100% - $paddingpage - $paddingpage );
+    height: 100%;
+
+    font-family: sans-serif;
+}
+
+form>*{
+    display: block;
+}
+
+input{
+    margin-top: 0.5rem;
+    background-color: transparent;
+    
+    /*
+    &[required]{
+        border-bottom: solid red 1px;
+    }*/
+}
+
+*[name='titre']{
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-color: rgba( 1, 1, 1, 0);
+}
+
+*[name='id']{
+    border: none;
+
+}
+
+
+*[name='description']{
+    margin: 2rem 0 0 0;
+    border-color: rgba( 1, 1, 1, 0.2);
+    width: calc( 100% - 2 * $paddingpage );
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    min-height: 1.1rem;
+    transition: background-color $timeTransition, border-color $timeTransition ;
+    background-color: transparent;
+
+    &:hover{
+        background-color: white;
+        border-color : black;
+    }
+
+}
+
+.errorMessage{
+    color: red;
+
+}
+
+button{
+    margin-top: 1rem;
+    background-color: rgb(40, 44, 36);
+    color: white;
+    height: 2rem;
+    width: 4rem;
+    cursor: pointer;
+
+    &:disabled{
+        background-color: rgba(61, 61, 61, 0.8);
+        cursor: no-drop;
+    }
+
+}
+
+.invisible{
+    opacity: 0;
+}

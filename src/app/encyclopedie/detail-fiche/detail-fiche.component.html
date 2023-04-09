@@ -1,0 +1,11 @@
+<div class="detailPageContainer">
+    <h2>{{page?.titre}}</h2>
+    <p class="idLabel">@{{id}}</p>
+
+    <div class="textContainer">{{page?.description}}</div>
+
+    <div *ngFor="let bloc of page?.blocs">
+        <h4>{{bloc.title}}<span class="butonContainer"><button class="btEdit"></button></span></h4>
+        <div class="textContainer">{{bloc.texte}}</div>
+    </div>
+</div>

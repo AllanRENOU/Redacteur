@@ -1,6 +1,9 @@
 <div class="globalContainer">
     <div class="arboContainer">
-        <app-arbo-page idContainer="root" [isOpened]="true" (pageClicked)="onPageClicked($event)"/>
+        <app-arbo-page idContainer="root" [isOpened]="true" (pageClicked)="onPageClicked($event)" (createPageClicked)="onNewPageClicked($event)"/>
     </div>
-    <div class="contentContainer">BB</div>
+    <div class="contentContainer">
+        <app-detail-fiche *ngIf="!createFiche" [id]="currentIdPage"/>
+        <app-create-fiche *ngIf="createFiche" [folder]="parentFolder" />
+    </div>
 </div>
