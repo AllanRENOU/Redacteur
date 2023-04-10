@@ -4,6 +4,7 @@ export class PageConteneur{
     titre : string;
     pages : string[] = [];
     subContainer : { position : number, id : string }[] = [];
+    isRemoved = false;
 
     constructor( id : string, titre : string ){
         this.id = id;
@@ -25,6 +26,32 @@ export class PageConteneur{
 
     addSubContainer( cont : PageConteneur ){
         this.subContainer.push( { position : this.subContainer.length, id : cont.id } );
+    }
+
+    removeSubContainer( dossier : PageConteneur ){
+
+        let posIdToRemove : { position : number, id : string } = { position : -1, id : "" };
+
+        // Suppression du dossier fils
+        this.subContainer.forEach( ( posId, index)=>{
+            if( posId.id == dossier.id ){
+                posIdToRemove = posId;
+                this.subContainer.splice( index, 1 );
+            }
+        } );
+
+        // Si dossier a été supprimé, on remonte ceux du dessous
+        if( posIdToRemove.position != -1 ){
+
+            this.subContainer
+            .filter( posId => { return posId.position > posIdToRemove.position })
+            .forEach( posId => { posId.position-- } )
+
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     monter( sousDossier : PageConteneur ){

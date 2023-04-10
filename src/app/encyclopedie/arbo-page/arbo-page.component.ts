@@ -124,6 +124,9 @@ export class ArboPageComponent implements OnInit{
 
         case MenuItem.REMOVE :{
           console.log( "Suppression du dossier" );
+          if( confirm( "Est tu certain de vouloir supprimer le dossier '" + this.container.titre + "' ?") ){
+            this.projectService.removeArbo( this.container );
+          }
           break;
         }
       }

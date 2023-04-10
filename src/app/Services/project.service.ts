@@ -108,6 +108,23 @@ export class ProjectService {
     console.log( "TODO : sauvegarder nouvel etat du dossier ", dossier );
   }
 
+  removeArbo( dossier : PageConteneur ){
+    this.arboPage.forEach( (dd , index) => {
+      if( dd.id == dossier.id ){
+        this.arboPage.splice( index, 1 );
+      }
+    } );
+
+    this.arboPage.forEach( dd =>{
+      if( dd.removeSubContainer( dossier ) ){
+        this.updateArbo( dd );
+      }
+    });
+
+    dossier.isRemoved = true;
+    this.updateArbo( dossier );
+  }
+
   /**
    * Créer une nouvelle page, et l'ajoute dans le dossier indiqué. Si aucun dossier n'est indiqué, la page sera ajoutée à la racine du projet.
    * Une Erreur est levée si l'id existe déjà
