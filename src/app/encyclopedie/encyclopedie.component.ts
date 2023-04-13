@@ -14,7 +14,7 @@ export class EncyclopedieComponent {
   public static ROOT_PAGE_CONTAINER_ID = "root";
 
   // Consultation d'une fiche
-  currentIdPage : string = "p01";
+  currentIdPage : string = "";
 
   // Creation d'une fiche
   createFiche = false;

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Page } from './Beans/Page';
 import { PageConteneur } from './Beans/PageConteneur';
 import { EncyclopedieComponent } from '../encyclopedie/encyclopedie.component';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +11,49 @@ import { EncyclopedieComponent } from '../encyclopedie/encyclopedie.component';
 
 export class ProjectService {
   
+  static url = "http://localhost:8080/";
+
   static ID_ROOT_FOLDER = "root";
+
+  PROJECT_NAME = "PROJECT_TEST";
 
   name : string = "nope";
   pages : Page[] = [];
   arboPage : PageConteneur[] = [];
 
-  constructor(){
+  observableArboPage : Observable<any>;
+
+  constructor( private http: HttpClient ){
     
+    this.observableArboPage = this.http.get<any>( ProjectService.url + this.PROJECT_NAME + "/dossier" );
+    
+    this.observableArboPage.subscribe( data =>{
+      if( Object.keys( data ).length == 0 ){
+        console.log( "Création d'un dossier root" )
+        this.updateArbo( this.getRootFolder() );
+      }else{
+        for( let idDossier of Object.keys( data )){
+          let dossier = this.generatePageContainer( data[ idDossier ] );
+          if( dossier ){
+            this.arboPage.push( dossier );
+          }
+        }
+      }
+    });
+
+    this.http.get<any>( ProjectService.url + this.PROJECT_NAME + "/fiche" ).subscribe( data =>{
+
+      for( let idPage of Object.keys( data ) ){
+        let page = this.generatePage( data[idPage] );
+
+        if( page ){
+          page.isLight = true;
+          this.pages.push( page );
+        }
+      }
+    } );
+    
+    /*
     // Tests
     let p01 = new Page( "p01", "Page 1", "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut repudiandae magni eum eligendi assumenda temporibus labore nulla dolorum enim voluptate ab adipisci quaerat illum facere, deserunt dignissimos obcaecati unde ad.")
     p01.addBloc( "Premier bloc", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum");
@@ -52,7 +89,7 @@ export class ProjectService {
     this.arboPage.push( c01 );
     this.arboPage.push( c02 );
     this.arboPage.push( c11 );
-
+    */
   }
 
   /**
@@ -62,7 +99,32 @@ export class ProjectService {
    */
   getPage( idPage : string ) : Page | null{
     let tmp = this.pages.filter( pp =>{ return pp.id == idPage } );
+    console.log( "Get ", idPage, " : ", ((tmp.length == 0)? null : tmp[0]), " total : ", this.arboPage )
     return (tmp.length == 0)? null : tmp[0];
+  }
+
+  getPageAsync( idPage : string ) : Observable<Page | null>{
+    
+    let page : Page | null = this.getPage( idPage );
+
+    if( page && !page.isLight ){
+      return new Observable( observer =>{
+        observer.next( page );
+      } );
+    }else{
+
+      return new Observable<Page | null>( observer =>{
+
+        this.http.get<Page[]>( ProjectService.url + this.PROJECT_NAME + "/fiche/"+idPage ).subscribe( data => {
+          page = this.generatePage( data );
+          if( page && page != null ){
+            page.isLight = false;
+            this.pages.push( page );
+          }
+          observer.next( page );
+        } );
+      } );
+    }
   }
   
   /**
@@ -75,6 +137,18 @@ export class ProjectService {
     return (tmp.length == 0)? [] : tmp;
   }
 
+  getPagesAsync( idPages : string[] ) : Observable <Page[]>{
+
+    if( this.pages.length > 0 ){
+      return new Observable( observer =>{
+        observer.next( this.getPages( idPages ) );
+      } );
+    }else{
+      return this.http.post<Page[]>( ProjectService.url + this.PROJECT_NAME + "/fiche", idPages );
+    }
+
+  }
+
   /**
    * Récupère les information d'un dossier
    * @param idConteneur 
@@ -84,6 +158,26 @@ export class ProjectService {
     let tmp = this.arboPage.filter( pp =>{ return pp.id == idConteneur } );
     return (tmp.length == 0)? null : tmp[0];
   }
+
+  getArboPageAsync( idConteneur : string ) : Observable <PageConteneur | null>{
+
+    if( this.arboPage.length > 0 ){
+      return new Observable( observer =>{
+        observer.next( this.getArboPage( idConteneur ) );
+      } );
+    }else{
+
+      let obs : Observable <PageConteneur | null> = new Observable( observer =>{
+        this.observableArboPage.subscribe( data => {
+          observer.next( this.getArboPage( idConteneur ) );
+        })
+      } );
+
+      return obs
+    }
+  }
+
+
 
   /**
    * Crée un sous dossier dans le dossier indiqué
@@ -95,17 +189,22 @@ export class ProjectService {
     
     if( parentPC ){
 
-      console.log( "TODO : sauvegarde d'un nouveau dossier + lien parent - enfant");
       this.arboPage.push( newPageConteneur )
       parentPC.addSubContainer( newPageConteneur );
       console.log( "Nouveau dossier : ", newPageConteneur.titre, " (", newPageConteneur.id, ")")
+      this.updateArbo( newPageConteneur );
+      this.updateArbo( parentPC );
     }else{
       console.error("Impossible de créer le dossier ", nom );
     }
   }
 
   updateArbo( dossier : PageConteneur ){
-    console.log( "TODO : sauvegarder nouvel etat du dossier ", dossier );
+    console.log( "Maj dossier ", dossier );
+
+    this.http.post<PageConteneur>( ProjectService.url + this.PROJECT_NAME + "/dossier/" + dossier.id, dossier ).subscribe( (dossierReturn : PageConteneur) =>{
+      console.log( "Dossier recu ", dossierReturn );
+    });
   }
 
   removeArbo( dossier : PageConteneur ){
@@ -135,6 +234,7 @@ export class ProjectService {
    */
   createPage( id : string, titre : string, description : string, idFolder? : string  ) : Page { 
     let page = new Page( id, titre, description );
+    page.isLight = false;
 
     console.log( "TODO : Enregistrer la création de la page", page );
 
@@ -157,18 +257,23 @@ export class ProjectService {
     this.pages.push( page );
     folder.pages.push( id );
 
+    this.updatePage( page );
+    this.updateArbo( folder );
+
     return page;
   }
 
   addBlocInPage( page : Page, titleBloc : string, contentBloc : string ){
     
     page.addBloc( this.formatText( titleBloc ), this.formatText( contentBloc ) );
-    console.log( "TODO : Ajout dans la page ", page.titre, " du bloc ", titleBloc, " : ", contentBloc );
+    this.updatePage( page );
   }
 
   updatePage( page : Page ){
-    console.log( "TODO :  Sauvegarder les modifs du titre et de la description", page );
-    // TODO : Faire aussi la sauvegarde des blocs, et les attributs de la page
+    console.log( "Maj page ", page );
+    this.http.post<Page>( ProjectService.url + this.PROJECT_NAME + "/fiche/" + page.id, page ).subscribe( (newPage : Page) =>{
+      console.log( "Page recu ", newPage );
+    });
   }
 
   removePage( page : Page ){
@@ -193,6 +298,62 @@ export class ProjectService {
       .replaceAll( '"', '')
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "") //Supprime les caractères spéciaux et accents
       .toLocaleUpperCase();
+  }
+
+  private generatePageContainer( data : any ) : PageConteneur|null{
+
+    let dossier = null;
+
+    if( data.id && data.titre ){
+      let id = data.id;
+      let titre = data.titre;
+      let pages = data.pages;
+      let subContainer = data.subContainer;
+      let isRemoved = data.isRemoved;
+
+      dossier = new PageConteneur( id, titre );
+
+      if( pages ){
+        dossier.pages = pages;
+      }
+
+      if( subContainer ){
+        dossier.subContainer = subContainer;
+      }
+
+      dossier.isRemoved = isRemoved === true;
+      
+
+    }else{
+      console.error( "Impossible de convertir ", data, " en PageConteneur");
+    }
+
+    return dossier;
+  }
+  private generatePage( data : any ) : Page | null{
+
+    let page = null;
+
+    if( data.id && data.titre ){
+      page = new Page( data.id, data.titre, "" );
+
+      if( data.description ){
+        page.description = data.description;
+      }
+
+      if( data.blocs ){
+        for( let bloc of data.blocs ){
+          page.addBloc( bloc.titre, bloc.texte );
+        }
+      }
+      
+
+      page.isRemoved = data.isRemoved === true;
+    }else{
+      console.error( "Impossible de convertir ", data, " en Fiche");
+    }
+
+    return page;
   }
 
   /**

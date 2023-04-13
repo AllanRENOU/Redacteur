@@ -11,7 +11,8 @@ import { ArboPageComponent } from './encyclopedie/arbo-page/arbo-page.component'
 import { DetailFicheComponent } from './encyclopedie/detail-fiche/detail-fiche.component';
 import { FloatMenuComponent } from './Utils/float-menu/float-menu.component';
 import { CreateFicheComponent } from './encyclopedie/create-fiche/create-fiche.component';
-import { IdTransformPipe } from 'src/app/Utils/IdTransformpipe'
+import { IdTransformPipe } from 'src/app/Utils/IdTransformPipe'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { IdTransformPipe } from 'src/app/Utils/IdTransformpipe'
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule
   ],

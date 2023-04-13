@@ -7,6 +7,7 @@ export class Page{
     description : string;
     blocs : PageBloc[] = [];
     isRemoved = false;
+    isLight = true;
 
     constructor( id : string, titre : string, description : string ){
         this.id = id.replaceAll( " ", "" ).replaceAll( "'", "" );

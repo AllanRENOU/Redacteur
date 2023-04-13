@@ -52,11 +52,15 @@ export class DetailFicheComponent implements OnInit {
   }
 
   reloadPage(){
-    let page = this.projectService.getPage( this.id );
-    if( page ){
-      this.page = page;
-      this.resetForms();
-    }
+    this.projectService.getPageAsync( this.id ).subscribe( (page : Page|null) => {
+      if( page ){
+        this.page = page;
+        this.resetForms();
+      }else{
+        console.log( "TODO : Erreur à gérer" )
+      }
+    });
+    
   }
   
   // Update page

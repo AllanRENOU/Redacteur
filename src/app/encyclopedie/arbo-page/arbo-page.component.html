@@ -17,8 +17,8 @@
     </li>
 
     <!-- Liste des sous dossiers -->
-    <li *ngFor="let subCont of this.container.subContainer">
-        <app-arbo-page idContainer="{{subCont.id}}" (pageClicked)="onClickPage($event)" (createPageClicked)="onClickPageCreated($event)" (up)="moveChild( $event, true )" (down)="moveChild( $event, false )" />
+    <li *ngFor="let subC of this.container.subContainer">
+        <app-arbo-page idContainer="{{subC.id}}" (pageClicked)="onClickPage($event)" (createPageClicked)="onClickPageCreated($event)" (up)="moveChild( $event, true )" (down)="moveChild( $event, false )" />
     </li>
 
     <!-- Liste des fichiers -->

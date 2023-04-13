@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Page } from 'src/app/Services/Beans/Page';
 import { PageConteneur } from 'src/app/Services/Beans/PageConteneur';
 import { ProjectService } from 'src/app/Services/project.service';
@@ -46,33 +47,44 @@ export class ArboPageComponent implements OnInit{
   down : EventEmitter<PageConteneur> = new EventEmitter<PageConteneur>();
 
   constructor( private projectService : ProjectService){
-    
   }
 
   ngOnInit() {
 
-    this.container = this.projectService.getArboPage( this.idContainer );
-    if( this.isOpened ){
-      if( this.container ){
-        this.pages = this.projectService.getPages( this.container?.pages );
+    console.log( "Ouverture de ", this.idContainer)
+    
+    let obs : Observable<PageConteneur | null | undefined> = this.projectService.getArboPageAsync( this.idContainer );
+
+    obs.subscribe( dossier  => {
+      console.log( "Dossier ", this.idContainer, " : ", dossier );
+      if( dossier ){
+        //if( this.isOpened ){
+          this.container = dossier as PageConteneur;
+
+          this.projectService.getPagesAsync( this.container.pages ).subscribe( fiches=>{
+            this.pages = fiches;
+          } );
+
+          //this.pages = this.projectService.getPages( this.container?.pages );
+        //}
       }else{
         console.error( "Dossier d'arbo ",  this.idContainer, " non trouvé");
       }
-    }
+    });
   }
 
   onClickDeploy( title : string){
-    console.log( "click ", title )
+    // Doit-on refresh tout le contenu ?
 
     this.isOpened = !this.isOpened;
 
-    if( this.container ){
-      if( this.isOpened && this.pages.length == 0 ){
-        this.pages = this.projectService.getPages( this.container?.pages );
-      }
-    }else{
-      console.error( "Impossible de charger le contenu de ", this.idContainer );
-    }
+    //if( this.container ){
+      //if( this.isOpened && this.pages.length == 0 ){
+      //  this.pages = this.projectService.getPages( this.container?.pages );
+      //}
+    //}else{
+    //  console.error( "Impossible de charger le contenu de ", this.idContainer );
+    //}
   }
 
   onClickPage( idPage : string){
