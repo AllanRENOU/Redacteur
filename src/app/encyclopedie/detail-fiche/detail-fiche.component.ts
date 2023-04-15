@@ -48,7 +48,6 @@ export class DetailFicheComponent implements OnInit {
 
   ngOnChanges( change : SimpleChange){
     this.reloadPage();
-    
   }
 
   reloadPage(){

@@ -35,10 +35,15 @@ export class EncyclopedieComponent {
   }
   
   openPage( idPage : string){
-    console.log( "ouverture de la page ", idPage );
-    this.createFiche = false;
-    this.currentIdPage = idPage;
-    this._location.go( "/" + this.projectService.dataProject.code + "/encyclopedie/" + idPage );
+    if( idPage ){
+      console.log( "ouverture de la page ", idPage );
+      this.createFiche = false;
+      this.currentIdPage = idPage;
+      this._location.go( "/" + this.projectService.dataProject.code + "/encyclopedie/" + idPage );
+    }else{
+      this._location.go( "/" + this.projectService.dataProject.code + "/encyclopedie/" );
+    }
+    
 
   }
 

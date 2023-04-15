@@ -24,7 +24,7 @@ export class ProjectService {
   observableArboPage? : Observable<any>;
 
   constructor( private http: HttpClient ){
-    this.reloadAll();
+    
   }
 
   setProject( newIdProject : string ){
@@ -45,7 +45,7 @@ export class ProjectService {
    */
   getPage( idPage : string ) : Page | null{
     let tmp = this.pages.filter( pp =>{ return pp.id == idPage } );
-    console.log( "Get ", idPage, " : ", ((tmp.length == 0)? null : tmp[0]), " total : ", this.arboPage )
+    console.log( "Get ", idPage, " : ", ((tmp.length == 0)? null : tmp[0]), " total : ", this.pages )
     return (tmp.length == 0)? null : tmp[0];
   }
 
@@ -124,12 +124,15 @@ export class ProjectService {
 
       if( this.dataProject.code ){
         let obs : Observable <PageConteneur | null> = new Observable( observer =>{
+
           this.observableArboPage?.subscribe( data => {
             observer.next( this.getArboPage( idConteneur ) );
           });
+          
         } );
         return obs
       }else{
+        
         return new Observable( observer =>{
           observer.next( null );
         } );
@@ -262,36 +265,48 @@ export class ProjectService {
 
   private reloadAll(){
     
-    this.http.get<any>( ProjectService.url ).subscribe( ( data : { projects: { code:string, name:string }[] } ) =>{
-      if( data ){
-        let tmp =  data.projects.filter( (pp)=>{ return pp.code == this.dataProject.code } );
-        if( tmp.length>0){
-          this.dataProject = tmp[0];
-        }else{
-          console.error( "Le projet ", this.dataProject.code, " introuvable. Projets existants : ", data.projects );
-        }
-        
-      }else{
-        console.error( "Impossible de récupérer les données du projet" );
-      }
-    });
     
     if( this.dataProject.code ){
-      this.observableArboPage = this.http.get<any>( ProjectService.url + this.dataProject.code + "/dossier" );
-      
-      this.observableArboPage.subscribe( data =>{
-        if( Object.keys( data ).length == 0 ){
-          console.log( "Création d'un dossier root" )
-          this.updateArbo( this.getRootFolder() );
-        }else{
-          for( let idDossier of Object.keys( data )){
-            let dossier = this.generatePageContainer( data[ idDossier ] );
-            if( dossier ){
-              this.arboPage.push( dossier );
-            }
+
+      console.log( "Envoi requetes projets, arbos et pages" );
+      this.http.get<any>( ProjectService.url ).subscribe( ( data : { projects: { code:string, name:string }[] } ) =>{
+        if( data ){
+          let tmp =  data.projects.filter( (pp)=>{ return pp.code == this.dataProject.code } );
+          if( tmp.length>0){
+            this.dataProject = tmp[0];
+          }else{
+            console.error( "Le projet ", this.dataProject.code, " introuvable. Projets existants : ", data.projects );
           }
+          
+        }else{
+          console.error( "Impossible de récupérer les données du projet" );
         }
       });
+
+
+      this.observableArboPage = new Observable<PageConteneur[]>( observer => {
+       
+        this.http.get<any>( ProjectService.url + this.dataProject.code + "/dossier" ).subscribe( data =>{
+        
+          console.log( "Données de l'arborescence recues" );
+          if( Object.keys( data ).length == 0 ){
+            console.log( "Création d'un dossier root" )
+            this.updateArbo( this.getRootFolder() );
+          }else{
+            for( let idDossier of Object.keys( data )){
+              let dossier = this.generatePageContainer( data[ idDossier ] );
+              if( dossier ){
+                this.arboPage.push( dossier );
+              }
+            }
+            console.log( "Données de l'arborescence traitées.", this.arboPage );
+          }
+          observer.next( this.arboPage );
+
+        });
+      } );
+      
+      this.observableArboPage
 
       this.http.get<any>( ProjectService.url + this.dataProject.code + "/fiche" ).subscribe( data =>{
 
@@ -304,6 +319,7 @@ export class ProjectService {
           }
         }
       } );
+
     }else{
       console.log( "Aucun projet sélectionné" );
     }
@@ -340,6 +356,7 @@ export class ProjectService {
 
     return dossier;
   }
+
   private generatePage( data : any ) : Page | null{
 
     let page = null;

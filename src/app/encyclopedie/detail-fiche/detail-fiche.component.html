@@ -1,8 +1,8 @@
-<div class="detailPageContainer">
+<div *ngIf="page" class="detailPageContainer">
 
     <!-- Nom de la page -->
     <h2 *ngIf="!updatePage">
-        {{page?.titre}}
+        {{page.titre}}
         <span class="more" (click)="onClickMorePage($event)">
             ...
             <app-float-menu *ngIf="idBlocMenu=='0'" (toHide)="onHideMenu()" (onClick)="onClickMenuPage( $event )" [values]="MENU_MORE_PAGE"></app-float-menu>
@@ -27,7 +27,7 @@
 
 
     <!-- Description de la page -->
-    <div *ngIf="!updatePage" class="textContainer">{{page?.description}}</div>
+    <div *ngIf="!updatePage" class="textContainer">{{page.description}}</div>
 
 
     <!-- Blocs -->
@@ -67,4 +67,9 @@
             </form>
         </div>
       </div>
+</div>
+
+<div *ngIf="!page" class="emptyPageContainer">
+    <span>Page vide</span>
+
 </div>
