@@ -54,17 +54,13 @@ export class ArboPageComponent implements OnInit{
     let obs : Observable<PageConteneur | null | undefined> = this.projectService.getArboPageAsync( this.idContainer );
 
     obs.subscribe( dossier  => {
-      //console.log( "Dossier ", this.idContainer, " : ", dossier );
       if( dossier ){
-        //if( this.isOpened ){
           this.container = dossier as PageConteneur;
 
-          this.projectService.getPagesAsync( this.container.pages ).subscribe( fiches=>{
+          this.projectService.getPagesAsync( this.container.pages ).subscribe( fiches =>{
             this.pages = fiches;
           } );
 
-          //this.pages = this.projectService.getPages( this.container?.pages );
-        //}
       }else{
         console.error( "Dossier d'arbo ",  this.idContainer, " non trouvé");
       }

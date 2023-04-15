@@ -66,15 +66,15 @@ export class ProjectService {
             page = this.generatePage( data );
             if( page && page != null ){
               page.isLight = false;
-              this.pages.push( page );
+              this.remplacerPage( page );
             }
             observer.next( page );
           } );
         } );
-        
-    }else{
-      return new Observable( observer =>{ observer.next( null ); } ); 
-    }
+ 
+      }else{
+        return new Observable( observer =>{ observer.next( null ); } ); 
+      }
     }
   }
   
@@ -85,6 +85,9 @@ export class ProjectService {
    */
   getPages( idPages : string[] ) : Page[]{
     let tmp = this.pages.filter( pp =>{ return idPages.indexOf( pp.id ) != -1 } );
+    //let res = (tmp.length == 0)? [] : tmp;
+    //console.log( "getPage( ", idPages, " ) = ", res, ". Total page : ", this.pages );
+    //return res;
     return (tmp.length == 0)? [] : tmp;
   }
 
@@ -306,14 +309,12 @@ export class ProjectService {
         });
       } );
       
-      this.observableArboPage
-
       this.http.get<any>( ProjectService.url + this.dataProject.code + "/fiche" ).subscribe( data =>{
 
         for( let idPage of Object.keys( data ) ){
           let page = this.generatePage( data[idPage] );
 
-          if( page ){
+          if( page && this.idPageNotUsed( page.id ) ){
             page.isLight = true;
             this.pages.push( page );
           }
@@ -413,6 +414,17 @@ export class ProjectService {
       }
     }
     return rootFolder;
+  }
+
+  private remplacerPage( page : Page ){
+    
+    this.pages.forEach( (pp, index) => {
+      if( pp.id == page.id ){
+        this.pages.splice( index, 1 );
+      }
+    } );
+
+    this.pages.push( page );
   }
 
   private idPageNotUsed( id : string ) : boolean{
