@@ -371,12 +371,12 @@ export class ProjectService {
 
       if( data.blocs ){
         for( let bloc of data.blocs ){
-          page.addBloc( bloc.titre, bloc.texte );
+          page.addBloc( bloc.title, bloc.texte );
         }
       }
       
-
       page.isRemoved = data.isRemoved === true;
+      console.log( "Page générée ", data, ", ", page );
     }else{
       console.error( "Impossible de convertir ", data, " en Fiche");
     }

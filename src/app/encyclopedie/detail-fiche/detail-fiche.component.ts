@@ -54,6 +54,7 @@ export class DetailFicheComponent implements OnInit {
     if( this.id ){
       this.projectService.getPageAsync( this.id ).subscribe( (page : Page|null) => {
         if( page ){
+          console.log( "page chargée : ", page )
           this.page = page;
           this.resetForms();
         }else{
@@ -147,7 +148,7 @@ export class DetailFicheComponent implements OnInit {
 
         case MenuItem.UPDATE :{
           this.updateBloc = bloc.id;
-          this.newTitle = bloc.texte;
+          this.newTitle = bloc.title;
           this.newDesc = bloc.texte;
 
           break;
