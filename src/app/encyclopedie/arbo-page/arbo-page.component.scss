@@ -26,6 +26,8 @@ ul{
 
 .page{
     font-weight: normal;
+    user-select: none;
+    
     input{
         background-color: transparent;
         color: white;
