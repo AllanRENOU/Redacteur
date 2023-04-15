@@ -276,33 +276,38 @@ export class ProjectService {
       }
     });
     
-    this.observableArboPage = this.http.get<any>( ProjectService.url + this.dataProject.code + "/dossier" );
-    
-    this.observableArboPage.subscribe( data =>{
-      if( Object.keys( data ).length == 0 ){
-        console.log( "Création d'un dossier root" )
-        this.updateArbo( this.getRootFolder() );
-      }else{
-        for( let idDossier of Object.keys( data )){
-          let dossier = this.generatePageContainer( data[ idDossier ] );
-          if( dossier ){
-            this.arboPage.push( dossier );
+    if( this.dataProject.code ){
+      this.observableArboPage = this.http.get<any>( ProjectService.url + this.dataProject.code + "/dossier" );
+      
+      this.observableArboPage.subscribe( data =>{
+        if( Object.keys( data ).length == 0 ){
+          console.log( "Création d'un dossier root" )
+          this.updateArbo( this.getRootFolder() );
+        }else{
+          for( let idDossier of Object.keys( data )){
+            let dossier = this.generatePageContainer( data[ idDossier ] );
+            if( dossier ){
+              this.arboPage.push( dossier );
+            }
           }
         }
-      }
-    });
+      });
 
-    this.http.get<any>( ProjectService.url + this.dataProject.code + "/fiche" ).subscribe( data =>{
+      this.http.get<any>( ProjectService.url + this.dataProject.code + "/fiche" ).subscribe( data =>{
 
-      for( let idPage of Object.keys( data ) ){
-        let page = this.generatePage( data[idPage] );
+        for( let idPage of Object.keys( data ) ){
+          let page = this.generatePage( data[idPage] );
 
-        if( page ){
-          page.isLight = true;
-          this.pages.push( page );
+          if( page ){
+            page.isLight = true;
+            this.pages.push( page );
+          }
         }
-      }
-    } );
+      } );
+    }else{
+      console.log( "Aucun projet sélectionné" );
+    }
+    
   }
 
   private generatePageContainer( data : any ) : PageConteneur|null{

@@ -50,8 +50,6 @@ export class ArboPageComponent implements OnInit{
   }
 
   ngOnInit() {
-
-    console.log( "Ouverture de ", this.idContainer)
     
     let obs : Observable<PageConteneur | null | undefined> = this.projectService.getArboPageAsync( this.idContainer );
 
