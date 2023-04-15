@@ -56,7 +56,7 @@ export class ArboPageComponent implements OnInit{
     let obs : Observable<PageConteneur | null | undefined> = this.projectService.getArboPageAsync( this.idContainer );
 
     obs.subscribe( dossier  => {
-      console.log( "Dossier ", this.idContainer, " : ", dossier );
+      //console.log( "Dossier ", this.idContainer, " : ", dossier );
       if( dossier ){
         //if( this.isOpened ){
           this.container = dossier as PageConteneur;
@@ -72,6 +72,7 @@ export class ArboPageComponent implements OnInit{
       }
     });
   }
+  
 
   onClickDeploy( title : string){
     // Doit-on refresh tout le contenu ?
@@ -94,12 +95,10 @@ export class ArboPageComponent implements OnInit{
   onClickShowMenu( $event : any ){
     $event.stopPropagation();
     this.showMenu = true;
-    console.log( this.showMenu );
   }
 
   onHideMenu(){
     this.showMenu = false;
-    console.log( this.showMenu );
   }
 
   onClickMenu( item : MenuItem ){

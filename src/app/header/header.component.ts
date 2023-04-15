@@ -11,20 +11,9 @@ export class HeaderComponent {
 
   title : string = "Rédacteur";
 
-  constructor( private projectService : ProjectService, private router: Router){
+  constructor( public projectService : ProjectService){
     this.title = projectService.name;
-
-    this.router.events.subscribe((aa : any) => {
-      if( aa instanceof NavigationEnd){
-        console.log( "Url : ", aa.url)
-      }
-    });
-
-
   }
 
-  onUrlChanged( obj: any ){
-    console.log( "url changed ", obj)
-  }
 
 }
