@@ -42,8 +42,19 @@
         <div  *ngIf="updateBloc != bloc.id" class="textContainer" [innerHTML]="bloc.texte | markdown"></div>
 
         <form *ngIf="updateBloc == bloc.id" #updateBlocForm="ngForm" (ngSubmit)="onSubmitUpdateBloc( bloc )" class="formUpdateBloc" >
-            <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
-            <div class="btInfo"></div>
+            <nav>
+                <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
+                <div class="btInfo" title="Infos Markdown" (click)="onClickinfoMarkdown( $event )">
+                </div>
+                <div class="popupInfoMarkdownContainer">
+                    <div class="popupInfoMarkdown" *ngIf="showPopupInfoMarkdown" (click)="closePopupInfoMarkdown()">
+                        <p *ngFor="let texte of INFOS_MARKDOWN">{{texte}}</p>
+                    </div>
+                </div>
+                
+                
+            </nav>
+            
             <textarea name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description"></textarea>
             
             <div class="form-group">

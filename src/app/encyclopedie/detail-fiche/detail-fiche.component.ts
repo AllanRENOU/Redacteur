@@ -19,6 +19,7 @@ export class DetailFicheComponent implements OnInit {
   createPage = false;
   updatePage = false;
   updateBloc : string = "";
+  showPopupInfoMarkdown = false;
 
   newTitle = "";
   newDesc = "";
@@ -35,6 +36,20 @@ export class DetailFicheComponent implements OnInit {
   MENU_MORE_PAGE = [
     MenuItem.UPDATE,
     MenuItem.REMOVE
+  ];
+
+  INFOS_MARKDOWN = [
+    "**gras**",
+    "_italique_",
+    "~~barré~~",
+    "# titre",
+    "## sous titre",
+    "> Citation",
+    "* liste",
+    //"[ ] Case non cochée",
+    //"[x] Case cochée",
+    "Un [lien](http://example.com).",
+    "Texte en [color=#26B260]rouge[/color]"
   ];
 
 
@@ -194,5 +209,31 @@ export class DetailFicheComponent implements OnInit {
         break;
       }
     }
+  }
+
+  onClickinfoMarkdown( ee : Event ){
+
+    if( ee.target != null ){
+      if( ee.target instanceof Element ){
+        
+        console.log( ee );
+        this.openPopupInfoMarkdown( ee.target );
+      }else{
+        console.error( "Aucun element parent" );
+      }
+      
+    }else{
+      console.error( "Impossible de récupérer le bouton");
+    }
+  }
+
+  openPopupInfoMarkdown( elementParent : Element ){
+    this.showPopupInfoMarkdown = true;
+  }
+  
+  closePopupInfoMarkdown( ){
+    console.log( "click", this.showPopupInfoMarkdown );
+    this.showPopupInfoMarkdown = false;
+    console.log(  this.showPopupInfoMarkdown );
   }
 }
