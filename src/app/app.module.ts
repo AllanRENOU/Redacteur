@@ -13,6 +13,7 @@ import { FloatMenuComponent } from './Utils/float-menu/float-menu.component';
 import { CreateFicheComponent } from './encyclopedie/create-fiche/create-fiche.component';
 import { IdTransformPipe } from 'src/app/Utils/IdTransformPipe'
 import { HttpClientModule } from '@angular/common/http';
+import { MarkdownPipe } from './Utils/markdown.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     DetailFicheComponent,
     FloatMenuComponent,
     CreateFicheComponent,
-    IdTransformPipe
+    IdTransformPipe,
+    MarkdownPipe
   ],
   imports: [
     BrowserModule,

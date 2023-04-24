@@ -27,7 +27,7 @@
 
 
     <!-- Description de la page -->
-    <div *ngIf="!updatePage" class="textContainer">{{page.description}}</div>
+    <div *ngIf="!updatePage" class="textContainer" [innerHTML]="page.description | markdown" >{{page.description}}</div>
 
 
     <!-- Blocs -->
@@ -39,10 +39,11 @@
                 <app-float-menu *ngIf="idBlocMenu==bloc.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event, bloc )" [values]="MENU_MORE_BLOC"></app-float-menu>
             </span>
         </h4>
-        <div  *ngIf="updateBloc != bloc.id" class="textContainer">{{bloc.texte}}</div>
+        <div  *ngIf="updateBloc != bloc.id" class="textContainer" [innerHTML]="bloc.texte | markdown"></div>
 
         <form *ngIf="updateBloc == bloc.id" #updateBlocForm="ngForm" (ngSubmit)="onSubmitUpdateBloc( bloc )" class="formUpdateBloc" >
             <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
+            <div class="btInfo"></div>
             <textarea name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description"></textarea>
             
             <div class="form-group">
