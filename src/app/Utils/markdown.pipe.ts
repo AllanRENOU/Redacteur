@@ -8,7 +8,7 @@ export class MarkdownPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): unknown {
     if ( value ) {
-      return marked(value);
+      return marked(value ).replaceAll( "\n", "<br/>" );
     }
     return value;
   }

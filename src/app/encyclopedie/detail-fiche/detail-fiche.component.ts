@@ -45,11 +45,11 @@ export class DetailFicheComponent implements OnInit {
     "# titre",
     "## sous titre",
     "> Citation",
-    "* liste",
+    "Un [lien](http://example.com).",
+    "Texte en [color=#26B260]rouge[/color]",
+    "* liste"
     //"[ ] Case non cochée",
     //"[x] Case cochée",
-    "Un [lien](http://example.com).",
-    "Texte en [color=#26B260]rouge[/color]"
   ];
 
 
@@ -59,6 +59,8 @@ export class DetailFicheComponent implements OnInit {
 
   ngOnInit(): void {
     this.reloadPage();
+
+    //this.initAutoCompletion();
   }
 
   ngOnChanges( change : SimpleChange){
@@ -130,7 +132,7 @@ export class DetailFicheComponent implements OnInit {
   onSubmitUpdateBloc( bloc : PageBloc ){
     bloc.title = this.newTitle;
     bloc.texte = this.newDesc;
-    
+
     if( this.page ){
       this.projectService.updatePage( this.page );
     }
@@ -138,7 +140,7 @@ export class DetailFicheComponent implements OnInit {
     this.resetForms();
   }
 
-  // More
+  // ========== More ==========
   onClickMore( bloc : PageBloc, event : any ){
     console.log( "Clic more bloc '",bloc.title, "' (", bloc.id, ").", this.page );
 
@@ -211,6 +213,8 @@ export class DetailFicheComponent implements OnInit {
     }
   }
 
+  // ========== Infos Markdown ==========
+
   onClickinfoMarkdown( ee : Event ){
 
     if( ee.target != null ){
@@ -236,4 +240,24 @@ export class DetailFicheComponent implements OnInit {
     this.showPopupInfoMarkdown = false;
     console.log(  this.showPopupInfoMarkdown );
   }
+
+  // ========== Autocompletion ==========
+
+  autoSizeTextArea( ee : KeyboardEvent ){
+    console.log( "Event : ", ee );
+    console.log( "Target : ", ee.target );
+    if( ee.target ){
+      let textarea : HTMLTextAreaElement = ee.target as HTMLTextAreaElement;
+      textarea.style.height = this.calcHeight(textarea.value) + "px";
+    }
+
+  }
+
+  calcHeight( value : string ) {
+    let numberOfLineBreaks = (value.match(/\n/g) || []).length;
+    // min-height + lines x line-height + padding + border
+    let newHeight = 20 + numberOfLineBreaks * 20 + 12 + 2;
+    return newHeight;
+  }
+
 }

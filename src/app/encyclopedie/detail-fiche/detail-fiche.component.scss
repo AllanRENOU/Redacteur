@@ -13,6 +13,7 @@ $colorBG : #d1d1d1;
     margin: 0;
     width: calc( 100% - $paddingpage - $paddingpage );
     height: 100%;
+    overflow-y: scroll;
 
     font-family: sans-serif;
 }
@@ -55,6 +56,8 @@ h2{
     background-color: $colorBGForm ;
     border-radius: 1rem;
 
+    position : relative;
+
     &>*{
         display: block;
     }
@@ -71,6 +74,7 @@ h2{
         font-family: sans-serif;
         padding: 0.5rem;
         background-color: $colorBG;
+        resize: none;
     }
 
     button{
@@ -179,6 +183,7 @@ h4{
     height: 2rem;
     width: auto;
     margin-top: 1rem;
+    margin-bottom: 3rem;
     background-color: $colorBGForm ;
     color: white;
     text-decoration: none;
@@ -280,3 +285,4 @@ h4{
     color: #9f9f9f;
     user-select: none;
 }
+

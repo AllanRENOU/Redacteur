@@ -49,14 +49,13 @@
                 <div class="popupInfoMarkdownContainer">
                     <div class="popupInfoMarkdown" *ngIf="showPopupInfoMarkdown" (click)="closePopupInfoMarkdown()">
                         <p *ngFor="let texte of INFOS_MARKDOWN">{{texte}}</p>
-                    </div>
+                    </div> 
                 </div>
-                
                 
             </nav>
             
-            <textarea name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description"></textarea>
-            
+            <textarea name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description" spellcheck="true" (keyup)="autoSizeTextArea( $event )"></textarea>
+
             <div class="form-group">
                 <button type="submit" [disabled]="!updateBlocForm.form.valid">Valider</button>
                 <button (click)="onClickCancel()">Annuler</button>
