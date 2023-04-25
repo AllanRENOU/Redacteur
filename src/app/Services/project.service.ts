@@ -371,7 +371,7 @@ export class ProjectService {
 
       if( data.blocs ){
         for( let bloc of data.blocs ){
-          page.addBloc( bloc.title, bloc.texte );
+          page.addBloc( bloc.title, bloc.texte, bloc.id );
         }
       }
       

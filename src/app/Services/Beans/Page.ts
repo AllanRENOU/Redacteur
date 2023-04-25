@@ -14,9 +14,16 @@ export class Page{
         this.titre = titre;
         this.description = description;
     }
-
-    addBloc( titre : string, texte : string ){
-        this.blocs.push( new PageBloc( titre, texte, this.blocs.length ) );
+    
+    addBloc( titre : string, texte : string, id : string | undefined = undefined ) : PageBloc{
+        let bloc = new PageBloc( titre, texte, this.blocs.length );
+        
+        if( id ){
+            bloc.id = id;
+        }
+        
+        this.blocs.push( bloc );
+        return bloc;
     }
 
     monterBloc( blocAMonter : PageBloc ){
