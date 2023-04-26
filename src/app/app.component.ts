@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, ActivationEnd, NavigationEnd, Router } from '@angular/router';
 import { ProjectService } from './Services/project.service';
 import { URL_PARAM_ID_PROJET, URL_PARAM_ID_FICHE } from './app-routing.module';
@@ -6,7 +6,8 @@ import { URL_PARAM_ID_PROJET, URL_PARAM_ID_FICHE } from './app-routing.module';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit{
 

@@ -51,10 +51,13 @@
                         <p *ngFor="let texte of INFOS_MARKDOWN">{{texte}}</p>
                     </div> 
                 </div>
-                
             </nav>
             
-            <textarea name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description" spellcheck="true" (keyup)="autoSizeTextArea( $event )"></textarea>
+            <textarea id="desc_{{bloc.id}}" name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description" spellcheck="true" (keyup)="onTextChange( $event )" (focusout)="onFocusTextAreaLost()"></textarea>
+
+            <ul class="popupAutoComplet" *ngIf="showAutoComplet">
+                <li *ngFor="let page of this.projectService.getAllPages() | autocompletion:currentWord" (click)="onClickAutoCompletion( $event, page.id)">{{page.titre}}</li>
+            </ul>
 
             <div class="form-group">
                 <button type="submit" [disabled]="!updateBlocForm.form.valid">Valider</button>

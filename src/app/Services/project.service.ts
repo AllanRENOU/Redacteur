@@ -38,6 +38,10 @@ export class ProjectService {
     }
   }
 
+  getProject(){
+    return this.dataProject;
+  }
+
   /**
    * 
    * @param idPage Récupère les informations d'une fiche
@@ -99,12 +103,16 @@ export class ProjectService {
       } );
     }else{
       if( this.dataProject.code ){
-      return this.http.post<Page[]>( ProjectService.url + this.dataProject.code + "/fiche", idPages );
+        return this.http.post<Page[]>( ProjectService.url + this.dataProject.code + "/fiche", idPages );
       }else{
         return new Observable( observer =>{ observer.next( [] ); } ); 
       }
     }
 
+  }
+
+  getAllPages() : Page[]{
+    return this.pages;
   }
 
   /**
@@ -272,6 +280,8 @@ export class ProjectService {
     if( this.dataProject.code ){
 
       console.log( "Envoi requetes projets, arbos et pages" );
+
+      // Récupération du nom du projet
       this.http.get<any>( ProjectService.url ).subscribe( ( data : { projects: { code:string, name:string }[] } ) =>{
         if( data ){
           let tmp =  data.projects.filter( (pp)=>{ return pp.code == this.dataProject.code } );
@@ -287,6 +297,7 @@ export class ProjectService {
       });
 
 
+      // Récupération des dossiers
       this.observableArboPage = new Observable<PageConteneur[]>( observer => {
        
         this.http.get<any>( ProjectService.url + this.dataProject.code + "/dossier" ).subscribe( data =>{
@@ -309,6 +320,7 @@ export class ProjectService {
         });
       } );
       
+      // Récupération des pages
       this.http.get<any>( ProjectService.url + this.dataProject.code + "/fiche" ).subscribe( data =>{
 
         for( let idPage of Object.keys( data ) ){

@@ -24,6 +24,9 @@ export class DetailFicheComponent implements OnInit {
   newTitle = "";
   newDesc = "";
 
+  currentWord = "";// Pour autocompetion
+  showAutoComplet = false;
+
   // Boutons 'more'
   idBlocMenu : string = "";
   MENU_MORE_BLOC = [
@@ -53,14 +56,12 @@ export class DetailFicheComponent implements OnInit {
   ];
 
 
-  public constructor( private projectService : ProjectService ){
+  public constructor( public projectService : ProjectService ){
     
   }
 
   ngOnInit(): void {
     this.reloadPage();
-
-    //this.initAutoCompletion();
   }
 
   ngOnChanges( change : SimpleChange){
@@ -74,6 +75,7 @@ export class DetailFicheComponent implements OnInit {
           console.log( "page chargée : ", page )
           this.page = page;
           this.resetForms();
+         this.loadLinkedPages();
         }else{
           console.log( "TODO : Erreur à gérer" )
         }
@@ -106,6 +108,10 @@ export class DetailFicheComponent implements OnInit {
     this.updateBloc = "";
     this.createPage = false;
     this.updatePage = false;
+
+    // Autocompletion
+    this.showAutoComplet = false;
+    this.currentWord = "";
   }
 
   onClickCreateBloc(){
@@ -168,6 +174,11 @@ export class DetailFicheComponent implements OnInit {
           this.newTitle = bloc.title;
           this.newDesc = bloc.texte;
 
+          setTimeout( ()=>{
+            let textarea = document.getElementById( "desc_" + bloc.id ) as HTMLTextAreaElement;
+            textarea.style.height = this.calcHeight(textarea.value) + "rem";
+          }, 10 );
+          
           break;
         }
         case MenuItem.UP :{
@@ -236,28 +247,165 @@ export class DetailFicheComponent implements OnInit {
   }
   
   closePopupInfoMarkdown( ){
-    console.log( "click", this.showPopupInfoMarkdown );
     this.showPopupInfoMarkdown = false;
-    console.log(  this.showPopupInfoMarkdown );
   }
 
   // ========== Autocompletion ==========
 
-  autoSizeTextArea( ee : KeyboardEvent ){
-    console.log( "Event : ", ee );
-    console.log( "Target : ", ee.target );
-    if( ee.target ){
-      let textarea : HTMLTextAreaElement = ee.target as HTMLTextAreaElement;
-      textarea.style.height = this.calcHeight(textarea.value) + "px";
-    }
+  currentTextArea? : HTMLTextAreaElement;
 
+  onTextChange( ee : Event ){
+    if( ee.target ){
+
+      // Hauteur du textarea
+      this.currentTextArea = ee.target as HTMLTextAreaElement;
+      this.currentTextArea.style.height = this.calcHeight( this.currentTextArea.value ) + "rem";
+
+      // Position et contenu de l'autocompletion
+      this.manageAutoComplete( this.currentTextArea );
+      
+    }
   }
 
   calcHeight( value : string ) {
     let numberOfLineBreaks = (value.match(/\n/g) || []).length;
-    // min-height + lines x line-height + padding + border
-    let newHeight = 20 + numberOfLineBreaks * 20 + 12 + 2;
+    let newHeight =  numberOfLineBreaks * 1 + 3;
     return newHeight;
+  }
+
+  /**
+   * Retourne l'indexe de début et de fin du mot où le trouve le curceur actuellement 
+   * @param text 
+   * @param cursor 
+   * @returns 
+   */
+  private getIndexWord( text : string, cursor : number ) : { start : number, end : number } {
+    
+    let lastIndex = cursor;
+    let startIndex = lastIndex - 1;
+
+    // Recherche de la fin du mot
+    let lettre = text[ lastIndex ];
+    while( lettre && lettre != " " && lettre != "\n" ){
+      lastIndex++;
+      lettre = text[ lastIndex ];
+    }
+
+    // Recherche du début du mot
+    lettre = text[ startIndex ];
+    while( startIndex > -1 && lettre != " " && lettre != "\n" ){
+      startIndex--;
+      lettre = text[ startIndex ];
+    }
+
+    startIndex++;
+
+    return {
+      start : startIndex,
+      end : lastIndex
+    };
+    
+  }
+
+  manageAutoComplete( textarea : HTMLTextAreaElement ){
+
+    // ===== Recherche du mot actuel =====
+    let indexWord = this.getIndexWord( textarea.value, textarea.selectionStart );
+
+    let mot = textarea.value.substring( indexWord.start, indexWord.end );
+
+    // ===== Positionnement de la popup  =====
+
+    const OFFSET_TEXT_TOP = 3.5;
+    const OFFSET_TEXT_LEFT = 1;
+    const LETTER_WIDTH = 0.46;
+    const LETTER_HEIGHT = 1.2;
+
+    if( mot[0] == "@" ){
+      this.showAutoComplet = true;
+      let popupAutoComplet : HTMLElement = document.getElementsByClassName( "popupAutoComplet" )[0] as HTMLElement;
+      
+      if( popupAutoComplet ){
+        this.currentWord = mot.substring( 1 );
+        // Recherche du numéro de ligne et de caractère
+        let lines = textarea.value.split( "\n" );
+        let charNum : number = textarea.selectionStart;
+        let lineNum = 0;
+        while( charNum > lines[ lineNum ].length ){
+          charNum = charNum - lines[ lineNum ].length - 1;
+          lineNum++;
+        }
+        lineNum++;
+
+        popupAutoComplet.style.top = (lineNum * LETTER_HEIGHT + OFFSET_TEXT_TOP ) + "rem";
+        popupAutoComplet.style.left = (charNum * LETTER_WIDTH + OFFSET_TEXT_LEFT ) + "rem";
+      }else{
+        console.warn( "popup non visible" );
+      }
+      
+    }else{
+      this.showAutoComplet = false;
+      this.currentWord = mot;
+    }
+  }
+
+  onClickAutoCompletion( ee : MouseEvent, selectedWord : string ){
+    
+    if( this.currentTextArea ){
+      this.showAutoComplet = false;
+      this.currentWord = "";
+
+      
+      let indexWord = this.getIndexWord( this.currentTextArea.value, this.currentTextArea.selectionStart );
+      indexWord.start++;
+      this.newDesc = this.newDesc.substring( 0, indexWord.start ) + selectedWord + this.newDesc.substring( indexWord.end );
+      
+    }
+
+  }
+
+  onFocusTextAreaLost(){
+    //this.showAutoComplet = false;
+    //this.currentWord = "";
+  }
+
+  loadLinkedPages(){
+
+    if( this.page ){
+      let i = -1;
+      let pagesToLoad : string[] = [];
+      let indexMot;
+      let mot = "";
+
+      // Liste des pages listées dans chaque blocs
+      for( let bloc of this.page?.blocs ){
+        i = bloc.texte.indexOf( "@" );
+        while( i != -1 ){
+          indexMot = this.getIndexWord( bloc.texte, i );
+          mot = bloc.texte.substring( indexMot.start + 1, indexMot.end );
+
+          if( pagesToLoad.indexOf( mot ) == -1 ){
+            pagesToLoad.push( mot );
+          }
+          
+          i = bloc.texte.indexOf( "@", i+1 );
+        }
+      }
+
+      // Requete pour chaque mot à charger
+      for( let idPage of pagesToLoad ){
+        this.projectService.getPageAsync( idPage ).subscribe( (page : Page | null )=>{
+          if( page ){
+            let elements = document.querySelectorAll( ".refPage_" + page.id + " .pageInfoPopup" );
+            elements.forEach( (element :Element ) => {
+              element.innerHTML = page.description;
+            })
+          }
+        } );
+      }
+    }else{
+      console.error("Aucune page sélectionnée");
+    }
   }
 
 }

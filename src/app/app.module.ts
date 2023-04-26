@@ -14,6 +14,8 @@ import { CreateFicheComponent } from './encyclopedie/create-fiche/create-fiche.c
 import { IdTransformPipe } from 'src/app/Utils/IdTransformPipe'
 import { HttpClientModule } from '@angular/common/http';
 import { MarkdownPipe } from './Utils/markdown.pipe';
+import { AutocompletionPipe } from './Utils/autocompletion.pipe';
+import { LinkPageComponent } from './encyclopedie/detail-fiche/link-page/link-page.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { MarkdownPipe } from './Utils/markdown.pipe';
     FloatMenuComponent,
     CreateFicheComponent,
     IdTransformPipe,
-    MarkdownPipe
+    MarkdownPipe,
+    AutocompletionPipe,
+    LinkPageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,16 +1,65 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { marked } from 'marked';
+import { ProjectService } from '../Services/project.service';
 
 @Pipe({
   name: 'markdown'
 })
 export class MarkdownPipe implements PipeTransform {
 
-  transform(value: any, ...args: any[]): unknown {
+  constructor(private projectService : ProjectService ){
+
+  }
+
+  transform(value: string, ...args: any[]): unknown {
     if ( value ) {
-      return marked(value ).replaceAll( "\n", "<br/>" );
+      value = marked(value );
+      value = this.replaceRefPage( value );
+      return value.replaceAll( "\n", "<br/>" );
+    }else{
+      return value;
     }
-    return value;
+  }
+
+  /**
+   * Remplace une référence à une page par un lien + affichage du nom
+   * @param value 
+   * @returns 
+   */
+  private replaceRefPage( value: string ){
+
+      let i = value.indexOf( "@" );
+      let word : string = "";
+      let newWord : string = "";
+      let page;
+      while( i != -1 ){
+        let iEnd = this.getIndexEndWord( value, i );
+        word = value.substring( i + 1, iEnd );
+        page = this.projectService.getPage( word );
+        newWord = page?.titre || word ;
+
+        //console.log( "Replace ", "'" + word  +"'", " par ", newWord );
+
+        //value = value.replaceAll( "@" + word, "[" + newWord + "](" + this.projectService.getProject().code + "/encyclopedie/" + word + ")" );
+        value = value.replaceAll( "@" + word, "<span class=\"refPage refPage_" + word + "\">" + newWord + " <a class=\"pageInfoPopup\">" + page?.description + "</a></span>" );
+        //value = value.replaceAll( "@" + word, "<span class=\"refPage\" routerLink=\"" + this.projectService.getProject().code + "/encyclopedie/" + word + "\">" + newWord + "</a>" );
+        //value = value.replaceAll( "@" + word, "<app-link-page [word]=\""+ word +"\" />"  );
+        
+        i = value.indexOf( "@", i+1 );
+
+      }
+
+      return value;
+  }
+
+  private getIndexEndWord( texte : string, indexStart : number ){
+
+    let indexEnd = indexStart;
+    while( indexEnd < texte.length && texte[ indexEnd ] != " " && texte[ indexEnd ] != "\n" ){
+      indexEnd++;
+    }
+
+    return indexEnd;
   }
 
 }
