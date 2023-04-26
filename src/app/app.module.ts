@@ -15,7 +15,6 @@ import { IdTransformPipe } from 'src/app/Utils/IdTransformPipe'
 import { HttpClientModule } from '@angular/common/http';
 import { MarkdownPipe } from './Utils/markdown.pipe';
 import { AutocompletionPipe } from './Utils/autocompletion.pipe';
-import { LinkPageComponent } from './encyclopedie/detail-fiche/link-page/link-page.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +28,7 @@ import { LinkPageComponent } from './encyclopedie/detail-fiche/link-page/link-pa
     CreateFicheComponent,
     IdTransformPipe,
     MarkdownPipe,
-    AutocompletionPipe,
-    LinkPageComponent
+    AutocompletionPipe
   ],
   imports: [
     BrowserModule,
