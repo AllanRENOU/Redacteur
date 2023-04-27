@@ -27,46 +27,11 @@
 
 
     <!-- Description de la page -->
-    <div *ngIf="!updatePage" class="textContainer" [innerHTML]="page.description | markdown" >{{page.description}}</div>
+    <div *ngIf="!updatePage" class="textContainer" [innerHTML]="page.description | markdown | safeHtml " >{{page.description}}</div>
 
 
     <!-- Blocs -->
-    <div *ngFor="let bloc of page?.blocs" class="bloc">
-        <h4 *ngIf="updateBloc != bloc.id">
-            {{bloc.title}}
-            <span class="more" (click)="onClickMore(bloc,  $event)">
-                ...
-                <app-float-menu *ngIf="idBlocMenu==bloc.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event, bloc )" [values]="MENU_MORE_BLOC"></app-float-menu>
-            </span>
-        </h4>
-        <div  *ngIf="updateBloc != bloc.id" class="textContainer" [innerHTML]="bloc.texte | markdown"></div>
-
-        <form *ngIf="updateBloc == bloc.id" #updateBlocForm="ngForm" (ngSubmit)="onSubmitUpdateBloc( bloc )" class="formUpdateBloc" >
-            <nav>
-                <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
-                <div class="btInfo" title="Infos Markdown" (click)="onClickinfoMarkdown( $event )">
-                </div>
-                <div class="popupInfoMarkdownContainer">
-                    <div class="popupInfoMarkdown" *ngIf="showPopupInfoMarkdown" (click)="closePopupInfoMarkdown()">
-                        <p *ngFor="let texte of INFOS_MARKDOWN">{{texte}}</p>
-                    </div> 
-                </div>
-            </nav>
-            
-            <textarea id="desc_{{bloc.id}}" name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description" spellcheck="true" (keyup)="onTextChange( $event )" (focusout)="onFocusTextAreaLost()"></textarea>
-
-            <ul class="popupAutoComplet" *ngIf="showAutoComplet">
-                <li *ngFor="let page of this.projectService.getAllPages() | autocompletion:currentWord" (click)="onClickAutoCompletion( $event, page.id)">{{page.titre}}</li>
-            </ul>
-
-            <div class="form-group">
-                <button type="submit" [disabled]="!updateBlocForm.form.valid">Valider</button>
-                <button (click)="onClickCancel()">Annuler</button>
-            </div>
-        </form>
-        
-    </div>
-
+    <app-page-bloc *ngFor="let bloc of page?.blocs" [bloc]="bloc" [page]="page"></app-page-bloc>
 
     <!-- Bouton Ajouter un bloc -->
     <div class="floatingButton" *ngIf="page" [ngClass]="createPage?'creating':''" (click)="onClickCreateBloc()">

@@ -15,6 +15,9 @@ import { IdTransformPipe } from 'src/app/Utils/IdTransformPipe'
 import { HttpClientModule } from '@angular/common/http';
 import { MarkdownPipe } from './Utils/markdown.pipe';
 import { AutocompletionPipe } from './Utils/autocompletion.pipe';
+import { SafeHtmlPipe } from './Utils/safe-html.pipe';
+import { LinkPageComponent } from './encyclopedie/detail-fiche/link-page/link-page.component';
+import { PageBlocComponent } from './encyclopedie/detail-fiche/page-bloc/page-bloc.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { AutocompletionPipe } from './Utils/autocompletion.pipe';
     CreateFicheComponent,
     IdTransformPipe,
     MarkdownPipe,
-    AutocompletionPipe
+    AutocompletionPipe,
+    SafeHtmlPipe,
+    LinkPageComponent,
+    PageBlocComponent
   ],
   imports: [
     BrowserModule,
