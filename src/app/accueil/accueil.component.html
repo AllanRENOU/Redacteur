@@ -1,6 +1,28 @@
 <div class="accueilContainer">
+    <!--
     <h1>Bienvenue sur le rédacteur</h1>
     <ul>
         <li><a routerLink="PROJECT_TEST/encyclopedie/">Encyclopedie</a></li>
     </ul>
+    -->
+    <div id="projectsContainer" [className]="isLoaded ? 'loaded' : ''">
+
+        <div class="buttonContainer">
+            <button class="loader"></button>
+        </div>
+
+        <div class="buttonContainer">
+            <button id="btAdd" title="Créer un projet" (click)="addProject()">+</button>
+        </div>
+
+        <button class="btProjectContainer" *ngFor="let pp of projects" [style.top]="pp.top" [style.left]="pp.left" [style.opacity]="pp.opacity" [ngClass]="pp.color" routerLink="{{pp.code}}/encyclopedie/" >
+            <span class="before"></span>
+            {{pp.lettre}}
+            <span class="after"></span>
+            <div class="nameContainer">   
+                <div class="name">{{pp.name}}</div>
+            </div>
+        </button>
+
+    </div>    
 </div>

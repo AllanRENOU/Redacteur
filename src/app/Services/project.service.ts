@@ -42,6 +42,15 @@ export class ProjectService {
     return this.dataProject;
   }
 
+  getProjects() : Observable<{ projects: { code:string, name:string }[]} >{
+    return this.http.get<{ projects: { code:string, name:string }[]}>( ProjectService.url );
+  }
+
+  createProject( name : string, code : string ): Observable <any>{
+    console.log( "Création du projet ", name, "(", code,")", ProjectService.url + "newProject" )
+    return this.http.post<any>( ProjectService.url + "newProject", { "name" : name, "code" : code } );
+  }
+
   /**
    * 
    * @param idPage Récupère les informations d'une fiche
@@ -49,7 +58,7 @@ export class ProjectService {
    */
   getPage( idPage : string ) : Page | null{
     let tmp = this.pages.filter( pp =>{ return pp.id == idPage } );
-    console.log( "Get ", idPage, " : ", ((tmp.length == 0)? null : tmp[0]), " total : ", this.pages )
+    //console.log( "Get ", idPage, " : ", ((tmp.length == 0)? null : tmp[0]), " total : ", this.pages )
     return (tmp.length == 0)? null : tmp[0];
   }
 
@@ -388,7 +397,7 @@ export class ProjectService {
       }
       
       page.isRemoved = data.isRemoved === true;
-      console.log( "Page générée ", data, ", ", page );
+      //console.log( "Page générée ", data, ", ", page );
     }else{
       console.error( "Impossible de convertir ", data, " en Fiche");
     }
