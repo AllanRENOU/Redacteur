@@ -17,7 +17,7 @@ Puis lancer le serveur à l'aide de la commande `node serveur.js`
 
 ### Client
 Dans un premier temps, il est nécessaire de récupérer les dépendances avec la commande `npm install`
-Pour lancer le client, executer la commande `ng serve`
+Pour lancer le client, executer la commande `npm start`
 
 ## Fonctionnement
 

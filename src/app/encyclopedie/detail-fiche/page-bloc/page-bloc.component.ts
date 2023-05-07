@@ -4,7 +4,6 @@ import { PageBloc } from 'src/app/Services/Beans/Page.bloc';
 import { ProjectService } from 'src/app/Services/project.service';
 import { MenuItem } from 'src/app/Utils/float-menu/MenuItem';
 import { MarkdownPipe } from 'src/app/Utils/markdown.pipe';
-import { LinkPageDirDirective } from '../link-page/link-page-dir.directive';
 import { LinkPageComponent } from '../link-page/link-page.component';
 import { DomSanitizer } from '@angular/platform-browser';
 
