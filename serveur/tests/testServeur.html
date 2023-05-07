@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Test serveur</title>
+
+	<script type="text/javascript" src="jquery-3.6.4.min.js"></script>
+
+	<style type="text/css">
+		.container{
+			border: solid black 1px;
+			border-radius: 5px;
+			padding: 0.5rem;
+			margin: 1rem;
+		}
+	</style>
+</head>
+<body>
+
+	<h2>Les projets</h2>
+	<div class="container">
+		<p>lister les projets</p>
+		<input type="button" onclick="onClickListProjets()" value="Lister"></input>
+		<br/>
+		<span id="ListProjResult"></span>
+	</div>
+
+	<div class="container">
+		<p>Créer un projet</p>
+		Nom : <input type="text" id="NewProjName"/>
+		<br/>
+		Code : <input type="text" id="NewProjCode"/>
+		<br/>
+		<input type="button" onclick="onClickCreateProjet()" value="Créer"></input>
+		<br/>
+		<span id="NewProjResult"></span>
+	</div>
+
+	<h2>Les fichiers</h2>
+	<div class="container">
+		<p>Créer une fiche</p>
+		Id projet : <input type="text" id="NewFicheIdProjet"/>
+		<br/>
+		Id : <input type="text" id="NewFicheId"/>
+		<br/>
+		Titre : <input type="text" id="NewFicheTitre"/>
+		<br/>
+		Description : <input type="text" id="NewFicheDesc"/>
+		<br/>
+		<input type="button" onclick="onClickCreateFiche()" value="Créer"></input>
+		<br/>
+		<span id="NewFicheResult"></span>
+	</div>
+
+	<div class="container">
+		<p>Afficher toutes les fiches</p>
+		Id projet : <input type="text" id="AllFicheIdProjet"/>
+		<br/>
+		
+		<input type="button" onclick="onClickAllFiche()" value="Afficher"></input>
+		<br/>
+		<span id="AllFicheResult"></span>
+	</div>
+
+	<div class="container">
+		<p>Afficher une fiche</p>
+		Id projet : <input type="text" id="GetFicheIdProjet"/>
+		<br/>
+		Id : <input type="text" id="GetFicheId"/>
+		<br/>
+		
+		<input type="button" onclick="onClickGetFiche()" value="Afficher"></input>
+		<br/>
+		<span id="GetFicheResult"></span>
+	</div>
+
+	<h2>Les dossiers</h2>
+	<div class="container">
+		<p>Créer un dossier</p>
+		Id projet : <input type="text" id="NewFolderIdProjet"/>
+		<br/>
+		Id : <input type="text" id="NewFolderId"/>
+		<br/>
+		Titre : <input type="text" id="NewFolderTitre"/>
+		<br/>
+		<input type="button" onclick="onClickCreateFolder()" value="Créer"></input>
+		<br/>
+		<span id="NewFolderResult"></span>
+	</div>
+
+	<div class="container">
+		<p>Afficher les dossiers</p>
+		Id projet : <input type="text" id="GetAllDossier"/>
+		<br/>
+		
+		<input type="button" onclick="onClickAllDossier()" value="Afficher"></input>
+		<br/>
+		<span id="AllDossierResult"></span>
+	</div>
+
+	<script type="text/javascript">
+
+		const URL = "http://localhost:8080/"
+
+		function onClickListProjets(){
+			get( URL, "ListProjResult" );
+		}
+
+		function onClickCreateProjet(){
+			let name = $("#NewProjName").val();
+			let code = $("#NewProjCode").val();
+
+			let jsonData = JSON.stringify( { name : name, code : code } );
+			post( URL + "newProject", jsonData, "NewProjResult" );
+		}
+
+		function onClickCreateFiche(){
+			let idProjet = $("#NewFicheIdProjet").val();
+			let id = $("#NewFicheId").val();
+			let titre = $("#NewFicheTitre").val();
+			let desc = $("#NewFicheDesc").val();
+
+			let jsonData = JSON.stringify( { id : id, titre : titre, description : desc } );
+			post( URL + idProjet + "/fiche/" + id, jsonData, "NewFicheResult" );
+		}
+
+		function onClickAllFiche(){
+			let idProjet = $("#AllFicheIdProjet").val();
+
+			get( URL + idProjet + "/fiche", "AllFicheResult" );
+		}
+
+		function onClickGetFiche(){
+			let idProjet = $("#GetFicheIdProjet").val();
+			let idFiche = $("#GetFicheId").val();
+
+			get( URL + idProjet + "/fiche/" + idFiche, "GetFicheResult" );
+		}
+
+		function onClickAllDossier(){
+			let idProjet = $("#GetAllDossier").val();
+
+			get( URL + idProjet + "/dossier", "AllDossierResult" );
+		}
+
+		function onClickCreateFolder(){
+			let idProjet = $("#NewFolderIdProjet").val();
+			let id = $("#NewFolderId").val();
+			let titre = $("#NewFolderTitre").val();
+
+			let jsonData = JSON.stringify( { id : id, titre : titre, isRemoved : false } );
+			post( URL + idProjet + "/dossier/" + id, jsonData, "NewFolderResult" );
+		}
+
+
+		function get( url, idDiv ){
+			$.ajax({
+			  type: "GET",
+			  url: url,
+			  success: (result, msg, details)=>{
+				$("#" + idDiv).text( msg + " : " + JSON.stringify( result ) );
+				},
+			  dataType: "json",
+			  contentType:"application/json; charset=utf-8"
+			});
+		}
+
+		function post( url, data, idDiv ){
+			$.ajax({
+			  type: "POST",
+			  url: url,
+			  data: data,
+			  success: (result, msg, details)=>{
+				$("#" + idDiv).text( msg + " : " + JSON.stringify( result ) );
+				},
+			  dataType: "json",
+			  contentType:"application/json; charset=utf-8"
+			});
+		}
+	</script>
+
+</body>
+</html>
