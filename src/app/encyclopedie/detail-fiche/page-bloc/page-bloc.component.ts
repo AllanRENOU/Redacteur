@@ -1,25 +1,26 @@
-import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EnvironmentInjector, Injector, Input, OnInit, QueryList, Renderer2, ViewChild, ViewChildren, ViewContainerRef, createComponent } from '@angular/core';
 import { Page } from 'src/app/Services/Beans/Page';
 import { PageBloc } from 'src/app/Services/Beans/Page.bloc';
 import { ProjectService } from 'src/app/Services/project.service';
 import { MenuItem } from 'src/app/Utils/float-menu/MenuItem';
+import { MarkdownPipe } from 'src/app/Utils/markdown.pipe';
+import { LinkPageDirDirective } from '../link-page/link-page-dir.directive';
+import { LinkPageComponent } from '../link-page/link-page.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-page-bloc',
   templateUrl: './page-bloc.component.html',
   styleUrls: ['./page-bloc.component.scss']
 })
-export class PageBlocComponent implements OnInit{
-  
-  constructor( public projectService : ProjectService, private renderer: Renderer2 ){
-
-  }
-
+export class PageBlocComponent implements OnInit, AfterViewInit {
+ 
   @Input()
   bloc? : PageBloc;
   @Input()
   page? : Page;
 
+  // Menu "more"
   showMoreMenu : boolean = false;
   isUpdatemode : boolean = false;
 
@@ -43,15 +44,26 @@ export class PageBlocComponent implements OnInit{
     //"[x] Case cochée",
   ];
 
+  // Update
   newTitle = "";
   newDesc = "";
   showPopupInfoMarkdown = false;
 
-  currentWord = "";// Pour autocompetion
+  // Autocompletion
+  currentWord = "";
   showAutoComplet = false;
-  
+   
+  constructor( public projectService : ProjectService, private renderer: Renderer2, private pipeMarkdown : MarkdownPipe, private viewContainerRef: ViewContainerRef ){
+
+  }
+
   ngOnInit(): void {
+  }
+  
+  ngAfterViewInit(): void {
     
+    this.updateText();
+
   }
 
   // ===== Formulaire update =====
@@ -75,7 +87,44 @@ export class PageBlocComponent implements OnInit{
     this.isUpdatemode = false;
   }
 
+  @ViewChild('textContainer')
+  textContainer? : ElementRef<HTMLElement>;
   
+  @ViewChild('componentLoader')
+  componentLoader? : ElementRef<HTMLElement>;
+
+  updateText(){
+
+    if( this.bloc && this.textContainer ){
+      this.textContainer.nativeElement.innerHTML = this.pipeMarkdown.transform( this.bloc.texte );
+
+      let links : HTMLCollectionOf<Element> = this.textContainer.nativeElement.getElementsByClassName( "refPage");
+      
+      for( let i = 0; i< links.length; i++ ){
+        let link : Element | undefined = links.item( i ) || undefined;
+        
+        if( link ){
+
+          let cc = link.getAttribute( "code" ) || "";
+          let tt = link.getAttribute( "texte" ) || "";
+          let dd = link.getAttribute( "description" ) || "";
+
+          this.instanciateLink( cc, tt, dd, link );
+          
+        }
+      }
+    }
+  }
+  
+  private instanciateLink( code : string, texte : string, desc : string, parent : Element){
+
+    let componentRef = this.viewContainerRef.createComponent( LinkPageComponent );
+    componentRef.setInput( "code", code );
+    componentRef.setInput( "texte", texte );
+    componentRef.setInput( "description", desc );
+    parent.appendChild( componentRef.location.nativeElement );
+
+  }
   
   // ===== More =====
   
@@ -163,7 +212,7 @@ export class PageBlocComponent implements OnInit{
   currentTextArea? : ElementRef<HTMLTextAreaElement>;
 
   onTextChange( ee : Event ){
-    
+
     if( this.currentTextArea ){
 
       // Hauteur du textarea

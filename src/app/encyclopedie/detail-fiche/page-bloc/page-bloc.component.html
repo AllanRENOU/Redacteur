@@ -1,4 +1,5 @@
 <div class="bloc" *ngIf="bloc">
+    
     <h4 *ngIf="!isUpdatemode">
         {{bloc.title}}
         <span class="more" (click)="onClickMore(bloc,  $event)">
@@ -6,7 +7,9 @@
             <app-float-menu *ngIf="showMoreMenu" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event, bloc )" [values]="MENU_MORE_BLOC"></app-float-menu>
         </span>
     </h4>
-    <div  *ngIf="!isUpdatemode" class="textContainer" [innerHTML]="bloc.texte | markdown"></div>
+    <div  *ngIf="!isUpdatemode" class="textContainer" #textContainer ></div>
+
+
 
     <form *ngIf="isUpdatemode" #updateBlocForm="ngForm" (ngSubmit)="onSubmitUpdateBloc( bloc )" class="formUpdateBloc" >
         <nav>
@@ -31,5 +34,5 @@
             <button (click)="onClickCancel()">Annuler</button>
         </div>
     </form>
-    
+
 </div>

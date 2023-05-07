@@ -18,6 +18,8 @@ import { AutocompletionPipe } from './Utils/autocompletion.pipe';
 import { SafeHtmlPipe } from './Utils/safe-html.pipe';
 import { LinkPageComponent } from './encyclopedie/detail-fiche/link-page/link-page.component';
 import { PageBlocComponent } from './encyclopedie/detail-fiche/page-bloc/page-bloc.component';
+import { LinkPageDirDirective } from './encyclopedie/detail-fiche/link-page/link-page-dir.directive';
+import { JustTextPipe } from './Utils/just-text.pipe';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { PageBlocComponent } from './encyclopedie/detail-fiche/page-bloc/page-bl
     AutocompletionPipe,
     SafeHtmlPipe,
     LinkPageComponent,
-    PageBlocComponent
+    PageBlocComponent,
+    LinkPageDirDirective,
+    JustTextPipe
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,7 @@ import { PageBlocComponent } from './encyclopedie/detail-fiche/page-bloc/page-bl
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ MarkdownPipe ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

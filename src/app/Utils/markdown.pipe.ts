@@ -8,7 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class MarkdownPipe implements PipeTransform {
 
-  constructor(private projectService : ProjectService, private sanitizer : DomSanitizer ){
+  constructor( private projectService : ProjectService ){
 
   }
 
@@ -16,7 +16,6 @@ export class MarkdownPipe implements PipeTransform {
     if ( value ) {
       value = marked(value );
       value = this.replaceRefPage( value );
-      //return this.sanitizer.bypassSecurityTrustHtml( value.replaceAll( "\n", "<br/>" ) );
       return value.replaceAll( "\n", "<br/>" );
     }else{
       return value;
@@ -40,12 +39,7 @@ export class MarkdownPipe implements PipeTransform {
         page = this.projectService.getPage( word );
         newWord = page?.titre || word ;
 
-        //console.log( "Replace ", "'" + word  +"'", " par ", newWord );
-
-        //value = value.replaceAll( "@" + word, "[" + newWord + "](" + this.projectService.getProject().code + "/encyclopedie/" + word + ")" );
-        value = value.replaceAll( "@" + word, "<span class=\"refPage refPage_" + word + "\">" + newWord + " <a class=\"pageInfoPopup\">" + page?.description + "<app-link-page/></a></span>" );
-        //value = value.replaceAll( "@" + word, "<span class=\"refPage\" routerLink=\"" + this.projectService.getProject().code + "/encyclopedie/" + word + "\">" + newWord + "</a>" );
-        //value = value.replaceAll( "@" + word, "<app-link-page [word]=\""+ word +"\" />"  );
+        value = value.replaceAll( "@" + word, "<span class=\"refPage refPage_" + word + "\" code=\"" + word + "\" texte=\"" + newWord+ "\" description=\"" + page?.description + "\" ></span>" );
         
         i = value.indexOf( "@", i+1 );
 

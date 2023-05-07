@@ -1,0 +1,40 @@
+
+a{
+    position: relative;
+    text-decoration: underline;
+    font-style: italic;
+    cursor: pointer;
+
+    .pageInfoPopup{
+        opacity: 0;
+        transition: opacity 0.3s ease-in;
+        z-index: -1;
+        background: white;
+        border: solid black 1px;
+        border-radius: 5px;
+        top: 1rem;
+        left: 0;
+        position: absolute;
+        padding: 0.25rem;
+        width: max-content;
+        max-width: 50rem;
+
+        
+        font-style: normal;
+        text-decoration: none;
+
+        &:empty{
+            display: none;
+        }
+    }
+
+    &:hover:not(:has(*:hover)){
+
+        .pageInfoPopup{
+            z-index: 5;
+            opacity: 1;
+        }
+
+    }
+
+}

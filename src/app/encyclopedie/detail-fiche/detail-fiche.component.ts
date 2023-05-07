@@ -51,10 +51,8 @@ export class DetailFicheComponent implements OnInit {
     if( this.id ){
       this.projectService.getPageAsync( this.id ).subscribe( (page : Page|null) => {
         if( page ){
-          console.log( "page chargée : ", page )
           this.page = page;
           this.resetForms();
-         this.loadLinkedPages();
         }else{
           console.log( "TODO : Erreur à gérer" )
         }
@@ -146,45 +144,4 @@ export class DetailFicheComponent implements OnInit {
       }
     }
   }
-
-
-  loadLinkedPages(){
-
-    if( this.page ){
-      let i = -1;
-      let pagesToLoad : string[] = [];
-      let indexMot;
-      let mot = "";
-
-      // Liste des pages listées dans chaque blocs
-      for( let bloc of this.page?.blocs ){
-        i = bloc.texte.indexOf( "@" );
-        while( i != -1 ){
-          indexMot = PageBlocComponent.getIndexWord( bloc.texte, i );
-          mot = bloc.texte.substring( indexMot.start + 1, indexMot.end );
-
-          if( pagesToLoad.indexOf( mot ) == -1 ){
-            pagesToLoad.push( mot );
-          }
-          
-          i = bloc.texte.indexOf( "@", i+1 );
-        }
-      }
-
-      // Requete pour chaque mot à charger
-      for( let idPage of pagesToLoad ){
-        this.projectService.getPageAsync( idPage ).subscribe( (page : Page | null )=>{
-          if( page ){
-            let elements = document.querySelectorAll( ".refPage_" + page.id + " .pageInfoPopup" );
-            elements.forEach( (element :Element ) => {
-              element.innerHTML = page.description;
-            })
-          }
-        } );
-      }
-    }else{
-      console.error("Aucune page sélectionnée");
-    }
-  }
-
 }
