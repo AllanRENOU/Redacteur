@@ -225,6 +225,7 @@ export class PageBlocComponent implements OnInit, AfterViewInit {
     }
   }
 
+  static LETTRES_END_WORD = [ "\n", " ", ".", ",", "?", "!" ];
 
   /**
    * Retourne l'indexe de début et de fin du mot où le trouve le curceur actuellement 
@@ -236,17 +237,17 @@ export class PageBlocComponent implements OnInit, AfterViewInit {
     
     let lastIndex = cursor;
     let startIndex = lastIndex - 1;
-
+    
     // Recherche de la fin du mot
     let lettre = text[ lastIndex ];
-    while( lettre && lettre != " " && lettre != "\n" ){
+    while( lettre && PageBlocComponent.LETTRES_END_WORD.indexOf(lettre) == -1 ){
       lastIndex++;
       lettre = text[ lastIndex ];
     }
 
     // Recherche du début du mot
     lettre = text[ startIndex ];
-    while( startIndex > -1 && lettre != " " && lettre != "\n" ){
+    while( startIndex > -1 && PageBlocComponent.LETTRES_END_WORD.indexOf(lettre) == -1 ){
       startIndex--;
       lettre = text[ startIndex ];
     }

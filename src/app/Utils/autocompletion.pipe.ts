@@ -10,7 +10,8 @@ export class AutocompletionPipe implements PipeTransform {
 
   transform(pages : Page[], filter : string ): Page[] {
     console.log( filter )
-    return pages.filter( (pp)=>{ return pp.id.indexOf( filter ) != -1 || pp.titre.indexOf( filter ) != -1; } );
+    filter = filter.toUpperCase();
+    return pages.filter( (pp)=>{ return pp.id.toUpperCase().indexOf( filter ) != -1 || pp.titre.toUpperCase().indexOf( filter ) != -1; } );
   }
 
 }

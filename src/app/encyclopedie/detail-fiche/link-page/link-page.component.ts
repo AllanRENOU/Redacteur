@@ -28,15 +28,19 @@ export class LinkPageComponent implements OnInit {
 
   ngOnChanges( change : SimpleChange){
     console.log( "change : texte : ", this.texte, " (", this.code , "), description : ", this.description );
+
     this.refreshDescription();
   }
 
   private refreshDescription(){
-    if( !this.description ){
+    if( this.description == "undefined" ){
+      this.description="";
+    }
+
+    if( !this.description  ){
       this.projectService.getPageAsync( this.code ).subscribe( (page : Page | null )=>{
         if( page ){
             this.description = page.description;
-            console.log( "lien mis à jour : titre : ", this.texte, ", description : ", this.description );
         }else{
           console.error( "Page ", this.code, " introuvable" )
         }
