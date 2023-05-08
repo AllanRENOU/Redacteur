@@ -81,6 +81,7 @@ $DELAY_IN:1.5s;
                     position: relative;
                     font-family: monospace;
                     font-weight: bold;
+                    user-select: none;
                 }
 
                 .msg{
@@ -130,6 +131,11 @@ $DELAY_IN:1.5s;
             &:has(.loader){
                 opacity: 0;
             }
+            
+            &:has(#btAdd){
+                z-index: 1;
+            }
+
         }
 
         &.error>.buttonContainer{
