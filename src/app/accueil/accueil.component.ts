@@ -12,6 +12,7 @@ export class AccueilComponent {
 
   projects : { code:string, name:string, lettre:string, top:string, left:string, delay:number, opacity:number, color : string }[] = [];
   isLoaded = false;
+  msgErreur = "";
 
   constructor( private projectService : ProjectService){
 
@@ -19,6 +20,9 @@ export class AccueilComponent {
 
       this.refresh( data.projects );
 
+    }, ( err : any)=>{
+        this.msgErreur = err.message;
+        console.error( "Erreur", err);
     });
   }
 
@@ -41,16 +45,6 @@ export class AccueilComponent {
   
   refresh( projects : { code:string, name:string }[] ){
     console.log ("Refresh", projects);
-     /*
-      data.projects.push( { code : "F1", name : "Fake 1"} );
-      data.projects.push( { code : "F2", name : "Fake 2"} );
-      data.projects.push( { code : "F3", name : "Fake 3"} );
-      data.projects.push( { code : "F4", name : "Fake 4"} );
-      data.projects.push( { code : "F5", name : "Fake 5"} );
-      data.projects.push( { code : "F6", name : "Fake 6"} );
-      data.projects.push( { code : "F7", name : "Fake 7"} );
-      data.projects.push( { code : "F8", name : "Fake 8"} );
-    */
    
     const BT_SIZE = "5rem";
     const OFFSET_DELAY = 1500;//temps transition bouton +

@@ -63,6 +63,37 @@ $DELAY_IN:1.5s;
                 transition: opacity 1s linear 0.2s;
             }
 
+            &:has(.error){
+
+                color: red;
+                border-color: red;
+                display: flex;
+                flex-wrap: wrap;
+                
+                opacity: 0;
+                transition: opacity 1.5s linear $DELAY_IN;
+
+                .error{
+                    width: 100%;
+                    line-height: 4.5rem;
+                    text-align: center;
+                    font-size: 5rem;
+                    position: relative;
+                    font-family: monospace;
+                    font-weight: bold;
+                }
+
+                .msg{
+                    padding: 1rem 0 0 0;
+                    width: max-content;
+
+                    a{
+                        display: block;
+                        width: max-content;
+                    }
+                }
+            }
+
             #btAdd{
                 font-weight: bold;
                 font-size: 5rem;
@@ -98,6 +129,17 @@ $DELAY_IN:1.5s;
             
             &:has(.loader){
                 opacity: 0;
+            }
+        }
+
+        &.error>.buttonContainer{
+            
+            &:has(.loader), &:has(#btAdd){
+                opacity: 0;
+            }
+
+            &:has(.error){
+                opacity: 1;
             }
         }
 

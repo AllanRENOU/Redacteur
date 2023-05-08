@@ -5,7 +5,7 @@
         <li><a routerLink="PROJECT_TEST/encyclopedie/">Encyclopedie</a></li>
     </ul>
     -->
-    <div id="projectsContainer" [className]="isLoaded ? 'loaded' : ''">
+    <div id="projectsContainer" [className]="isLoaded ? 'loaded' : ''" [className]="msgErreur? 'error':''" >
 
         <div class="buttonContainer">
             <button class="loader"></button>
@@ -13,6 +13,11 @@
 
         <div class="buttonContainer">
             <button id="btAdd" title="Créer un projet" (click)="addProject()">+</button>
+        </div>
+
+        <div class="buttonContainer">
+            <p class="error">x</p>
+            <p class="msg" ><a>{{msgErreur}}</a></p>
         </div>
 
         <button class="btProjectContainer" *ngFor="let pp of projects" [style.top]="pp.top" [style.left]="pp.left" [style.opacity]="pp.opacity" [ngClass]="pp.color" routerLink="{{pp.code}}/encyclopedie/" >
