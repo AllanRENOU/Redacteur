@@ -16,6 +16,11 @@ export class MarkdownPipe implements PipeTransform {
     if ( value ) {
       value = marked(value );
       value = this.replaceRefPage( value );
+
+      if( value.endsWith("\n") ){
+        value = value.substring( 0, value.length -1 );
+      }
+
       return value.replaceAll( "\n", "<br/>" );
     }else{
       return value;
@@ -33,18 +38,20 @@ export class MarkdownPipe implements PipeTransform {
       let word : string = "";
       let newWord : string = "";
       let page;
+      let result = value;
       while( i != -1 ){
         let indexWord = AutocompleteInputComponent.getIndexWord( value, i );
         word = value.substring( i + 1, indexWord.end );
+        console.log( "word", word, i, value)
         page = this.projectService.getPage( word );
         newWord = page?.titre || word ;
 
-        value = value.replaceAll( "@" + word, "<span class=\"refPage refPage_" + word + "\" code=\"" + word + "\" texte=\"" + newWord+ "\" ></span>" );
+        result = result.replace( "@" + word, "<span class=\"refPage refPage_" + word + "\" code=\"" + word + "\" texte=\"" + newWord+ "\" ></span>" );
         
         i = value.indexOf( "@", i+1 );
 
       }
 
-      return value;
+      return result;
   }
 }

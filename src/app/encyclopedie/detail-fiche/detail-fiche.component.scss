@@ -16,6 +16,10 @@ $colorBG : #d1d1d1;
     overflow-y: scroll;
 
     font-family: sans-serif;
+
+    background-image: url( '/assets/petitCarreaux.png' );
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
 }
 
 h2{
@@ -43,7 +47,7 @@ h2{
 .idLabel{
     font-size: 0.7rem;
     margin-top: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0rem;
     opacity: 0.5;
 }
 

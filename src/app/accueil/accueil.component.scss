@@ -8,12 +8,10 @@ $DELAY_IN:1.5s;
     padding: 0;
     margin: 0;
     top: 0;
-    background-color: rgb(6 6 6);
 
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-image: url(../../assets/octogones3.png);
 
 
     #projectsContainer{
@@ -131,10 +129,6 @@ $DELAY_IN:1.5s;
     }
 }
 
-@font-face {
-    font-family: absender1;
-    src: url(../../assets/absender1.ttf);
-}
 
 @keyframes mltShdSpin {
     0% {

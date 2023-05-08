@@ -25,6 +25,7 @@ export class AutocompleteInputComponent implements OnInit {
   showAutoComplet = false;
 
   static LETTRES_END_WORD = [ "\n", " ", ".", ",", "?", "!", "<" ];
+  static LETTRES_END_WORD_REGEXP = /\n| |\.|,|\?|!|</g;
   
   constructor( public projectService : ProjectService,private renderer: Renderer2 ){
     

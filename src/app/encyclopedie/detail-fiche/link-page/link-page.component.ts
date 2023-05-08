@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import { Page } from 'src/app/Services/Beans/Page';
 import { ProjectService } from 'src/app/Services/project.service';
+import { AutocompleteInputComponent } from 'src/app/Utils/autoComplete/autocomplete-input/autocomplete-input.component';
 
 @Component({
   selector: 'app-link-page',
@@ -26,8 +27,6 @@ export class LinkPageComponent implements OnInit {
   }
 
   ngOnChanges( change : SimpleChange){
-    console.log( "change : texte : ", this.texte, " (", this.code , "), description : ", this.description );
-
     this.refreshDescription();
   }
 
@@ -39,11 +38,30 @@ export class LinkPageComponent implements OnInit {
     if( !this.description && this.code  ){
       this.projectService.getPageAsync( this.code ).subscribe( (page : Page | null )=>{
         if( page ){
-            this.description = page.description;
+            this.description = this.replaceRefWithTitle( page.description );
+            //this.description = page.description;
         }else{
           console.error( "Page ", this.code, " introuvable" )
         }
       });
     }
+  }
+
+  replaceRefWithTitle( desc : string ) : string{
+    desc
+      .replaceAll( AutocompleteInputComponent.LETTRES_END_WORD_REGEXP, " ")
+      .split( " " )
+      .filter( tt=>tt[0]=="@")
+      .map( tt => tt.substring(1) )
+      .forEach( (idPage : string) => {
+        console.log( "Sorte : ", idPage )
+        let page = this.projectService.getPage( idPage );
+
+        if( page ){
+          desc = desc.replaceAll( "@"+idPage, page.titre );
+        }
+      })
+
+    return desc;
   }
 }

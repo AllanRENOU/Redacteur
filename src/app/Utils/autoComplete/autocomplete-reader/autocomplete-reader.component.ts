@@ -27,9 +27,7 @@ export class AutocompleteReaderComponent implements AfterViewInit{
   updateText(){
 
     if( this.data && this.textContainer ){
-      console.log( "texte au debut : ", this.data.texte)
       this.textContainer.nativeElement.innerHTML = this.pipeMarkdown.transform( this.data.texte );
-      console.log( "texte apres transformation : ", this.textContainer.nativeElement.innerHTML )
 
       let links : HTMLCollectionOf<Element> = this.textContainer.nativeElement.getElementsByClassName( "refPage");
       
