@@ -9,8 +9,6 @@
     </h4>
     <div  *ngIf="!isUpdatemode" class="textContainer" #textContainer ></div>
 
-
-
     <form *ngIf="isUpdatemode" #updateBlocForm="ngForm" (ngSubmit)="onSubmitUpdateBloc( bloc )" class="formUpdateBloc" >
         <nav>
             <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
@@ -23,11 +21,8 @@
             </div>
         </nav>
         
-        <textarea id="desc_{{bloc.id}}" name="newDesc" ngModel [(ngModel)]="newDesc" #textArea placeholder="Description" spellcheck="true" (keyup)="onTextChange( $event )" (focusout)="onFocusTextAreaLost()"></textarea>
+        <app-autocomplete-input [texte]="currentDesc" (textChanged)="onDescChanged( $event )"></app-autocomplete-input>
 
-        <ul class="popupAutoComplet" *ngIf="showAutoComplet">
-            <li *ngFor="let page of this.projectService.getAllPages() | autocompletion:currentWord" (click)="onClickAutoCompletion( $event, page.id)">{{page.titre}}</li>
-        </ul>
 
         <div class="form-group">
             <button type="submit" [disabled]="!updateBlocForm.form.valid">Valider</button>

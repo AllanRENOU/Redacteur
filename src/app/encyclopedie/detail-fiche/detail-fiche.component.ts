@@ -1,9 +1,7 @@
 import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import { Page } from 'src/app/Services/Beans/Page';
-import { PageBloc } from 'src/app/Services/Beans/Page.bloc';
 import { ProjectService } from 'src/app/Services/project.service';
 import { MenuItem } from 'src/app/Utils/float-menu/MenuItem';
-import { PageBlocComponent } from './page-bloc/page-bloc.component';
 
 @Component({
   selector: 'app-detail-fiche',
@@ -21,7 +19,8 @@ export class DetailFicheComponent implements OnInit {
   updatePage = false;
 
   newTitle = "";
-  newDesc = "";
+  currentDesc = "";
+  newDesc="";
 
 
   // Boutons 'more'
@@ -64,10 +63,10 @@ export class DetailFicheComponent implements OnInit {
   
   // Update page
   onSubmitUpdatePage(){
-    console.log( "Page mise à jour. Titre : ", this.newTitle, ". Desc : ", this.newDesc );
+    console.log( "Page mise à jour. Titre : ", this.newTitle, ". Desc : ", this.newDesc ? this.newDesc : this.currentDesc );
     if( this.page ){
       this.page.titre = this.newTitle;
-      this.page.description = this.newDesc;
+      this.page.description = this.newDesc ? this.newDesc : this.currentDesc;
       this.projectService.updatePage( this.page );
     }else{
       console.error( "Aucune page n'est sélectionnée" );
@@ -76,11 +75,16 @@ export class DetailFicheComponent implements OnInit {
     this.resetForms();
   }
 
+  onDescChanged( description : string ){
+    this.newDesc = description;
+    console.log( "newDesc : ", this.newDesc );
+  }
+
   // Création d'un bloc
 
   private resetForms(){
     this.newTitle = "";
-    this.newDesc = "";
+    this.currentDesc = "";
 
     this.createPage = false;
     this.updatePage = false;
@@ -96,7 +100,7 @@ export class DetailFicheComponent implements OnInit {
     console.log( "Click créer bloc ", this.newTitle, " : ", this.newDesc );
 
     if( this.page ){
-      this.projectService.addBlocInPage( this.page, this.newTitle, this.newDesc );
+      this.projectService.addBlocInPage( this.page, this.newTitle, this.newDesc ?  this.newDesc : "" );
     }else{
       console.log("Erreur, aucune page n'est actuellement affichée" );
     }
@@ -133,7 +137,7 @@ export class DetailFicheComponent implements OnInit {
         this.createPage = false;
         this.updatePage = true;
         this.newTitle = this.page?this.page.titre:"";
-        this.newDesc = this.page?this.page.description:"";
+        this.currentDesc = this.page?this.page.description:"";
           
         break;
       }

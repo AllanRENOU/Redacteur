@@ -12,7 +12,11 @@
     <!-- Formulaire update page -->
     <form *ngIf="updatePage && !createPage" #updatePageForm="ngForm" (ngSubmit)="onSubmitUpdatePage()" id="formUpdatePage" >
         <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
-        <textarea name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description de la fiche"></textarea>
+        <!--
+            <textarea name="newDesc" ngModel [(ngModel)]="newDesc"  placeholder="Description de la fiche"></textarea>
+        -->
+        
+        <app-autocomplete-input [texte]="currentDesc" (textChanged)="onDescChanged( $event )"></app-autocomplete-input>
         
         
         <div class="form-group">
@@ -41,7 +45,8 @@
         <div *ngIf="createPage && !updatePage" class="createBlocContainer">
             <form #createBlocForm="ngForm" (ngSubmit)="onSubmitNewBloc()" >
                 <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
-                <input type="text" name="newDesc" ngModel [(ngModel)]="newDesc" placeholder="Description" autocomplete="off"/>
+                
+                <app-autocomplete-input [texte]="''" (textChanged)="onDescChanged( $event )"></app-autocomplete-input>
                 <button type="submit" [disabled]="!createBlocForm.form.valid">Valider</button>
             </form>
         </div>

@@ -15,7 +15,6 @@ export class LinkPageComponent implements OnInit {
   @Input()
   texte : string = "";
 
-  @Input()
   description : string = "";
 
   constructor( public projectService : ProjectService ){
@@ -37,7 +36,7 @@ export class LinkPageComponent implements OnInit {
       this.description="";
     }
 
-    if( !this.description  ){
+    if( !this.description && this.code  ){
       this.projectService.getPageAsync( this.code ).subscribe( (page : Page | null )=>{
         if( page ){
             this.description = page.description;

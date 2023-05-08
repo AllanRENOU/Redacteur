@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { marked } from 'marked';
 import { ProjectService } from '../Services/project.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AutocompleteInputComponent } from './autoComplete/autocomplete-input/autocomplete-input.component';
 
 @Pipe({
   name: 'markdown'
@@ -34,12 +34,12 @@ export class MarkdownPipe implements PipeTransform {
       let newWord : string = "";
       let page;
       while( i != -1 ){
-        let iEnd = this.getIndexEndWord( value, i );
-        word = value.substring( i + 1, iEnd );
+        let indexWord = AutocompleteInputComponent.getIndexWord( value, i );
+        word = value.substring( i + 1, indexWord.end );
         page = this.projectService.getPage( word );
         newWord = page?.titre || word ;
 
-        value = value.replaceAll( "@" + word, "<span class=\"refPage refPage_" + word + "\" code=\"" + word + "\" texte=\"" + newWord+ "\" description=\"" + page?.description + "\" ></span>" );
+        value = value.replaceAll( "@" + word, "<span class=\"refPage refPage_" + word + "\" code=\"" + word + "\" texte=\"" + newWord+ "\" ></span>" );
         
         i = value.indexOf( "@", i+1 );
 
@@ -47,15 +47,4 @@ export class MarkdownPipe implements PipeTransform {
 
       return value;
   }
-
-  private getIndexEndWord( texte : string, indexStart : number ){
-
-    let indexEnd = indexStart;
-    while( indexEnd < texte.length && texte[ indexEnd ] != " " && texte[ indexEnd ] != "\n" ){
-      indexEnd++;
-    }
-
-    return indexEnd;
-  }
-
 }

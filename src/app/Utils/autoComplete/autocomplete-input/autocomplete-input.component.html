@@ -1,0 +1,5 @@
+<textarea name="newDesc" ngModel [(ngModel)]="texte" #textArea placeholder="Description" spellcheck="true" (keyup)="onTextChange( $event )" (focusout)="onFocusTextAreaLost()"></textarea>
+
+<ul #popupAutoComplet class="popupAutoComplet" *ngIf="showAutoComplet">
+    <li *ngFor="let page of this.projectService.getAllPages() | autocompletion:currentWord" (click)="onClickAutoCompletion( $event, page.id)">{{page.titre}}</li>
+</ul>

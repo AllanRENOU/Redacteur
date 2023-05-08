@@ -19,6 +19,7 @@ import { SafeHtmlPipe } from './Utils/safe-html.pipe';
 import { LinkPageComponent } from './encyclopedie/detail-fiche/link-page/link-page.component';
 import { PageBlocComponent } from './encyclopedie/detail-fiche/page-bloc/page-bloc.component';
 import { JustTextPipe } from './Utils/just-text.pipe';
+import { AutocompleteInputComponent } from './Utils/autoComplete/autocomplete-input/autocomplete-input.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { JustTextPipe } from './Utils/just-text.pipe';
     SafeHtmlPipe,
     LinkPageComponent,
     PageBlocComponent,
-    JustTextPipe
+    JustTextPipe,
+    AutocompleteInputComponent
   ],
   imports: [
     BrowserModule,
