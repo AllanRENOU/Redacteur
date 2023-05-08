@@ -11,7 +11,7 @@ import { LinkPageComponent } from '../link-page/link-page.component';
   templateUrl: './page-bloc.component.html',
   styleUrls: ['./page-bloc.component.scss']
 })
-export class PageBlocComponent implements OnInit, AfterViewInit {
+export class PageBlocComponent implements OnInit {
  
   @Input()
   bloc? : PageBloc;
@@ -46,22 +46,14 @@ export class PageBlocComponent implements OnInit, AfterViewInit {
   newTitle = "";
   currentDesc = "";
   newDesc = "";
+  
   showPopupInfoMarkdown = false;
-
-  // Autocompletion
-  currentWord = "";
-  showAutoComplet = false;
    
-  constructor( public projectService : ProjectService, private renderer: Renderer2, private pipeMarkdown : MarkdownPipe, private viewContainerRef: ViewContainerRef ){
+  constructor( public projectService : ProjectService, private renderer: Renderer2 ){
 
   }
 
   ngOnInit(): void {
-  }
-  
-  ngAfterViewInit(): void {
-    
-    this.updateText();
 
   }
 
@@ -86,46 +78,6 @@ export class PageBlocComponent implements OnInit, AfterViewInit {
     this.isUpdatemode = false;
   }
   
-  @ViewChild('textContainer')
-  textContainer? : ElementRef<HTMLElement>;
-  
-  @ViewChild('componentLoader')
-  componentLoader? : ElementRef<HTMLElement>;
-
-  updateText(){
-
-    if( this.bloc && this.textContainer ){
-      console.log( "texte au debut : ", this.bloc.texte)
-      this.textContainer.nativeElement.innerHTML = this.pipeMarkdown.transform( this.bloc.texte );
-      console.log( "texte apres transformation : ", this.textContainer.nativeElement.innerHTML )
-
-      let links : HTMLCollectionOf<Element> = this.textContainer.nativeElement.getElementsByClassName( "refPage");
-      
-      for( let i = 0; i< links.length; i++ ){
-        let link : Element | undefined = links.item( i ) || undefined;
-        
-        if( link ){
-
-          let cc = link.getAttribute( "code" ) || "";
-          let tt = link.getAttribute( "texte" ) || "";
-          let dd = link.getAttribute( "description" ) || "";
-
-          this.instanciateLink( cc, tt, dd, link );
-          
-        }
-      }
-    }
-  }
-  
-  private instanciateLink( code : string, texte : string, desc : string, parent : Element){
-
-    let componentRef = this.viewContainerRef.createComponent( LinkPageComponent );
-    componentRef.setInput( "code", code );
-    componentRef.setInput( "texte", texte );
-    componentRef.setInput( "description", desc );
-    parent.appendChild( componentRef.location.nativeElement );
-
-  }
   onDescChanged( description : string ){
     this.newDesc = description;
   }
@@ -175,8 +127,6 @@ export class PageBlocComponent implements OnInit, AfterViewInit {
     this.showMoreMenu = false;
   }
   
-
-
   // ========== Infos Markdown ==========
 
   onClickinfoMarkdown( ee : Event ){

@@ -24,7 +24,7 @@ export class AutocompleteInputComponent implements OnInit {
   currentWord = "";
   showAutoComplet = false;
 
-  static LETTRES_END_WORD = [ "\n", " ", ".", ",", "?", "!" ];
+  static LETTRES_END_WORD = [ "\n", " ", ".", ",", "?", "!", "<" ];
   
   constructor( public projectService : ProjectService,private renderer: Renderer2 ){
     

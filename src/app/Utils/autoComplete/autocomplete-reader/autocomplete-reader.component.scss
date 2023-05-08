@@ -1,0 +1,16 @@
+
+$timeTransition : 0.5s;
+
+.textContainer{
+    margin: 0;
+    border-radius: 0.5rem;
+    padding: 0 0.5rem;
+    min-height: 1.1rem;
+    transition: background-color $timeTransition, border-color $timeTransition ;
+    background-color: transparent;
+    border: solid transparent 1px;
+
+    &:hover{
+        border: solid black 1px;
+    }
+}

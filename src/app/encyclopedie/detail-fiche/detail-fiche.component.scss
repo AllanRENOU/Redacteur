@@ -68,11 +68,6 @@ h2{
     min-height: 1.1rem;
     transition: background-color $timeTransition, border-color $timeTransition ;
     background-color: transparent;
-    border: solid transparent 1px;
-
-    &:hover{
-        border: solid black 1px;
-    }
 
     p{
         padding: 0.5rem 0;

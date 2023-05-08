@@ -20,6 +20,7 @@ import { LinkPageComponent } from './encyclopedie/detail-fiche/link-page/link-pa
 import { PageBlocComponent } from './encyclopedie/detail-fiche/page-bloc/page-bloc.component';
 import { JustTextPipe } from './Utils/just-text.pipe';
 import { AutocompleteInputComponent } from './Utils/autoComplete/autocomplete-input/autocomplete-input.component';
+import { AutocompleteReaderComponent } from './Utils/autoComplete/autocomplete-reader/autocomplete-reader.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AutocompleteInputComponent } from './Utils/autoComplete/autocomplete-in
     LinkPageComponent,
     PageBlocComponent,
     JustTextPipe,
-    AutocompleteInputComponent
+    AutocompleteInputComponent,
+    AutocompleteReaderComponent
   ],
   imports: [
     BrowserModule,
