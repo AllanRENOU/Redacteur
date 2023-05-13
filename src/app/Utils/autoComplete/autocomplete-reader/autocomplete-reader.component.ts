@@ -7,25 +7,39 @@ import { LinkPageComponent } from 'src/app/encyclopedie/detail-fiche/link-page/l
   templateUrl: './autocomplete-reader.component.html',
   styleUrls: ['./autocomplete-reader.component.scss']
 })
-export class AutocompleteReaderComponent implements AfterViewInit{
+export class AutocompleteReaderComponent implements AfterViewInit, OnChanges{
 
   @Input()
   data? : { texte : string };
 
   @ViewChild('textContainer')
   textContainer? : ElementRef<HTMLElement>;
+
+  private isLoaded = false;
   
   constructor( private viewContainerRef: ViewContainerRef, private pipeMarkdown : MarkdownPipe ){
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.isLoaded = this.textContainer != undefined;
+    if( this.isLoaded ){
+      this.updateText();
+    }
+  }
 
-  ngAfterViewInit(): void {
-    
-    this.updateText();
+  ngAfterViewInit(): void { 
+    if( !this.isLoaded ){
+      this.updateText();
+    }
+  }
 
-    if( this.textContainer ){
+  updateText(){
 
-      let links : HTMLCollectionOf<Element> = this.textContainer.nativeElement.getElementsByClassName( "refPage");
+    if( this.data && this.textContainer ){
+
+      this.textContainer.nativeElement.innerHTML = this.pipeMarkdown.transform( this.data.texte );
+
+      let links : HTMLCollectionOf<Element> = this.textContainer.nativeElement.getElementsByClassName( "refPage" );
 
       let linkToInstanciate : {code : string, texte : string, parent : Element}[] = [];
       
@@ -49,15 +63,6 @@ export class AutocompleteReaderComponent implements AfterViewInit{
 
       setTimeout( ()=>{this.instanciateLinks( linkToInstanciate )}, 10 );
 
-    }else{
-      console.error("Pas de textContainer")
-    }
-  }
-
-  updateText(){
-
-    if( this.data && this.textContainer ){
-      this.textContainer.nativeElement.innerHTML = this.pipeMarkdown.transform( this.data.texte );
     }else{
       console.error("Pas de textContainer ou de data", this.textContainer, this.data)
     }

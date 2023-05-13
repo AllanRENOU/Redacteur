@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { Page } from 'src/app/Services/Beans/Page';
 import { ProjectService } from 'src/app/Services/project.service';
 import { MenuItem } from 'src/app/Utils/float-menu/MenuItem';
@@ -8,7 +8,7 @@ import { MenuItem } from 'src/app/Utils/float-menu/MenuItem';
   templateUrl: './detail-fiche.component.html',
   styleUrls: ['./detail-fiche.component.scss']
 })
-export class DetailFicheComponent implements OnInit {
+export class DetailFicheComponent implements OnChanges {
 
   @Input()
   id:string = "";
@@ -32,28 +32,22 @@ export class DetailFicheComponent implements OnInit {
     MenuItem.REMOVE
   ];
 
-
-
   public constructor( public projectService : ProjectService ){
-    
   }
 
-  ngOnInit(): void {
-    this.reloadPage();
-  }
-
-  ngOnChanges( change : SimpleChange){
+  ngOnChanges(){
     this.reloadPage();
   }
 
   reloadPage(){
     if( this.id ){
       this.projectService.getPageAsync( this.id ).subscribe( (page : Page|null) => {
+        console.log( "Affichage de la page", page)
         if( page ){
           this.page = page;
           this.resetForms();
         }else{
-          console.log( "TODO : Erreur à gérer" )
+          console.log( "TODO : Erreur à gérer" );
         }
       });
     }else{

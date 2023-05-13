@@ -74,7 +74,6 @@ export class ArboPageComponent implements OnInit{
   private refreshPages(){
     if(  this.container ){
       this.projectService.getPagesAsync( this.container.pages ).subscribe( fiches =>{
-        console.log( "Nouvelles fichies : ", fiches );
         this.pages = fiches;
       } );
     }
