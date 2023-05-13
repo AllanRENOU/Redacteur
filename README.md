@@ -37,5 +37,5 @@ Fonction non implémentée
 Fonction non implémentée
 
 ## Corrections à venir
-<iframe src="TODO.md" />
+(Le lien vers la backlog se trouve ici)[https://github.com/AllanRENOU/Redacteur/blob/main/TODO.md]
 
