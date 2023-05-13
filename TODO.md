@@ -12,7 +12,7 @@
  - [x] Corriger l'erreur dans les, logs (lié à l'instanciation des comp link-page)
  - [x] Ajouter l'autocompletion a la creation d'une page
  - [ ] Revoir AutocompleteInputComponent.getIndexWord
- - [ ] (Autocompletion) Pouvoir slectionner un choix avec les fleches
+ - [ ] (Autocompletion) Pouvoir sélectionner un choix avec les fleches
 
  ### Page d'accueil
  - [ ] Faire un formulaire plus jolie pour la création de projet
@@ -24,6 +24,8 @@
  ### Encyclopédie
  - [ ] Faire des fiches "Favories"
  - [ ] Faire une recherche de fiche
+ - [ ] Déplacer une fiche
+ - [ ] Changer une fiche ou un dossier de dossier (sauf ROOT)
  
  ### Autre
  - [ ] Pages Axes
