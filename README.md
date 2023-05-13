@@ -1,27 +1,41 @@
 # Redacteur
+Ce projet permet d'assister un auteur lors de la création d'une histoire. Pour cela le programme est divisé en 4 parties :
+* Encyclopédie
+* Axes
+* Structure
+* Rédaction
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
+## Installation
+TODO
 
-## Development server
+### Serveur
+Un serveur simple est fournit dans le dossier `Serveur/`
+Avant de l'utliser, assurez vous que NodeJs est installé sur votre PC. Si ce n'est pas le cas, vous pouvez le télécharger [ici](https://nodejs.org/en)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Pour l'executer, récupérer les dépendances avec `npm install`
+Puis lancer le serveur à l'aide de la commande `node serveur.js`
 
-## Code scaffolding
+### Client
+Dans un premier temps, il est nécessaire de récupérer les dépendances avec la commande `npm install`
+Pour lancer le client, executer la commande `npm start`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Fonctionnement
 
-## Build
+### Création d'un projet
+TODO
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Encyclopédie
+TODO
 
-## Running unit tests
+### Axes
+Fonction non implémentée
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Structure
+Fonction non implémentée
 
-## Running end-to-end tests
+### Rédaction
+Fonction non implémentée
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Corrections à venir
+<iframe src="TODO.md" />
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
