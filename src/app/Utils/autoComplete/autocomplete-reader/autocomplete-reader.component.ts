@@ -7,7 +7,7 @@ import { LinkPageComponent } from 'src/app/encyclopedie/detail-fiche/link-page/l
   templateUrl: './autocomplete-reader.component.html',
   styleUrls: ['./autocomplete-reader.component.scss']
 })
-export class AutocompleteReaderComponent implements OnInit, AfterViewInit, AfterContentInit,  OnChanges {
+export class AutocompleteReaderComponent implements AfterViewInit{
 
   @Input()
   data? : { texte : string };
@@ -64,11 +64,11 @@ export class AutocompleteReaderComponent implements OnInit, AfterViewInit, After
   }
 
   private instanciateLinks( linkToInstanciate : {code : string, texte : string, parent : Element}[] ){
-    for( let ll of this.linkToInstanciate ){
+    for( let ll of linkToInstanciate ){
       this.instanciateLink( ll.code, ll.texte, "", ll.parent );
     }
-    this.linkToInstanciate = [];
   }
+  
   private instanciateLink( code : string, texte : string, desc : string, parent : Element){
 
     let componentRef = this.viewContainerRef.createComponent( LinkPageComponent );
