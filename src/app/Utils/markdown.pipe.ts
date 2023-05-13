@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { marked } from 'marked';
-import { ProjectService } from '../Services/project.service';
 import { AutocompleteInputComponent } from './autoComplete/autocomplete-input/autocomplete-input.component';
 
 @Pipe({
@@ -8,7 +7,7 @@ import { AutocompleteInputComponent } from './autoComplete/autocomplete-input/au
 })
 export class MarkdownPipe implements PipeTransform {
 
-  constructor( private projectService : ProjectService ){
+  constructor( ){
 
   }
 
@@ -36,16 +35,12 @@ export class MarkdownPipe implements PipeTransform {
 
       let i = value.indexOf( "@" );
       let word : string = "";
-      let newWord : string = "";
-      let page;
       let result = value;
       while( i != -1 ){
         let indexWord = AutocompleteInputComponent.getIndexWord( value, i );
         word = value.substring( i + 1, indexWord.end );
-        page = this.projectService.getPage( word );
-        newWord = page?.titre || word ;
 
-        result = result.replace( "@" + word, "<span class=\"refPage refPage_" + word + "\" code=\"" + word + "\" texte=\"" + newWord+ "\" ></span>" );
+        result = result.replace( "@" + word, "<span class=\"refPage refPage_" + word + "\" code=\"" + word + "\"></span>" );
         
         i = value.indexOf( "@", i+1 );
 

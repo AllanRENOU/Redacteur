@@ -1,6 +1,7 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild, ViewContainerRef } from '@angular/core';
 import { MarkdownPipe } from '../../markdown.pipe';
 import { LinkPageComponent } from 'src/app/encyclopedie/detail-fiche/link-page/link-page.component';
+import { ProjectService } from 'src/app/Services/project.service';
 
 @Component({
   selector: 'app-autocomplete-reader',
@@ -17,10 +18,10 @@ export class AutocompleteReaderComponent implements AfterViewInit, OnChanges{
 
   private isLoaded = false;
   
-  constructor( private viewContainerRef: ViewContainerRef, private pipeMarkdown : MarkdownPipe ){
+  constructor( private viewContainerRef: ViewContainerRef, private pipeMarkdown : MarkdownPipe, private projectService : ProjectService ){
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges( ): void {
     this.isLoaded = this.textContainer != undefined;
     if( this.isLoaded ){
       this.updateText();
@@ -37,50 +38,52 @@ export class AutocompleteReaderComponent implements AfterViewInit, OnChanges{
 
     if( this.data && this.textContainer ){
 
+      
       this.textContainer.nativeElement.innerHTML = this.pipeMarkdown.transform( this.data.texte );
 
-      let links : HTMLCollectionOf<Element> = this.textContainer.nativeElement.getElementsByClassName( "refPage" );
+      setTimeout( ()=>{
 
-      let linkToInstanciate : {code : string, texte : string, parent : Element}[] = [];
-      
-      for( let i = 0; i< links.length; i++ ){
-        let link : Element | undefined = links.item( i ) || undefined;
-        
-        if( link ){
+        if( this.textContainer ){
 
-          let cc = link.getAttribute( "code" ) || "";
-          let tt = link.getAttribute( "texte" ) || "";
-          let dd = link.getAttribute( "description" ) || "";
+          // Pour chaque balise <span>, remplacer par l'instance de linkPage
+          let links : HTMLCollectionOf<Element> = this.textContainer.nativeElement.getElementsByClassName( "refPage" );
+          
+          for( let i = 0; i< links.length; i++ ){
+            let link : Element | undefined = links.item( i ) || undefined;
 
-          //this.instanciateLink( cc, tt, dd, link );
-          linkToInstanciate.push({
-            code : cc , texte : tt, parent : link 
-          });
+            if( link ){
 
-          link.classList.remove( "refPage" );
+              // Récupération de l'id, ed la page associée et création du lien
+              let cc = link.getAttribute( "code" ) || "";
+              let page = this.projectService.getPage( cc );
+
+              this.instanciateLink( cc, page?.titre || cc, link as HTMLElement );
+
+            }else{
+              console.log( "link empty ", link)
+            }
+          }
+
+          //Suppression des balises <span>
+          for( let i = links.length - 1; i >= 0; i-- ){
+            links.item( i )?.remove();
+          }
+        }else{
+          console.error ( "Le conteneur du texte est introuvable" );
         }
-      }
-
-      setTimeout( ()=>{this.instanciateLinks( linkToInstanciate )}, 10 );
-
+      }, 10 );
+      
     }else{
       console.error("Pas de textContainer ou de data", this.textContainer, this.data)
     }
   }
-
-  private instanciateLinks( linkToInstanciate : {code : string, texte : string, parent : Element}[] ){
-    for( let ll of linkToInstanciate ){
-      this.instanciateLink( ll.code, ll.texte, "", ll.parent );
-    }
-  }
   
-  private instanciateLink( code : string, texte : string, desc : string, parent : Element){
+  private instanciateLink( code : string, texte : string, parent : HTMLElement){
 
     let componentRef = this.viewContainerRef.createComponent( LinkPageComponent );
     componentRef.setInput( "code", code );
     componentRef.setInput( "texte", texte );
-    //componentRef.setInput( "description", desc );
-    parent.appendChild( componentRef.location.nativeElement );
+    parent.after(componentRef.location.nativeElement);
 
   }
 }
