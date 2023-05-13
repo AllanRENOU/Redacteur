@@ -214,10 +214,15 @@ function loadFiche( idProjet, idFiche ){
         loadFichesFile( idProjet );
     }
 
-    if( !fichesFull[idProjet][idFiche] ){
-        let path = DATA_FOLDER + "/" + idProjet + FICHES_FOLDER + "/" + idFiche + ".json";
-        fichesFull[idProjet][idFiche] = JSON.parse( fs.readFileSync( path ) );
+    try{
+        if( !fichesFull[idProjet][idFiche] ){
+            let path = DATA_FOLDER + "/" + idProjet + FICHES_FOLDER + "/" + idFiche + ".json";
+            fichesFull[idProjet][idFiche] = JSON.parse( fs.readFileSync( path ) );
+        }
+    }catch( e ){
+        console.error( "File ", idFiche, " not exists" )
     }
+    
 
     return fichesFull[idProjet][idFiche];
 }
