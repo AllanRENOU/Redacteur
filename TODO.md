@@ -13,6 +13,7 @@
  - [x] Ajouter l'autocompletion a la creation d'une page
  - [ ] Revoir AutocompleteInputComponent.getIndexWord
  - [ ] (Autocompletion) Pouvoir sélectionner un choix avec les fleches
+ - [ ] Revoir le positionnement du menu d'autocompletion
 
  ### Page d'accueil
  - [ ] Faire un formulaire plus jolie pour la création de projet
