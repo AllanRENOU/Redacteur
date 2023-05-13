@@ -42,7 +42,6 @@ export class MarkdownPipe implements PipeTransform {
       while( i != -1 ){
         let indexWord = AutocompleteInputComponent.getIndexWord( value, i );
         word = value.substring( i + 1, indexWord.end );
-        console.log( "word", word, i, value)
         page = this.projectService.getPage( word );
         newWord = page?.titre || word ;
 

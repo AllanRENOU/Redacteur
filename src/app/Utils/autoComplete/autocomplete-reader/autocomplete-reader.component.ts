@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
 import { MarkdownPipe } from '../../markdown.pipe';
 import { LinkPageComponent } from 'src/app/encyclopedie/detail-fiche/link-page/link-page.component';
 
@@ -7,7 +7,7 @@ import { LinkPageComponent } from 'src/app/encyclopedie/detail-fiche/link-page/l
   templateUrl: './autocomplete-reader.component.html',
   styleUrls: ['./autocomplete-reader.component.scss']
 })
-export class AutocompleteReaderComponent implements AfterViewInit{
+export class AutocompleteReaderComponent implements OnInit, AfterViewInit, AfterContentInit,  OnChanges {
 
   @Input()
   data? : { texte : string };
@@ -18,18 +18,16 @@ export class AutocompleteReaderComponent implements AfterViewInit{
   constructor( private viewContainerRef: ViewContainerRef, private pipeMarkdown : MarkdownPipe ){
   }
 
+
   ngAfterViewInit(): void {
     
     this.updateText();
 
-  }
-
-  updateText(){
-
-    if( this.data && this.textContainer ){
-      this.textContainer.nativeElement.innerHTML = this.pipeMarkdown.transform( this.data.texte );
+    if( this.textContainer ){
 
       let links : HTMLCollectionOf<Element> = this.textContainer.nativeElement.getElementsByClassName( "refPage");
+
+      let linkToInstanciate : {code : string, texte : string, parent : Element}[] = [];
       
       for( let i = 0; i< links.length; i++ ){
         let link : Element | undefined = links.item( i ) || undefined;
@@ -40,14 +38,37 @@ export class AutocompleteReaderComponent implements AfterViewInit{
           let tt = link.getAttribute( "texte" ) || "";
           let dd = link.getAttribute( "description" ) || "";
 
-          this.instanciateLink( cc, tt, dd, link );
-          
+          //this.instanciateLink( cc, tt, dd, link );
+          linkToInstanciate.push({
+            code : cc , texte : tt, parent : link 
+          });
+
+          link.classList.remove( "refPage" );
         }
       }
+
+      setTimeout( ()=>{this.instanciateLinks( linkToInstanciate )}, 10 );
+
+    }else{
+      console.error("Pas de textContainer")
     }
   }
 
-  
+  updateText(){
+
+    if( this.data && this.textContainer ){
+      this.textContainer.nativeElement.innerHTML = this.pipeMarkdown.transform( this.data.texte );
+    }else{
+      console.error("Pas de textContainer ou de data", this.textContainer, this.data)
+    }
+  }
+
+  private instanciateLinks( linkToInstanciate : {code : string, texte : string, parent : Element}[] ){
+    for( let ll of this.linkToInstanciate ){
+      this.instanciateLink( ll.code, ll.texte, "", ll.parent );
+    }
+    this.linkToInstanciate = [];
+  }
   private instanciateLink( code : string, texte : string, desc : string, parent : Element){
 
     let componentRef = this.viewContainerRef.createComponent( LinkPageComponent );

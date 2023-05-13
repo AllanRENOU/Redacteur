@@ -399,7 +399,7 @@ export class ProjectService {
 
     let page = null;
 
-    if( data.id && data.titre ){
+    if( data && data.id && data.titre ){
       page = new Page( data.id, data.titre, "" );
 
       if( data.description ){

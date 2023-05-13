@@ -3,12 +3,13 @@
  ## Bugs et améliorations
  - [x] A la creation d'une fiche, elle n'apparait pas dans l'arborescence
  - [x] A la création d'une page, si le nom est long, l'id n'est pas affiché complètement
+ - [ ] Implémenter la suppression d'une page
  
  ### CSS
  - [x] Centraliser les variables CSS dans un fichier globale (ex : couleurs)
 
  ### Inputs
- - [ ] Corriger l'erreur dans les, logs (lié à l'instanciation des comp link-page)
+ - [x] Corriger l'erreur dans les, logs (lié à l'instanciation des comp link-page)
  - [ ] Ajouter l'autocompletion a la creation d'une page
  - [ ] Revoir AutocompleteInputComponent.getIndexWord
  - [ ] (Autocompletion) Pouvoir slectionner un choix avec les fleches
