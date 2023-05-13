@@ -3,7 +3,7 @@ import { Page } from './Beans/Page';
 import { PageConteneur } from './Beans/PageConteneur';
 import { EncyclopedieComponent } from '../encyclopedie/encyclopedie.component';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +18,14 @@ export class ProjectService {
   dataProject : { code : string, name : string } = { code : "", name : "Rédacteur" }
 
   name : string = "nope";
-  pages : Page[] = [];
-  arboPage : PageConteneur[] = [];
+  private pages : Page[] = [];
+  private arboPage : PageConteneur[] = [];
 
-  observableArboPage? : Observable<any>;
+  private observableArboPage? : Observable<any>;
+
+  // Observable folder update
+  public observableFolderUpdate : Observable<PageConteneur> = new Observable( ( obs:Observer<PageConteneur> )=>{ this.observersFolderUpdate.push( obs ) } );
+  private observersFolderUpdate : Observer<PageConteneur>[] = [];
 
   constructor( private http: HttpClient ){
     
@@ -186,8 +190,10 @@ export class ProjectService {
     console.log( "Maj dossier ", dossier );
 
     this.http.post<PageConteneur>( ProjectService.url + this.dataProject.code + "/dossier/" + dossier.id, dossier ).subscribe( (dossierReturn : PageConteneur) =>{
-      console.log( "Dossier recu ", dossierReturn );
+      console.log( "Dossier mis à jour ", dossierReturn );
     });
+
+    this.notifyFolderUpdated( dossier );
   }
 
   removeArbo( dossier : PageConteneur ){
@@ -218,8 +224,6 @@ export class ProjectService {
   createPage( id : string, titre : string, description : string, idFolder? : string  ) : Page { 
     let page = new Page( id, titre, description );
     page.isLight = false;
-
-    console.log( "TODO : Enregistrer la création de la page", page );
 
     if( !this.idPageNotUsed( id ) ){
       throw new Error( "Cet identifiant est déjà utilisé" );
@@ -283,6 +287,18 @@ export class ProjectService {
       .toLocaleUpperCase();
   }
 
+  // ====== Observable folder update ======
+  getObservableFolder(){
+    return this.observableFolderUpdate;
+  }
+
+  private notifyFolderUpdated( folder : PageConteneur ){
+    for( let obs of this.observersFolderUpdate ){
+      obs.next( folder );
+    }
+  }
+
+  // =======================================
   private reloadAll(){
     
     

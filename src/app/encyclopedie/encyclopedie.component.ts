@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ProjectService } from '../Services/project.service';
 import { PageConteneur } from '../Services/Beans/PageConteneur';
 import { Page } from '../Services/Beans/Page';

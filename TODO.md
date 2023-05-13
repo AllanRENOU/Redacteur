@@ -1,7 +1,7 @@
  # Backlogs
 
  ## Bugs et améliorations
- - [ ] A la creation d'une fiche, elle n'apparait pas dans l'arborescence
+ - [x] A la creation d'une fiche, elle n'apparait pas dans l'arborescence
  - [ ] A la création d'une page, si le nom est long, l'id n'est pas affiché complètement
  
  ### CSS

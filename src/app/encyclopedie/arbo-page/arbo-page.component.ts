@@ -50,23 +50,35 @@ export class ArboPageComponent implements OnInit{
   }
 
   ngOnInit() {
-    
-    let obs : Observable<PageConteneur | null | undefined> = this.projectService.getArboPageAsync( this.idContainer );
 
-    obs.subscribe( dossier  => {
+    this.projectService.getArboPageAsync( this.idContainer ).subscribe( dossier  => {
+
       if( dossier ){
-          this.container = dossier as PageConteneur;
-
-          this.projectService.getPagesAsync( this.container.pages ).subscribe( fiches =>{
-            this.pages = fiches;
-          } );
-
+        this.container = dossier as PageConteneur;
+        this.refreshPages();
       }else{
         console.error( "Dossier d'arbo ",  this.idContainer, " non trouvé");
       }
     });
+
+    this.projectService.getObservableFolder().subscribe( (dd: PageConteneur)=>{this.onFolderUpdateReceved.call( this, dd ); } )
   }
   
+  onFolderUpdateReceved( dossier : PageConteneur ){
+    if( dossier.id == this.idContainer ){
+      this.container = dossier;
+      this.refreshPages();
+    }
+  }
+
+  private refreshPages(){
+    if(  this.container ){
+      this.projectService.getPagesAsync( this.container.pages ).subscribe( fiches =>{
+        console.log( "Nouvelles fichies : ", fiches );
+        this.pages = fiches;
+      } );
+    }
+  }
 
   onClickDeploy( title : string){
     // Doit-on refresh tout le contenu ?
@@ -177,4 +189,6 @@ export class ArboPageComponent implements OnInit{
       this.projectService.updateArbo( this.container );
     }
   }
+
+
 }
