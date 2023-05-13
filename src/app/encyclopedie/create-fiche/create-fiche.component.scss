@@ -31,11 +31,12 @@ input{
     font-size: 1.5rem;
     font-weight: bold;
     border-color: rgba( 1, 1, 1, 0);
+    width: 100%;
 }
 
 *[name='id']{
     border: none;
-
+    width: calc( 100% - 2rem );
 }
 
 
