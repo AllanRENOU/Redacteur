@@ -1,13 +1,11 @@
-
 $paddingpage : 1rem;
-$colorBG : #d1d1d1;
 
 textarea{
     width: calc( 100% - $paddingpage - $paddingpage );
     font-size: 1rem;
     font-family: sans-serif;
     padding: 0.5rem;
-    background-color: $colorBG;
+    background-color: var(--light_bg);
     resize: none;
 }
 
@@ -39,7 +37,11 @@ textarea{
         }
 
         &:hover{
-            background-color: rgb(219, 218, 218);
+            background-color: var(--light_bg_hover);
         }
+    }
+
+    .selected{
+        background-color: var(--light_bg_hover);
     }
 }

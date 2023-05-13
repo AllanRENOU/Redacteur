@@ -12,7 +12,7 @@
  - [x] Corriger l'erreur dans les, logs (lié à l'instanciation des comp link-page)
  - [x] Ajouter l'autocompletion a la creation d'une page
  - [ ] Revoir AutocompleteInputComponent.getIndexWord
- - [ ] (Autocompletion) Pouvoir sélectionner un choix avec les fleches
+ - [x] (Autocompletion) Pouvoir sélectionner un choix avec les fleches
  - [ ] Revoir le positionnement du menu d'autocompletion
 
  ### Page d'accueil

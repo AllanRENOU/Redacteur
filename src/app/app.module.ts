@@ -48,7 +48,7 @@ import { AutocompleteReaderComponent } from './Utils/autoComplete/autocomplete-r
     AppRoutingModule,
     FormsModule
   ],
-  providers: [ MarkdownPipe ],
+  providers: [ MarkdownPipe, AutocompletionPipe ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

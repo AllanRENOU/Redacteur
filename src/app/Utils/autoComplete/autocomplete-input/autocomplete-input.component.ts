@@ -1,5 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { ProjectService } from 'src/app/Services/project.service';
+import { AutocompletionPipe } from '../../autocompletion.pipe';
+import { Page } from 'src/app/Services/Beans/Page';
 
 @Component({
   selector: 'app-autocomplete-input',
@@ -21,13 +23,12 @@ export class AutocompleteInputComponent implements OnInit {
   @ViewChild('popupAutoComplet')
   popupAutoComplet? : ElementRef<HTMLElement>;
 
-  currentWord = "";
   showAutoComplet = false;
 
   static LETTRES_END_WORD = [ "\n", " ", ".", ",", "?", "!", "<" ];
   static LETTRES_END_WORD_REGEXP = /\n| |\.|,|\?|!|</g;
   
-  constructor( public projectService : ProjectService,private renderer: Renderer2 ){
+  constructor( public projectService : ProjectService,private renderer: Renderer2, private autocompletionPipe : AutocompletionPipe ){
     
   }
 
@@ -43,20 +44,21 @@ export class AutocompleteInputComponent implements OnInit {
   }
 
 
-  onTextChange( ee : Event ){
-
+  onTextChange( ee : KeyboardEvent ){
+    
     if( this.currentTextArea ){
 
       // Hauteur du textarea
       this.renderer.setStyle( this.currentTextArea.nativeElement, "height", this.calcHeight( this.texte ) + "rem" );
 
       // Position et contenu de l'autocompletion
-      this.manageAutoComplete( this.currentTextArea.nativeElement );
+      this.manageAutoComplete( this.currentTextArea.nativeElement, ee );
       
       this.textChanged.emit( this.texte );
     }else{
       console.error( "Textarea not linked" );
     }
+    
   }
   
   calcHeight( value : string ) {
@@ -100,13 +102,13 @@ export class AutocompleteInputComponent implements OnInit {
     
   }
 
-  manageAutoComplete( textarea : HTMLTextAreaElement ){
+  manageAutoComplete( textarea : HTMLTextAreaElement, ee : KeyboardEvent ){
 
     // ===== Recherche du mot actuel =====
     let indexWord = AutocompleteInputComponent.getIndexWord( textarea.value, textarea.selectionStart );
 
     let mot = textarea.value.substring( indexWord.start, indexWord.end );
-    console.log( "mot : ", mot)
+    console.log( "mot : ", mot);
     // ===== Positionnement de la popup  =====
 
     const OFFSET_TEXT_TOP = 3.5;
@@ -118,7 +120,12 @@ export class AutocompleteInputComponent implements OnInit {
       this.showAutoComplet = true;
       
       if( this.popupAutoComplet ){
-        this.currentWord = mot.substring( 1 );
+        
+        mot = mot.substring( 1 );
+        this.listAutoComplete = this.autocompletionPipe.transform( this.projectService.getAllPages() , mot ).map( (page : Page, index : number ) =>{
+          return { texte : page.titre, id : page.id, index : index }
+        } );
+
         // Recherche du numéro de ligne et de caractère
         let lines = textarea.value.split( "\n" );
         let charNum : number = textarea.selectionStart;
@@ -131,21 +138,45 @@ export class AutocompleteInputComponent implements OnInit {
 
         this.popupAutoComplet.nativeElement.style.top = (lineNum * LETTER_HEIGHT + OFFSET_TEXT_TOP ) + "rem";
         this.popupAutoComplet.nativeElement.style.left = (charNum * LETTER_WIDTH + OFFSET_TEXT_LEFT ) + "rem";
+
+        this.manageArrowInput( ee, mot ); 
       }else{
         console.warn( "popup non visible" );
       }
       
     }else{
       this.showAutoComplet = false;
-      this.currentWord = mot;
+      this.indexAutoComplete = 0;
     }
   }
 
-  onClickAutoCompletion( ee : MouseEvent, selectedWord : string ){
+  protected indexAutoComplete : number = 0;
+  protected listAutoComplete : { texte : string, id : string, index : number }[] = [];
+  private manageArrowInput( ee : KeyboardEvent, mot : string ){
+
+    const ARROW_UP = "ArrowUp";
+    const ARROW_DOWN = "ArrowDown";
+    const ENTER = "Enter";
+    
+    if( ee.key == ARROW_DOWN || ee.key == ARROW_UP || ee.key == ENTER ){
+      ee.preventDefault();
+
+      if( ee.key == ARROW_DOWN ){
+        this.indexAutoComplete = ( this.indexAutoComplete + 1 ) % this.listAutoComplete.length;
+      }else if( ee.key == ARROW_UP ){
+        this.indexAutoComplete = this.indexAutoComplete == 0 ? this.listAutoComplete.length - 1 : this.indexAutoComplete - 1;
+      }else if( ee.key == ENTER ){
+        this.onClickAutoCompletion( this.listAutoComplete.filter( ll => ll.index == this.indexAutoComplete )[0].id );
+      }
+
+    }
+  }
+
+  onClickAutoCompletion( selectedWord : string ){
     
     if( this.currentTextArea ){
       this.showAutoComplet = false;
-      this.currentWord = "";
+      this.indexAutoComplete = 0;
 
       let indexWord = AutocompleteInputComponent.getIndexWord( this.texte, this.currentTextArea.nativeElement.selectionStart );
       indexWord.start++;
