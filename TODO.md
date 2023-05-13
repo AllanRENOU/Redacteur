@@ -2,6 +2,7 @@
 
  ## Bugs et améliorations
  - [ ] A la creation d'une fiche, elle n'apparait pas dans l'arborescence
+ - [ ] A la création d'une page, si le nom est long, l'id n'est pas affiché complètement
  
  ### CSS
  - [ ] Centraliser les variables CSS dans un fichier globale (ex : couleurs)
@@ -17,6 +18,12 @@
 
 
  ## Evolutions
+
+ ### Encyclopédie
+ - [ ] Faire des fiches "Favories"
+ - [ ] Faire une recherche de fiche
+ 
+ ### Autre
  - [ ] Pages Axes
  - [ ] Pages Structure
  - [ ] Pages Rédaction
