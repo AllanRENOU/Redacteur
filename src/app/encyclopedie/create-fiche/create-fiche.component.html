@@ -9,7 +9,8 @@
         @<input type="text" name="id" ngModel [(ngModel)]="id" placeholder="id" placeholder="{{titre | idTransform }}" pattern="([A-Z]|[0-9]|_)*" (ngModelChange)="id = projectService.generateIdFromString( $event )" />
         </div>
         
-        <input type="text" name="description" ngModel [(ngModel)]="description" placeholder="Description de la fiche"/>
+        <!--<input type="text" name="description" ngModel [(ngModel)]="description" placeholder="Description de la fiche"/>-->
+        <app-autocomplete-input [texte]="''" (textChanged)="onDescChanged( $event )"></app-autocomplete-input>
 
         <p class="errorMessage" *ngIf="errorMessage">{{errorMessage}}</p>
 

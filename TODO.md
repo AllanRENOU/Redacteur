@@ -10,7 +10,7 @@
 
  ### Inputs
  - [x] Corriger l'erreur dans les, logs (lié à l'instanciation des comp link-page)
- - [ ] Ajouter l'autocompletion a la creation d'une page
+ - [x] Ajouter l'autocompletion a la creation d'une page
  - [ ] Revoir AutocompleteInputComponent.getIndexWord
  - [ ] (Autocompletion) Pouvoir slectionner un choix avec les fleches
 

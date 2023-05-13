@@ -29,6 +29,11 @@ export class CreateFicheComponent implements OnInit{
   ngOnInit(): void {
     (document.getElementById("inputCreateFiche") as HTMLElement).focus();
   }
+  
+  onDescChanged( description : string ){
+    this.description = description;
+    console.log( "newDesc : ", this.description );
+  }
 
   onSubmit(){
 

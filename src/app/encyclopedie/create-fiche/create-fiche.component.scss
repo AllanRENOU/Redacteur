@@ -32,24 +32,7 @@ input{
 *[name='id']{
     border: none;
     width: calc( 100% - 2rem );
-}
-
-
-*[name='description']{
-    margin: 2rem 0 0 0;
-    border-color: rgba( 1, 1, 1, 0.2);
-    width: calc( 100% - 2 * $paddingpage );
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    min-height: 1.1rem;
-    transition: background-color $timeTransition, border-color $timeTransition ;
-    background-color: transparent;
-
-    &:hover{
-        background-color: white;
-        border-color : black;
-    }
-
+    margin-bottom: 2rem;
 }
 
 .errorMessage{
