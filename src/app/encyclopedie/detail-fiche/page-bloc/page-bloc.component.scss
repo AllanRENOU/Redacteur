@@ -2,26 +2,14 @@ $paddingpage : 1rem;
 $timeTransition : 0.5s;
 
 $buttonSize : 1.7rem;
-$colorBGForm : rgb(40, 44, 36);
-$colorBG : #d1d1d1;
 
 .formUpdateBloc{
-    input{
-        font-size: 1rem;
-    }
-    
-    textarea{
-        margin-top: 1rem;
-    }
-}
-
-#formUpdatePage,.formUpdateBloc{
     margin-top: 1rem;
     margin-bottom: -1rem;
     margin-left: calc( $paddingpage / -2 );
     padding: calc( $paddingpage / 2 );
-    background-color: $colorBGForm ;
-    border-radius: 1rem;
+    background-color: var(--dark_bg) ;
+    border-radius: 10px;
 
     position : relative;
 
@@ -30,13 +18,10 @@ $colorBG : #d1d1d1;
     }
 
     input{
-        font-weight: bold;
-        background-color: $colorBG;
-        border-color: rgba( 0, 0, 0, 0.2);
     }
 
     button{
-        margin-top: 0.5rem;
+        
     }
 
 }
@@ -58,7 +43,7 @@ h4{
     font-size: 1rem;
     
     &:hover{
-        background-image: radial-gradient(circle, #bdbcbc 50%, transparent 80%, transparent 100%);
+        background-image: radial-gradient(circle, var(--light_bg_hover) 50%, transparent 80%, transparent 100%);
     }
 }
 
@@ -97,6 +82,8 @@ h4{
 
 .popupInfoMarkdownContainer{
     position: relative;
+    z-index: 10;
+
     .popupInfoMarkdown{
         width: max-content;
         position: absolute;
@@ -122,6 +109,7 @@ h4{
     min-height: 1.1rem;
     transition: background-color $timeTransition, border-color $timeTransition ;
     background-color: transparent;
+    color: var(--light_textColor);
     border: solid transparent 1px;
 
     &:hover{

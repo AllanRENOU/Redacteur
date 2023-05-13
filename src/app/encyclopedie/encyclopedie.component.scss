@@ -16,8 +16,7 @@ $widthArbo : 15%;
         width: $widthArbo;
         border-right: solid black 1px;
 
-        /*background-color: rgb( 40, 44, 36);*/
-        color: white;
+        color: var(--dark_textColor);
 
         font-family: sans-serif;
         font-weight: bold;
@@ -25,7 +24,7 @@ $widthArbo : 15%;
 
     .contentContainer{
         width: calc( 100% - $widthArbo - $arboSeparateur );
-        background-color: #d1d1d1;
+        background-color: var(--light_bg);
         position: relative
     }
 

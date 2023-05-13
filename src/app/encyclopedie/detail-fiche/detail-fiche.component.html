@@ -42,7 +42,7 @@
                 <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
                 
                 <app-autocomplete-input [texte]="''" (textChanged)="onDescChanged( $event )"></app-autocomplete-input>
-                <button type="submit" [disabled]="!createBlocForm.form.valid">Valider</button>
+                <button type="submit" [disabled]="!createBlocForm.form.valid" class="buttonBlack">Valider</button>
             </form>
         </div>
       </div>

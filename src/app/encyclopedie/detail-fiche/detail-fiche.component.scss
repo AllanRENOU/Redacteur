@@ -2,8 +2,6 @@ $paddingpage : 1rem;
 $timeTransition : 0.5s;
 
 $buttonSize : 1.7rem;
-$colorBGForm : rgb(40, 44, 36);
-$colorBG : #d1d1d1;
 
 .detailPageContainer{
     position: absolute;
@@ -52,7 +50,7 @@ h2{
 }
 
 .more{
-    color: rgba(0, 0, 0, 0);
+    color: var(--light_textColor);
     user-select: none;
     cursor: pointer;
     background-image: none;
@@ -61,7 +59,7 @@ h2{
     font-size: 1rem;
     
     &:hover{
-        background-image: radial-gradient(circle, #bdbcbc 50%, transparent 80%, transparent 100%);
+        background-image: radial-gradient(circle, var(--light_bg_hover) 50%, transparent 80%, transparent 100%);
     }
 }
 
@@ -85,20 +83,20 @@ h2{
     width: auto;
     margin-top: 1rem;
     margin-bottom: 3rem;
-    background-color: $colorBGForm ;
-    color: white;
+    background-color: var(--dark_bg) ;
+    color: var(--dark_textColor);
     text-decoration: none;
     border-radius: 1rem;
     display: inline-flex;
     align-items: center;
     overflow: hidden;
-    cursor: pointer;
     opacity: 0.5;
 
     max-width: 2rem;
     transition: max-width 0.5s, height 0.5s;
 
     &.creating{
+        border-radius: 10px;
         max-width: calc( 100% - 2 * $paddingpage );
         height: 12rem;
         width: calc( 100% - 2 * $paddingpage );
@@ -109,9 +107,13 @@ h2{
     }
     
 
-    &:not(.creating):hover {
-        max-width: 300px;
-        opacity: 1;
+    &:not(.creating){
+
+        cursor: pointer;
+        &:hover {
+            max-width: 300px;
+            opacity: 1;
+        }
     }
   
     .icon {
@@ -126,6 +128,7 @@ h2{
     .text {
         white-space: nowrap;
         padding-right: 1rem;
+        user-select: none;
     }
   }
   
@@ -135,7 +138,8 @@ h2{
 
     input{
         display: block;
-        background-color: $colorBG;
+        background-color: var(--light_bg);
+        color: var(--light_textColor);
 
         &[name="newTitle"]{
             border-color: rgba( 0, 0, 0, 0.2);
@@ -150,20 +154,6 @@ h2{
             width: calc( 100% - 2 * $paddingpage );
             border: none;
 
-        }
-    }
-
-    button{
-        margin-top: 1rem;
-        color: black;
-        background: $colorBG;
-        height: 2rem;
-        cursor: pointer;
-
-        &:disabled{
-            background-color: rgba(61, 61, 61, 0.8);
-            color: white;
-            cursor: no-drop;
         }
     }
 }
@@ -183,7 +173,7 @@ h2{
     font-size: 7vw;
     font-family: sans-serif;
     font-weight: bold;
-    color: #9f9f9f;
+    color: var(--light_bg_textColor);
     user-select: none;
 }
 

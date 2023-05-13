@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+    /*Accueil et arbo fiches(encyclopedie) */
+    --dark_bg : rgb(6 6 6);
+    --dark_bg_hover : rgba(64, 67, 59, 1);
+    --dark_textColor : white;
+    --dark_textColor_hover : white;
+
+    --dark_button_bg : rgba(61, 61, 61, 0.8);
+    --dark_button_disable_bg : rgba(143, 141, 141, 0.8);
+    --dark_button_textColor : rgb(207, 207, 207);
+    --dark_button_hover_textColor : white;
+    --dark_button_disable_textColor : rgb(187, 187, 187);
+    
+    /* Header */
+    --gray_bg : rgba(22, 22, 23, .8);
+    --gray_bg_hover : rgb(128, 128, 128);
+    --gray_textColor : rgb(172, 172, 172);
+    --gray_textColor_hover : white;
+
+    --light_bg : #d1d1d1;
+    --light_bg_hover : #bdbcbc;
+    --light_textColor : black;
+    --light_textColor_hover : black;
+    --light_bg_textColor : #9f9f9f;
+
+    --error_textColor : red;
+}
+
 body, html{
     padding: 0;
     margin: 0;
@@ -8,8 +36,26 @@ body, html{
 
 .backgroundBlack{
     
-    background-image: url(../../assets/octogones3.png);
-    background-color: rgb(6 6 6);
+    background-image: url(/assets/octogones3.png);
+    background-color: var(--dark_bg)
+}
+
+.buttonBlack{
+    margin-top: 1rem;
+    color: var(--dark_button_textColor);;
+    background: var(--dark_button_bg);
+    height: 2rem;
+    cursor: pointer;
+
+    &:disabled{
+        background-color: var(--dark_button_disable_bg);
+        color: var(--dark_button_disable_textColor);
+        cursor: no-drop;
+    }
+
+    &:not(:disabled):hover{
+        color: var(--dark_button_hover_textColor);
+    }
 }
 
 
@@ -17,5 +63,5 @@ body, html{
 
 @font-face {
     font-family: absender1;
-    src: url(../../assets/absender1.ttf);
+    src: url(/assets/absender1.ttf);
 }

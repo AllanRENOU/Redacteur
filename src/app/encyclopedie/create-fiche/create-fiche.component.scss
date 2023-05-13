@@ -20,11 +20,6 @@ form>*{
 input{
     margin-top: 0.5rem;
     background-color: transparent;
-    
-    /*
-    &[required]{
-        border-bottom: solid red 1px;
-    }*/
 }
 
 *[name='titre']{
@@ -58,7 +53,7 @@ input{
 }
 
 .errorMessage{
-    color: red;
+    color: var(--error_textColor);
 
 }
 
