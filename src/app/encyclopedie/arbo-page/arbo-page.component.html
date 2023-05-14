@@ -1,7 +1,7 @@
 <!-- Nom du dossier-->
 <span *ngIf="this.container" class="pageContainer" [ngClass]="this.isOpened?'arrowDown':''" (click)="onClickDeploy(this.container.titre)">
     {{this.container.titre}}
-    <span class="more" title="Options" (click)="onClickShowMenu( $event )" >...
+    <span class="more" title="Options" (click)="onClickShowMenu( $event )" *ngIf="!readonly" >...
         <app-float-menu *ngIf="showMenu" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event )" [values]="MENU_ITEMS"></app-float-menu>
     </span>
 </span>

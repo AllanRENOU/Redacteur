@@ -23,7 +23,7 @@
  ## Evolutions
 
  ### Encyclopédie
- - [ ] Faire des fiches "Favories"
+ - [x] Faire des fiches "Favories"
  - [x] Faire une recherche de fiche
  - [ ] Déplacer une fiche
  - [ ] Changer une fiche ou un dossier de dossier (sauf ROOT)

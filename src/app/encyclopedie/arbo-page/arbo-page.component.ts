@@ -17,6 +17,8 @@ export class ArboPageComponent implements OnInit{
   isOpened? : boolean = false;
   @Input()
   idContainer : string = "";
+  @Input()
+  readonly = false;
 
   container? : PageConteneur | null ;
   pages : Page[] = [];

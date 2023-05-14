@@ -140,17 +140,38 @@ export class DetailFicheComponent implements OnChanges {
       }
       case MenuItem.ADD_FAV :{
         if( this.page ){
-          this.page.isFavoris = true;
-          this.projectService.updatePage( this.page );
-          this.updateMore();
+
+          let favoris = this.projectService.getArboPage( ProjectService.ID_FAVORIS_FOLDER );
+          if( favoris ){
+            this.page.isFavoris = true;
+            this.projectService.updatePage( this.page );
+            favoris.pages.push( this.page.id );
+            this.projectService.updateArbo( favoris );
+            this.updateMore();
+          }else{
+            console.log( "Dossier favoris non trouvé" );
+          }
         }
         break;
       }
       case MenuItem.REM_FAV :{
         if( this.page ){
-          this.page.isFavoris = false;
-          this.projectService.updatePage( this.page );
-          this.updateMore();
+          
+          let favoris = this.projectService.getArboPage( ProjectService.ID_FAVORIS_FOLDER );
+          if( favoris ){
+            this.page.isFavoris = false;
+            this.projectService.updatePage( this.page );
+
+            let i = favoris.pages.indexOf( this.page.id );
+            if( i != -1 ){
+              favoris.pages.splice( i, 1 );
+              this.projectService.updateArbo( favoris );
+            }
+
+            this.updateMore();
+          }else{
+            console.log( "Dossier favoris non trouvé" );
+          }
         }
         break;
       }

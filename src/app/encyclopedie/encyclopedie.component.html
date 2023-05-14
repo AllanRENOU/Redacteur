@@ -8,6 +8,7 @@
                 <li *ngFor="let page of projectService.getAllPages() | autocompletion:currentSearch" (click)="onClickSearchResult( page )">{{page.titre}}</li>
             </ul>
         </form>
+        <app-arbo-page idContainer="favoris" [isOpened]="false" [readonly]="true" (pageClicked)="onPageClicked($event)"/>
         <app-arbo-page idContainer="root" [isOpened]="true" (pageClicked)="onPageClicked($event)" (createPageClicked)="onNewPageClicked($event)"/>
     </div>
 

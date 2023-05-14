@@ -14,6 +14,7 @@ export class ProjectService {
   static url = "http://localhost:8080/";
 
   static ID_ROOT_FOLDER = "root";
+  static ID_FAVORIS_FOLDER = "favoris";
 
   dataProject : { code : string, name : string } = { code : "", name : "Rédacteur" }
 
@@ -327,10 +328,14 @@ export class ProjectService {
        
         this.http.get<any>( ProjectService.url + this.dataProject.code + "/dossier" ).subscribe( data =>{
         
-          console.log( "Données de l'arborescence recues" );
+          console.log( "Données de l'arborescence recues", data );
           if( Object.keys( data ).length == 0 ){
+
             console.log( "Création d'un dossier root" )
             this.updateArbo( this.getRootFolder() );
+
+            console.log( "Création d'un dossier favoris" )
+            this.updateArbo( this.getFavorisFolder() );
           }else{
             for( let idDossier of Object.keys( data )){
               let dossier = this.generatePageContainer( data[ idDossier ] );
@@ -340,6 +345,12 @@ export class ProjectService {
             }
             console.log( "Données de l'arborescence traitées.", this.arboPage );
           }
+
+          if( !this.getArboPage( ProjectService.ID_FAVORIS_FOLDER ) ){
+            console.log( "Création d'un dossier favoris" )
+            this.updateArbo( this.getFavorisFolder() );
+          }
+
           observer.next( this.arboPage );
 
         });
@@ -453,6 +464,24 @@ export class ProjectService {
       }
     }
     return rootFolder;
+  }
+
+  private getFavorisFolder() : PageConteneur{
+
+    let favFolder;
+
+    if( this.arboPage ){
+      favFolder = this.getArboPage( ProjectService.ID_FAVORIS_FOLDER );
+    }else{
+      this.arboPage = [];
+    }
+      
+    if( !favFolder ){
+      favFolder = new PageConteneur( ProjectService.ID_FAVORIS_FOLDER, "Favoris" );
+      this.arboPage.push( favFolder );
+    }
+
+    return favFolder;
   }
 
   private remplacerPage( page : Page ){
