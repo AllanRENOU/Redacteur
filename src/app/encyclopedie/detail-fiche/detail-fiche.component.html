@@ -35,7 +35,7 @@
     <!-- Bouton Ajouter un bloc -->
     <div class="floatingButton" *ngIf="page" [ngClass]="createPage?'creating':''" (click)="onClickCreateBloc()">
         <span *ngIf="!createPage" class="icon">+</span>
-        <p class="text">Ajouter un bloc</p>
+        <p class="text">Ajouter une rublique</p>
 
         <div *ngIf="createPage && !updatePage" class="createBlocContainer">
             <form #createBlocForm="ngForm" (ngSubmit)="onSubmitNewBloc()" >
