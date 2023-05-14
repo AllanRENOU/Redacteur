@@ -11,7 +11,7 @@
     <!-- Input nouveau dossier -->
     <li *ngIf="showCreateInput" class="page" >
         <form (ngSubmit)="onSubmit()">
-            <input type="text" #inputNameNewItem name="inputNameNewItem" [(ngModel)]="nameNewItem"/>
+            <input type="text" #inputNameNewItem name="inputNameNewItem" autocomplete="off" [(ngModel)]="nameNewItem"/>
             <button type="submit"></button>
         </form>
     </li>

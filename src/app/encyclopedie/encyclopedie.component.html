@@ -1,7 +1,17 @@
 <div class="globalContainer">
+
+    <!-- Aborescence -->
     <div class="arboContainer backgroundBlack">
+        <form class="searchContainer">
+            <input class="inputSearch" #inputSearch name="inputSearch"  placeholder="Rechercher une fiche" autocomplete="off" [(ngModel)]="currentSearch"/>
+            <ul class="searchResult" *ngIf="currentSearch">
+                <li *ngFor="let page of projectService.getAllPages() | autocompletion:currentSearch" (click)="onClickSearchResult( page )">{{page.titre}}</li>
+            </ul>
+        </form>
         <app-arbo-page idContainer="root" [isOpened]="true" (pageClicked)="onPageClicked($event)" (createPageClicked)="onNewPageClicked($event)"/>
     </div>
+
+    <!-- Contenu page -->
     <div class="contentContainer">
         <app-detail-fiche *ngIf="!createFiche" [id]="currentIdPage"/>
         <app-create-fiche *ngIf="createFiche" [folder]="parentFolder" (created)="onNewPageCreated( $event )" />

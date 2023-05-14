@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { ProjectService } from '../Services/project.service';
 import { PageConteneur } from '../Services/Beans/PageConteneur';
 import { Page } from '../Services/Beans/Page';
@@ -22,6 +22,9 @@ export class EncyclopedieComponent {
   // Creation d'une fiche
   createFiche = false;
   parentFolder? : PageConteneur;
+
+  // Recherche
+  currentSearch = "";
 
   constructor( public projectService : ProjectService, private router: Router, private _location: Location){
     
@@ -65,5 +68,14 @@ export class EncyclopedieComponent {
     this.openPage( newPage.id );
   }
 
+  // ========== Recherche ==========
+  onClickSearchResult( page : Page ){
+    this.openPage( page.id );
+  }
+  
+  @HostListener('document:click')
+  clickout() {
+    this.currentSearch = "";
+  }
 }
 
