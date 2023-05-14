@@ -2,6 +2,7 @@
 
     <!-- Nom de la page -->
     <h2 *ngIf="!updatePage">
+        <a *ngIf="page.isFavoris" class="iconFavoris"></a>
         {{page.titre}}
         <span class="more" (click)="onClickMorePage($event)">
             ...

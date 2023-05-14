@@ -7,5 +7,8 @@ export const enum MenuItem{
     ADD_FOLDER = "Nouveau dossier",
 
     UP = "Monter",
-    DOWN = "Descendre"
+    DOWN = "Descendre",
+
+    ADD_FAV = "Ajouter aux favoris",
+    REM_FAV = "Retirer des favoris"
   }

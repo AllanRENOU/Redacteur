@@ -46,6 +46,7 @@ export class DetailFicheComponent implements OnChanges {
         if( page ){
           this.page = page;
           this.resetForms();
+          this.updateMore();
         }else{
           console.log( "TODO : Erreur à gérer" );
         }
@@ -115,13 +116,10 @@ export class DetailFicheComponent implements OnChanges {
     event.stopPropagation();
   }
 
-  
   onHideMenu(){
     this.idBlocMenu = "";
     console.log( "TODO : Revoir fermeture menu more")
   }
-
-  
 
   onClickMenuPage( item : MenuItem ){
     
@@ -139,6 +137,37 @@ export class DetailFicheComponent implements OnChanges {
         alert( "Fonction non implémentée");
           
         break;
+      }
+      case MenuItem.ADD_FAV :{
+        if( this.page ){
+          this.page.isFavoris = true;
+          this.projectService.updatePage( this.page );
+          this.updateMore();
+        }
+        break;
+      }
+      case MenuItem.REM_FAV :{
+        if( this.page ){
+          this.page.isFavoris = false;
+          this.projectService.updatePage( this.page );
+          this.updateMore();
+        }
+        break;
+      }
+    }
+  }
+
+  updateMore(){
+
+    if( this.MENU_MORE_PAGE.length == 3 ){
+      this.MENU_MORE_PAGE.pop();
+    }
+
+    if( this.page ){
+      if( this.page.isFavoris ){
+        this.MENU_MORE_PAGE.push( MenuItem.REM_FAV );
+      }else{
+        this.MENU_MORE_PAGE.push( MenuItem.ADD_FAV );
       }
     }
   }

@@ -414,6 +414,8 @@ export class ProjectService {
       
       page.isRemoved = data.isRemoved === true;
       //console.log( "Page générée ", data, ", ", page );
+
+      page.isFavoris = data.isFavoris == true;
     }else{
       console.error( "Impossible de convertir ", data, " en Fiche");
     }

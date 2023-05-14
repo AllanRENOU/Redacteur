@@ -18,6 +18,16 @@ $buttonSize : 1.7rem;
     background-image: url( '/assets/petitCarreaux.png' );
     background-repeat: no-repeat;
     background-position: 100% 100%;
+
+    .iconFavoris{
+        width: 1.5rem;
+        height: 1.5rem;
+        display: inline-block;
+        
+        background-image: url( '/assets/star.svg' );
+        background-repeat: no-repeat;
+        background-position: 100% 100%;
+    }
 }
 
 h2{
