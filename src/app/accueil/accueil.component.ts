@@ -79,7 +79,10 @@ export class AccueilComponent {
 
   getLetter( name : string ) : string {
     name = name.toUpperCase();
-    if( name.startsWith( "UN ") || name.startsWith( "LE ") || name.startsWith( "LA ") || name.startsWith( "L' ") ){
+    if( name.startsWith( "L'") ){
+      
+      return name[2];
+    }else if( name.startsWith( "UN ") || name.startsWith( "LE ") || name.startsWith( "LA ") ){
       return name[3];
     }else if( name.startsWith( "LES ") || name.startsWith( "UNE ") || name.startsWith( "DES ") ){
       return name[4];
