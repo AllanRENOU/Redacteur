@@ -31,6 +31,9 @@ Un cercle apparait alors, contenant la première lettre du nom du projet. Clique
 
 ### Encyclopédie
 Cette fonctionnalité permet de compiler le lore de votre univers sous forme de fiche. Chaque fiche est constituée d'un titre, d'une description, d'un identifiant et d'un ensemble de rublique.
+ 
+ > L'identifiant est définie lors de la création de la fiche, et n'a pas modifiable. 
+
 Les informations à afficher étant différente en fonction du sujet de la fiche (personnage, lieux, évenement, objet, ...), il n'y a pas de rublique prédéfinie. Vous pouvez ajouter des rubriques en fonction de vos besoins.
 
 Lors de la rédaction de la fiche, il est possible de faire référence à une autre fiche. Pour cela, au milieux du texte, vous pouvez ajouter le caractère **@** suivi de l'identifiant de la fiche. Une liste apparaitra, vous proposant les fiches disponibles. Lorsque vous validerez le texte, l'identifiant sera remplacé par son nom. Au survol de la sourie, une bulle apparaitra, affichant le contenu du la déscription de la fiche.
