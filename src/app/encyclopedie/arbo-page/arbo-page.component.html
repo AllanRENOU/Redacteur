@@ -24,7 +24,7 @@
     <!-- Liste des fichiers -->
     <li *ngFor="let page of this.pages" class="page moreContainer" (click)="onClickPage( page.id )">
         {{page.titre}}
-        <span class="more" title="Options" (click)="onClickShowMenuFromFiche( $event, page.id )" >...
+        <span class="more" title="Options"  *ngIf="!readonly" (click)="onClickShowMenuFromFiche( $event, page.id )" >...
             <app-float-menu *ngIf="pageIdToShowMenu == page.id" (toHide)="onHideMenu()" (onClick)="onClickMenuFiche( $event, page )" [values]="MENU_ITEMS_FICHE"></app-float-menu>
         </span>
     </li>
