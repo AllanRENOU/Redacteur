@@ -23,6 +23,7 @@ export class ProjectService {
   private arboPage : PageConteneur[] = [];
 
   private observableArboPage? : Observable<any>;
+  private observerWaitingArbo : Observer<PageConteneur[]>[] = [];
 
   // Observable folder update
   public observableFolderUpdate : Observable<PageConteneur> = new Observable( ( obs:Observer<PageConteneur> )=>{ this.observersFolderUpdate.push( obs ) } );
@@ -165,7 +166,10 @@ export class ProjectService {
     }
   }
 
-
+  getAllArboPage() : PageConteneur[]{
+    console.log( "getAllArboPage", this.arboPage );
+    return this.arboPage.filter( dd => dd.id != ProjectService.ID_FAVORIS_FOLDER );
+  }
 
   /**
    * Crée un sous dossier dans le dossier indiqué
@@ -212,6 +216,31 @@ export class ProjectService {
 
     dossier.isRemoved = true;
     this.updateArbo( dossier );
+  }
+
+  moveArbo( idDossierToMove : string, idDstDossier : string ){
+
+    // On ne peut pas copier root et favoris, ou copier vers favoris
+    if( idDossierToMove != ProjectService.ID_ROOT_FOLDER && idDossierToMove != ProjectService.ID_FAVORIS_FOLDER && idDstDossier != ProjectService.ID_FAVORIS_FOLDER ){
+      
+      this.getAllArboPage()
+        .filter( dd => dd.subContainer
+            .filter( posId=>posId.id==idDossierToMove ).length > 0 )
+        .forEach( dd => {
+          dd.removeSubContainer( idDossierToMove );
+          this.updateArbo( dd );
+        } );
+      
+      let dstDossier = this.getArboPage( idDstDossier );
+      if( dstDossier ){
+        dstDossier.addSubContainer( idDossierToMove );
+        this.updateArbo( dstDossier );
+      }
+
+    }else{
+      console.warn( "Impossible de modifier les dossiers ", ProjectService.ID_ROOT_FOLDER, " et ", ProjectService.ID_FAVORIS_FOLDER  );
+    }
+    
   }
 
   /**
@@ -325,37 +354,40 @@ export class ProjectService {
 
       // Récupération des dossiers
       this.observableArboPage = new Observable<PageConteneur[]>( observer => {
-       
-        this.http.get<any>( ProjectService.url + this.dataProject.code + "/dossier" ).subscribe( data =>{
-        
-          console.log( "Données de l'arborescence recues", data );
-          if( Object.keys( data ).length == 0 ){
-
-            console.log( "Création d'un dossier root" )
-            this.updateArbo( this.getRootFolder() );
-
-            console.log( "Création d'un dossier favoris" )
-            this.updateArbo( this.getFavorisFolder() );
-          }else{
-            for( let idDossier of Object.keys( data )){
-              let dossier = this.generatePageContainer( data[ idDossier ] );
-              if( dossier ){
-                this.arboPage.push( dossier );
-              }
-            }
-            console.log( "Données de l'arborescence traitées.", this.arboPage );
-          }
-
-          if( !this.getArboPage( ProjectService.ID_FAVORIS_FOLDER ) ){
-            console.log( "Création d'un dossier favoris" )
-            this.updateArbo( this.getFavorisFolder() );
-          }
-
-          observer.next( this.arboPage );
-
-        });
+        this.observerWaitingArbo.push( observer );
       } );
       
+      this.http.get<any>( ProjectService.url + this.dataProject.code + "/dossier" ).subscribe( data => {
+        
+        console.log( "Données de l'arborescence recues", data );
+        if( Object.keys( data ).length == 0 ){
+
+          console.log( "Création d'un dossier root" )
+          this.updateArbo( this.getRootFolder() );
+
+          console.log( "Création d'un dossier favoris" )
+          this.updateArbo( this.getFavorisFolder() );
+        }else{
+          for( let idDossier of Object.keys( data )){
+            let dossier = this.generatePageContainer( data[ idDossier ] );
+            if( dossier ){
+              this.arboPage.push( dossier );
+            }
+          }
+          console.log( "Données de l'arborescence traitées.", this.arboPage );
+        }
+
+        if( !this.getArboPage( ProjectService.ID_FAVORIS_FOLDER ) ){
+          console.log( "Création d'un dossier favoris" )
+          this.updateArbo( this.getFavorisFolder() );
+        }
+
+        this.observerWaitingArbo.forEach( oo => oo.next( this.arboPage ) );
+        this.observerWaitingArbo = [];
+
+      });
+
+
       // Récupération des pages
       this.http.get<any>( ProjectService.url + this.dataProject.code + "/fiche" ).subscribe( data =>{
 

@@ -39,7 +39,6 @@ export class LinkPageComponent implements OnInit {
       this.projectService.getPageAsync( this.code ).subscribe( (page : Page | null )=>{
         if( page ){
             this.description = this.replaceRefWithTitle( page.description );
-            //this.description = page.description;
         }else{
           console.error( "Page ", this.code, " introuvable" )
         }

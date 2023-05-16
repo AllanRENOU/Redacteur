@@ -19,10 +19,16 @@
     --gray_textColor_hover : white;
 
     --light_bg : #d1d1d1;
-    --light_bg_hover : #bdbcbc;
+    --light_bg_hover : #a0a0a0;
     --light_textColor : black;
     --light_textColor_hover : black;
     --light_bg_textColor : #9f9f9f;
+    
+    --light_button_bg : #707070;
+    --light_button_disable_bg : #a1a1a1;
+    --light_button_textColor : rgb(207, 207, 207);
+    --light_button_hover_textColor : white;
+    --light_button_disable_textColor : rgb(187, 187, 187);
 
     --error_textColor : red;
 }
@@ -56,6 +62,32 @@ body, html{
     &:not(:disabled):hover{
         color: var(--dark_button_hover_textColor);
     }
+}
+
+.buttonLight{
+    margin-top: 1rem;
+    color: var(--light_button_textColor);;
+    background: var(--light_button_bg);
+    height: 2rem;
+    cursor: pointer;
+
+    &.disabled{
+        background-color: var(--light_button_disable_bg);
+        color: var(--light_button_disable_textColor);
+        cursor: no-drop;
+    }
+    
+    &:not(.disabled){
+        border-width: 2px;
+        border-style: outset;
+        border-color: buttonborder;
+
+        &:hover{
+            color: var(--light_button_hover_textColor);
+        }
+    }
+
+    
 }
 
 

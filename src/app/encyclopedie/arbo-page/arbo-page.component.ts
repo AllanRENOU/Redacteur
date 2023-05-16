@@ -1,10 +1,11 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Page } from 'src/app/Services/Beans/Page';
 import { PageConteneur } from 'src/app/Services/Beans/PageConteneur';
 import { ProjectService } from 'src/app/Services/project.service';
 import { MenuItem } from 'src/app/Utils/float-menu/MenuItem';
+import { PopupSelectComponent } from 'src/app/Utils/popups/popup-select/popup-select.component';
 
 @Component({
   selector: 'app-arbo-page',
@@ -29,11 +30,13 @@ export class ArboPageComponent implements OnInit{
     MenuItem.ADD_FOLDER,
     MenuItem.UP,
     MenuItem.DOWN,
+    MenuItem.MOOVE,
     MenuItem.REMOVE
   ];
   public readonly MENU_ITEMS_FICHE : MenuItem[] = [
     MenuItem.UP,
-    MenuItem.DOWN
+    MenuItem.DOWN,
+    MenuItem.MOOVE
   ];
   showMenu : boolean = false;
 
@@ -52,7 +55,7 @@ export class ArboPageComponent implements OnInit{
   @Output()
   down : EventEmitter<PageConteneur> = new EventEmitter<PageConteneur>();
 
-  constructor( private projectService : ProjectService){
+  constructor( private projectService : ProjectService, private viewContainerRef: ViewContainerRef){
   }
 
   ngOnInit() {
@@ -169,6 +172,13 @@ export class ArboPageComponent implements OnInit{
           break;
         }
 
+        case MenuItem.MOOVE :{
+          console.log( "Déplacer" );
+          this.openPopupMooveDossier()
+            
+          break;
+        }
+
         case MenuItem.REMOVE :{
           console.log( "Suppression du dossier" );
           if( confirm( "Est tu certain de vouloir supprimer le dossier '" + this.container.titre + "' ?") ){
@@ -199,6 +209,12 @@ export class ArboPageComponent implements OnInit{
         case MenuItem.DOWN :{
           console.log( "Descendre" );
           this.container.descendreFiche( page.id );
+          break;
+        }
+        
+        case MenuItem.MOOVE :{
+          this.openPopupMooveFiche( page );
+            
           break;
         }
 
@@ -248,5 +264,53 @@ export class ArboPageComponent implements OnInit{
     }
   }
 
+  // Popup deplacement
+  private openPopupMooveFiche( page : Page ){
+    this.openPopup().subscribe( ( idDossier )=>{
+      
+      console.log( "Dossier sélectionnée", idDossier );
+      
+      if( this.container ){
+        this.container.removePage(page.id );
 
+        this.projectService.getArboPageAsync( idDossier ).subscribe( (dossier)=>{
+          if( dossier && this.container ){
+            dossier.addPage( page.id );
+            this.projectService.updateArbo( dossier );
+            this.projectService.updateArbo( this.container );
+
+          }else{
+            console.error( "L'un des dossier est introuvable. Dossier actuel : ", this.container, ", nouveau dossier : ", dossier );
+          }
+        } )
+      }else{
+        console.error( "Aucune dossier sélectionné" );
+      }
+    } );
+  }
+
+  private openPopupMooveDossier(){
+    this.openPopup().subscribe( ( idDossier )=>{
+      
+      console.log( "Dossier sélectionnée", idDossier ); 
+      if( this.container ){
+        this.projectService.moveArbo( this.container.id, idDossier )
+      }else{
+        console.error( "Aucune dossier sélectionné" );
+      }
+    } );
+  }
+
+  private openPopup() : EventEmitter<string>{
+
+    let componentRef = this.viewContainerRef.createComponent( PopupSelectComponent );
+    
+    componentRef.setInput( "comp", componentRef );
+    componentRef.setInput( "title", "Sélectionner un dossier" );
+    componentRef.setInput( "values", this.projectService.getAllArboPage().map( (dd) => { return {"id":dd.id, "text":dd.titre} } ) );
+    
+    return componentRef.instance.onValueSelected;
+  }
+
+  
 }

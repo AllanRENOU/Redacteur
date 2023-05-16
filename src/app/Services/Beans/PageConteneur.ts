@@ -92,17 +92,18 @@ export class PageConteneur{
         } );
     }
 
-    addSubContainer( cont : PageConteneur ){
-        this.subContainer.push( { position : this.subContainer.length, id : cont.id } );
+    addSubContainer( cont : PageConteneur | string ){
+        let idDos = typeof cont == "string" ? cont : cont.id;
+        this.subContainer.push( { position : this.subContainer.length, id : idDos } );
     }
 
-    removeSubContainer( dossier : PageConteneur ){
+    removeSubContainer( dossier : PageConteneur|string ){
 
         let posIdToRemove : { position : number, id : string } = { position : -1, id : "" };
-
+        let idDossier = ( typeof dossier == "string" ) ? dossier : dossier.id;
         // Suppression du dossier fils
         this.subContainer.forEach( ( posId, index)=>{
-            if( posId.id == dossier.id ){
+            if( posId.id == idDossier ){
                 posIdToRemove = posId;
                 this.subContainer.splice( index, 1 );
             }

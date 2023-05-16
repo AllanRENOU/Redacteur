@@ -21,6 +21,7 @@ import { PageBlocComponent } from './encyclopedie/detail-fiche/page-bloc/page-bl
 import { JustTextPipe } from './Utils/just-text.pipe';
 import { AutocompleteInputComponent } from './Utils/autoComplete/autocomplete-input/autocomplete-input.component';
 import { AutocompleteReaderComponent } from './Utils/autoComplete/autocomplete-reader/autocomplete-reader.component';
+import { PopupSelectComponent } from './Utils/popups/popup-select/popup-select.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AutocompleteReaderComponent } from './Utils/autoComplete/autocomplete-r
     PageBlocComponent,
     JustTextPipe,
     AutocompleteInputComponent,
-    AutocompleteReaderComponent
+    AutocompleteReaderComponent,
+    PopupSelectComponent
   ],
   imports: [
     BrowserModule,

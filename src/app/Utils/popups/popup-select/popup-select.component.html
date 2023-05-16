@@ -1,0 +1,14 @@
+<div id="popupBg">
+    <div id="popupContainer">
+        <div class="titlePopup">{{title}}</div>
+        <div class="listContainer" >
+            <ul>
+                <li *ngFor="let value of values" (click)="onSelectValue(value)"  [class.selected] = "selectedValue && value.id === selectedValue.id">{{value.text}}</li>
+            </ul>
+        </div>
+        <div class="buttonContainer" >
+            <button class="buttonLight" (click)="onCancel()">Annuler</button>
+            <button class="buttonLight disabled" #btValidate (click)="onValidate()">Valider</button>
+        </div>
+    </div>
+</div>
