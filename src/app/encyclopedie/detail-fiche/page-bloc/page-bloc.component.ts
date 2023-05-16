@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { Page } from 'src/app/Services/Beans/Page';
 import { PageBloc } from 'src/app/Services/Beans/Page.bloc';
 import { ProjectService } from 'src/app/Services/project.service';
@@ -17,6 +17,9 @@ export class PageBlocComponent implements OnInit {
   bloc? : PageBloc;
   @Input()
   page? : Page;
+  
+  @Output()
+  clickLink : EventEmitter<string> = new EventEmitter();
 
   // Menu "more"
   showMoreMenu : boolean = false;
@@ -148,5 +151,10 @@ export class PageBlocComponent implements OnInit {
   
   closePopupInfoMarkdown( ){
     this.showPopupInfoMarkdown = false;
+  }
+  
+  // ========== Ouvrir page ==========
+  onClickLink( idPage : string ){
+    this.clickLink.emit( idPage );
   }
 }

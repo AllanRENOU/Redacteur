@@ -8,7 +8,7 @@
         </span>
     </h4>
 
-    <app-autocomplete-reader *ngIf="!isUpdatemode" [data]="bloc" ></app-autocomplete-reader>
+    <app-autocomplete-reader *ngIf="!isUpdatemode" [data]="bloc" (clickLink)="onClickLink( $event )" ></app-autocomplete-reader>
 
     <form *ngIf="isUpdatemode" #updateBlocForm="ngForm" (ngSubmit)="onSubmitUpdateBloc( bloc )" class="formUpdateBloc" >
         <nav>

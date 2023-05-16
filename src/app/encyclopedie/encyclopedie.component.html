@@ -14,7 +14,7 @@
 
     <!-- Contenu page -->
     <div class="contentContainer">
-        <app-detail-fiche *ngIf="!createFiche" [id]="currentIdPage"/>
+        <app-detail-fiche *ngIf="!createFiche" [id]="currentIdPage" (clickLink)="onPageClicked($event)"/>
         <app-create-fiche *ngIf="createFiche" [folder]="parentFolder" (created)="onNewPageCreated( $event )" />
     </div>
 </div>

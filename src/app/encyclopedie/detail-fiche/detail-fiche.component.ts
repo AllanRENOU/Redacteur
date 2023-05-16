@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange } from '@angular/core';
 import { Page } from 'src/app/Services/Beans/Page';
 import { ProjectService } from 'src/app/Services/project.service';
 import { MenuItem } from 'src/app/Utils/float-menu/MenuItem';
@@ -22,15 +22,16 @@ export class DetailFicheComponent implements OnChanges {
   currentDesc = "";
   newDesc="";
 
-
   // Boutons 'more'
   idBlocMenu : string = "";// TODO A revoir
-  
 
   MENU_MORE_PAGE = [
     MenuItem.UPDATE,
     MenuItem.REMOVE
   ];
+  
+  @Output()
+  clickLink : EventEmitter<string> = new EventEmitter();
 
   public constructor( public projectService : ProjectService ){
   }
@@ -190,5 +191,11 @@ export class DetailFicheComponent implements OnChanges {
         this.MENU_MORE_PAGE.push( MenuItem.ADD_FAV );
       }
     }
+  }
+
+  
+  // ========== Click lien ==========
+  onClickLink( idPage : string ){
+    this.clickLink.emit( idPage );
   }
 }

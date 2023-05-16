@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { MarkdownPipe } from '../../markdown.pipe';
 import { LinkPageComponent } from 'src/app/encyclopedie/detail-fiche/link-page/link-page.component';
 import { ProjectService } from 'src/app/Services/project.service';
@@ -17,6 +17,9 @@ export class AutocompleteReaderComponent implements AfterViewInit, OnChanges{
   textContainer? : ElementRef<HTMLElement>;
 
   private isLoaded = false;
+  
+  @Output()
+  clickLink : EventEmitter<string> = new EventEmitter();
   
   constructor( private viewContainerRef: ViewContainerRef, private pipeMarkdown : MarkdownPipe, private projectService : ProjectService ){
   }
@@ -83,6 +86,7 @@ export class AutocompleteReaderComponent implements AfterViewInit, OnChanges{
     let componentRef = this.viewContainerRef.createComponent( LinkPageComponent );
     componentRef.setInput( "code", code );
     componentRef.setInput( "texte", texte );
+    componentRef.instance.clickLink.subscribe( idPage => { this.clickLink.emit( idPage ) })
     parent.after(componentRef.location.nativeElement);
 
   }

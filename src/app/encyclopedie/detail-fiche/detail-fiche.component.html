@@ -27,11 +27,11 @@
 
 
     <!-- Description de la page -->
-    <app-autocomplete-reader *ngIf="!updatePage"  [data]="{ texte : page.description}" class="textContainer" ></app-autocomplete-reader>
+    <app-autocomplete-reader *ngIf="!updatePage"  [data]="{ texte : page.description}" (clickLink)="onClickLink( $event )" class="textContainer" ></app-autocomplete-reader>
 
 
     <!-- Blocs -->
-    <app-page-bloc *ngFor="let bloc of page?.blocs" [bloc]="bloc" [page]="page"></app-page-bloc>
+    <app-page-bloc *ngFor="let bloc of page?.blocs" [bloc]="bloc" [page]="page" (clickLink)="onClickLink( $event )"></app-page-bloc>
 
     <!-- Bouton Ajouter un bloc -->
     <div class="floatingButton" *ngIf="page" [ngClass]="createPage?'creating':''" (click)="onClickCreateBloc()">

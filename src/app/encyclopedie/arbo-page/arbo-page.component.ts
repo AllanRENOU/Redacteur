@@ -39,12 +39,14 @@ export class ArboPageComponent implements OnInit{
     MenuItem.MOOVE
   ];
   showMenu : boolean = false;
+  pageIdToShowMenu = "";
 
   // Create item
   showCreateInput : boolean = false;
   @ViewChild('inputNameNewItem') 
   inputNameNewItem? : ElementRef;
   nameNewItem : string = "";
+  
 
   @Output()
   pageClicked : EventEmitter<string> = new EventEmitter<string>();
@@ -128,7 +130,6 @@ export class ArboPageComponent implements OnInit{
     this.pageIdToShowMenu = "";
   }
 
-  pageIdToShowMenu = "";
   onClickShowMenuFromFiche( $event : any, idPage : string ){
     $event.stopPropagation();
     this.showMenu = false;
