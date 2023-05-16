@@ -243,7 +243,7 @@ export class ProjectService {
     }
     
     this.pages.push( page );
-    folder.pages.push( id );
+    folder.addPage( id );
 
     this.updatePage( page );
     this.updateArbo( folder );
@@ -389,7 +389,7 @@ export class ProjectService {
       dossier = new PageConteneur( id, titre );
 
       if( pages ){
-        dossier.pages = pages;
+        dossier.setPages( pages );
       }
 
       if( subContainer ){

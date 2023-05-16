@@ -2,7 +2,7 @@ export class PageConteneur{
 
     id : string;
     titre : string;
-    pages : string[] = [];
+    private pages : {id : string, position : number}[] = [];
     subContainer : { position : number, id : string }[] = [];
     isRemoved = false;
 
@@ -14,14 +14,82 @@ export class PageConteneur{
     removePage( idPage : string ) : boolean{
         let containPage = false;
 
-        this.pages.forEach( ( id, index ) => {
-            if( id == idPage ){
+        this.pages.forEach( ( pagePos, index ) => {
+            if( pagePos.id == idPage ){
                 containPage = true;
                 this.pages.splice( index, 1 );
             }
         } );
+        this.refreshPagesIndex();
 
         return containPage;
+    }
+
+    addPage( idPage : string ){
+        this.pages.push( { id : idPage, position : this.pages.length} );
+        this.refreshPagesIndex();
+    }
+
+    setPages ( pagesPos : { id : string, position : number }[] ){
+        this.pages = pagesPos;
+        this.refreshPagesIndex();
+    }
+
+    getAllPagesId() : string[]{
+        return this.pages.map( pagePos => pagePos.id );
+    }
+
+    
+    getAllPagesWithPosition() : { id : string, position : number }[]{
+        return this.pages;
+    }
+
+    descendreFiche( idPage : string ){
+
+        let posPage = this.pages.filter( pp=>pp.id == idPage )[0];
+
+        if( posPage ){
+            if( posPage.position < this.pages.length - 1 ){
+                let ii = posPage.position+1;
+                this.pages.filter( pp=>pp.position == ii ).forEach( pp => {pp.position=pp.position-1} );
+                posPage.position++;
+            }else{
+                console.error( "La fiche est déjà en dernière position" );
+            }
+        }else{
+            console.error( "Position de la fiche introuvable" );
+        }
+
+    }
+    
+    monterFiche( idPage : string ){
+
+        let posPage = this.pages.filter( pp=>pp.id == idPage )[0];
+
+        if( posPage ){
+            if( posPage.position > 0 ){
+                let ii = posPage.position-1;
+                this.pages.filter( pp=>pp.position == ii ).forEach( pp => {pp.position=pp.position+1} );
+                posPage.position--;
+            }else{
+                console.error( "La fiche est déjà en premiere position" );
+            }
+        }else{
+            console.error( "Position de la fiche introuvable" );
+        }
+
+    }
+
+    /**
+     * Met à jour la position de chaque page
+     */
+    private refreshPagesIndex(){
+        this.pages.sort( (pa, pb)=>{
+            return pa.position > pb.position ? 1 : -1;
+        })
+        .forEach( ( pp, ii )=>{
+            pp.position = ii;
+        } );
     }
 
     addSubContainer( cont : PageConteneur ){

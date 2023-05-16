@@ -25,7 +25,7 @@
  ### Encyclopédie
  - [x] Faire des fiches "Favories"
  - [x] Faire une recherche de fiche
- - [ ] Déplacer une fiche
+ - [x] Déplacer une fiche
  - [ ] Changer une fiche ou un dossier de dossier (sauf ROOT)
  - [ ] Le clic sur un lien redirige vers la fiche concernée
  - [ ] Ajout d'un bouton pour revenir à la selection des projets

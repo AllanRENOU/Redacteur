@@ -1,5 +1,5 @@
 <!-- Nom du dossier-->
-<span *ngIf="this.container && ( ( readonly && this.pages.length > 0) || !readonly )" class="pageContainer" [ngClass]="this.isOpened?'arrowDown':''" (click)="onClickDeploy(this.container.titre)">
+<span *ngIf="this.container && ( ( readonly && this.pages.length > 0) || !readonly )" class="pageContainer moreContainer" [ngClass]="this.isOpened?'arrowDown':''" (click)="onClickDeploy(this.container.titre)">
     {{this.container.titre}}
     <span class="more" title="Options" (click)="onClickShowMenu( $event )" *ngIf="!readonly" >...
         <app-float-menu *ngIf="showMenu" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event )" [values]="MENU_ITEMS"></app-float-menu>
@@ -22,7 +22,10 @@
     </li>
 
     <!-- Liste des fichiers -->
-    <li *ngFor="let page of this.pages" class="page" (click)="onClickPage( page.id )">
+    <li *ngFor="let page of this.pages" class="page moreContainer" (click)="onClickPage( page.id )">
         {{page.titre}}
+        <span class="more" title="Options" (click)="onClickShowMenuFromFiche( $event, page.id )" >...
+            <app-float-menu *ngIf="pageIdToShowMenu == page.id" (toHide)="onHideMenu()" (onClick)="onClickMenuFiche( $event, page )" [values]="MENU_ITEMS_FICHE"></app-float-menu>
+        </span>
     </li>
 </ul>

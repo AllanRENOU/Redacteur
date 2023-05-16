@@ -143,9 +143,11 @@ export class DetailFicheComponent implements OnChanges {
 
           let favoris = this.projectService.getArboPage( ProjectService.ID_FAVORIS_FOLDER );
           if( favoris ){
+
             this.page.isFavoris = true;
             this.projectService.updatePage( this.page );
-            favoris.pages.push( this.page.id );
+
+            favoris.addPage( this.page.id );
             this.projectService.updateArbo( favoris );
             this.updateMore();
           }else{
@@ -162,12 +164,9 @@ export class DetailFicheComponent implements OnChanges {
             this.page.isFavoris = false;
             this.projectService.updatePage( this.page );
 
-            let i = favoris.pages.indexOf( this.page.id );
-            if( i != -1 ){
-              favoris.pages.splice( i, 1 );
-              this.projectService.updateArbo( favoris );
-            }
-
+            favoris.removePage( this.page.id );
+            this.projectService.updateArbo( favoris );
+            
             this.updateMore();
           }else{
             console.log( "Dossier favoris non trouvé" );

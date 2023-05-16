@@ -31,6 +31,10 @@ export class ArboPageComponent implements OnInit{
     MenuItem.DOWN,
     MenuItem.REMOVE
   ];
+  public readonly MENU_ITEMS_FICHE : MenuItem[] = [
+    MenuItem.UP,
+    MenuItem.DOWN
+  ];
   showMenu : boolean = false;
 
   // Create item
@@ -75,8 +79,24 @@ export class ArboPageComponent implements OnInit{
 
   private refreshPages(){
     if(  this.container ){
-      this.projectService.getPagesAsync( this.container.pages ).subscribe( fiches =>{
-        this.pages = fiches;
+      this.projectService.getPagesAsync( this.container.getAllPagesId() ).subscribe( fiches =>{
+        if(  this.container ){
+          let sortedPages : Page[] = [];
+          
+          this.container.getAllPagesWithPosition()
+            .sort( ( pa, pb )=>{ return pa.position > pb.position ? 1 : -1; } )
+            .forEach( ( pp, ii )=>{ 
+              let fiche = fiches.filter( ff => ff.id == pp.id )[0];
+              if( fiche ){
+                sortedPages.push( fiche );
+              }
+            } );
+            this.pages = sortedPages;
+
+            
+        }else{
+          this.pages = fiches;
+        }
       } );
     }
   }
@@ -102,10 +122,19 @@ export class ArboPageComponent implements OnInit{
   onClickShowMenu( $event : any ){
     $event.stopPropagation();
     this.showMenu = true;
+    this.pageIdToShowMenu = "";
+  }
+
+  pageIdToShowMenu = "";
+  onClickShowMenuFromFiche( $event : any, idPage : string ){
+    $event.stopPropagation();
+    this.showMenu = false;
+    this.pageIdToShowMenu = idPage;
   }
 
   onHideMenu(){
     this.showMenu = false;
+    this.pageIdToShowMenu = "";
   }
 
   onClickMenu( item : MenuItem ){
@@ -148,6 +177,34 @@ export class ArboPageComponent implements OnInit{
           break;
         }
       }
+      
+    }else{
+      console.error( "Dossier inconnu");
+    }
+  
+  }
+
+  onClickMenuFiche( item : MenuItem, page : Page ){
+    
+    if( this.container ){
+
+      switch( item ) {
+        
+        case MenuItem.UP :{
+          console.log( "Monter" );
+          this.container.monterFiche( page.id );
+          break;
+        }
+
+        case MenuItem.DOWN :{
+          console.log( "Descendre" );
+          this.container.descendreFiche( page.id );
+          break;
+        }
+
+      }
+      this.refreshPages();
+      this.projectService.updateArbo( this.container );
       
     }else{
       console.error( "Dossier inconnu");
