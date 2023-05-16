@@ -43,4 +43,30 @@ header{
             }
         }
     }
+
+    .btExit{
+        position: absolute;
+        
+        height: 2rem;
+        width: 2rem;
+
+        top: 0.5rem;
+        right: 0.5rem;
+
+        z-index: 4;
+        cursor: pointer;
+        background-image: url( '/assets/octagon-xmark.svg' );
+        opacity: 0.5;
+
+        &:hover{
+            
+        height: 2.1rem;
+        width: 2.1rem;
+
+        top: 0.495rem;
+        right: 0.495rem;
+
+        opacity: 1;
+        }
+    }
 }

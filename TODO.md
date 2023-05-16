@@ -28,7 +28,7 @@
  - [x] Déplacer une fiche
  - [x] Changer une fiche ou un dossier de dossier (sauf ROOT)
  - [x] Le clic sur un lien redirige vers la fiche concernée
- - [ ] Ajout d'un bouton pour revenir à la selection des projets
+ - [x] Ajout d'un bouton pour revenir à la selection des projets
  - [ ] Revoir la gestion des popup pour en faire un service
  
  ### Autre
