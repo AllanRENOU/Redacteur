@@ -1,4 +1,4 @@
-<textarea name="newDesc" ngModel [(ngModel)]="texte" #textArea placeholder="Description" spellcheck="true" (keydown)="onTextChange( $event )" (focusout)="onFocusTextAreaLost()"></textarea>
+<textarea name="newDesc" ngModel [(ngModel)]="texte" #textArea placeholder="Description" spellcheck="true" (keyup)="onTextChange( $event )" (focusout)="onFocusTextAreaLost()"></textarea>
 
 <ul #popupAutoComplet class="popupAutoComplet" *ngIf="showAutoComplet">
     <li *ngFor="let page of this.listAutoComplete" [ngClass]="{'selected' : page.index == indexAutoComplete }" (click)="onClickAutoCompletion( page.id)">{{page.texte}}</li>
