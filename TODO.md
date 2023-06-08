@@ -4,7 +4,7 @@
  - [ ] Implémenter la suppression d'une page
 
  ### Inputs
- - [ ] Lors de la validation, le dernier caractère est tronqué
+ - [x] Lors de la validation, le dernier caractère est tronqué
 
  ### Page d'accueil
  - [ ] Faire un formulaire plus jolie pour la création de projet
