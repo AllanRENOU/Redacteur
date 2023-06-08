@@ -22,6 +22,7 @@ import { JustTextPipe } from './Utils/just-text.pipe';
 import { AutocompleteInputComponent } from './Utils/autoComplete/autocomplete-input/autocomplete-input.component';
 import { AutocompleteReaderComponent } from './Utils/autoComplete/autocomplete-reader/autocomplete-reader.component';
 import { PopupSelectComponent } from './Utils/popups/popup-select/popup-select.component';
+import { AxesComponent } from './axes/axes.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PopupSelectComponent } from './Utils/popups/popup-select/popup-select.c
     JustTextPipe,
     AutocompleteInputComponent,
     AutocompleteReaderComponent,
-    PopupSelectComponent
+    PopupSelectComponent,
+    AxesComponent
   ],
   imports: [
     BrowserModule,
