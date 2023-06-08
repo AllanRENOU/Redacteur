@@ -16,8 +16,13 @@
  ### Encyclopédie
  - [ ] Revoir la gestion des popup pour en faire un service
  
+ ### Encyclopédie
+ - [ ] Mise en place serveur
+ - [ ] Mise en place IHM
+ 
  ### Autre
  - [ ] Pages Axes
  - [ ] Pages Structure
  - [ ] Pages Rédaction
  - [ ] Gestion d'une timeline
+ - [x] Créer une classe Ordonable
