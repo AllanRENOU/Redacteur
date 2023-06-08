@@ -1,5 +1,6 @@
 <div class="bloc" *ngIf="bloc">
     
+    <!-- Titre du bloc  -->
     <h4 *ngIf="!isUpdatemode">
         {{bloc.title}}
         <span class="more" (click)="onClickMore(bloc,  $event)">
@@ -8,8 +9,10 @@
         </span>
     </h4>
 
+    <!-- Description -->
     <app-autocomplete-reader *ngIf="!isUpdatemode" [data]="bloc" (clickLink)="onClickLink( $event )" ></app-autocomplete-reader>
 
+    <!-- Formulaire update -->
     <form *ngIf="isUpdatemode" #updateBlocForm="ngForm" (ngSubmit)="onSubmitUpdateBloc( bloc )" class="formUpdateBloc" >
         <nav>
             <input type="text" required name="newTitle" ngModel [(ngModel)]="newTitle" placeholder="Titre" autocomplete="off"/>
