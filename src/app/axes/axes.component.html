@@ -1,1 +1,31 @@
-<p>axes works!</p>
+<div class="globalContainer">
+
+    <div id="tableContainer">
+
+        <table>
+
+            <!-- 1re ligne : nom des axes -->
+            <tr>
+                <th>Notes</th>
+                <th *ngFor="let axe of axes" >{{axe.nom}}</th>
+            </tr>
+
+            <!-- lignes du tableau -->
+            <tr *ngFor="let ligne of lignes">
+
+                <!-- Case commentaire -->
+                <td>{{ligne.content}}</td>
+
+                <!-- Case des étapes -->
+                <td *ngFor="let axe of axes">
+                    <div *ngFor="let etape of axe.getEtapesOfLine( ligne.id )" [ngClass]="{'plie' : etape.content.length > 80}" class="etape">
+                        <span>{{etape.title}}</span>
+                        <p (click)="showAllEtapeContent($event)">{{etape.content}}</p>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>

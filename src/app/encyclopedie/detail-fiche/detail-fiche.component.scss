@@ -151,6 +151,7 @@ h2{
         display: block;
         background-color: var(--light_bg);
         color: var(--light_textColor);
+        margin-bottom: 0.5rem;
 
         &[name="newTitle"]{
             border-color: rgba( 0, 0, 0, 0.2);
