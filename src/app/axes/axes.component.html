@@ -7,7 +7,11 @@
             <!-- 1re ligne : nom des axes -->
             <tr>
                 <th>Notes</th>
-                <th *ngFor="let axe of axesService.getAxes()" >{{axe.nom}}</th>
+                <th *ngFor="let axe of axesService.getAxes()" >
+                    <div class="axeTitle">
+                        {{axe.nom}}
+                    </div>
+                </th>
             </tr>
 
             <!-- lignes du tableau -->

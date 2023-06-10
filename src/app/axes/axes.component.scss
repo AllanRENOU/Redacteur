@@ -13,6 +13,10 @@
         table{
             border-collapse: collapse;
 
+            th{
+                padding: 0!important;
+            }
+
             td,th{
                 /*border-right: solid 1px black;*/
                 border-bottom: solid 1px black;
@@ -21,8 +25,25 @@
 
             }
 
+            .axeTitle{
+                width: 80%;
+                border: solid 1px black;
+                margin-left: 10%;
+                margin-bottom: 0;
+                padding: 0.3rem;
+                text-align: center;
+                border-radius: 3px;
+                background-color: var(--light_bg);
+            }
+
             .bgLine{
                 background: linear-gradient(to right, #0000 0%, #0000 49%, #000 49%, #000 51%, #0000 51%);
+            }
+
+            tr:first-child{
+                th{
+                    border-bottom:0;
+                }
             }
 
             tr:last-child{
