@@ -15,7 +15,6 @@ import { AxesService } from '../Services/axes.service';
 })
 export class AxesComponent {
 
-  axes : Axe[] = [];
   lignes :  Ligne[] = [];
 
   constructor( public projectService : ProjectService, public axesService : AxesService, private router: Router, private _location: Location){
@@ -62,7 +61,7 @@ export class AxesComponent {
     e6.title = "Etape 6";
     e6.content=" Lorem ipsum dolor sit amet"
 
-    console.log(this.axes)
+    console.log( this.axesService.getAxes() )
     console.log(this.lignes)
 
   }
@@ -70,24 +69,24 @@ export class AxesComponent {
   // ========== Axe ==========
   createAxe( name : string ) : Axe {
     let axe = new Axe( this.projectService.generateIdFromString( name ), name );
-    Ordonable.addInArray( this.axes, axe );
+    Ordonable.addInArray( this.axesService.getAxes(), axe );
     return axe;
   }
 
   removeAxe( id : string ){
-    Ordonable.removeFromArray( this.axes, this.getAxe( id ) );
+    Ordonable.removeFromArray( this.axesService.getAxes(), this.getAxe( id ) );
   }
 
   decalerAxeDroite( axe : Axe ){
-    Ordonable.up( this.axes, axe );
+    Ordonable.up( this.axesService.getAxes(), axe );
   }
 
   decalerAxeGauche( axe : Axe ){
-    Ordonable.up( this.axes, axe );
+    Ordonable.up( this.axesService.getAxes(), axe );
   }
 
   getAxe( id : string) : Axe{
-    return this.axes.filter( a => a.id == id )[0] || null;
+    return this.axesService.getAxes().filter( a => a.id == id )[0] || null;
   }
 
 
