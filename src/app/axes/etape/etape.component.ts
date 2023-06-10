@@ -40,7 +40,11 @@ export class EtapeComponent {
   }
 
   onClickMenu(  item : MenuItem ){
-    
+    if( this.etape ){
+      if( MenuItem.UPDATE == item ){
+        this.etape.content = "Etape modifiée";
+      }
+    }
   }
 
 }

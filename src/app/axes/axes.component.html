@@ -7,7 +7,7 @@
             <!-- 1re ligne : nom des axes -->
             <tr>
                 <th>Notes</th>
-                <th *ngFor="let axe of axes" >{{axe.nom}}</th>
+                <th *ngFor="let axe of axesService.getAxes()" >{{axe.nom}}</th>
             </tr>
 
             <!-- lignes du tableau -->
@@ -17,13 +17,11 @@
                 <td>{{ligne.content}}</td>
 
                 <!-- Case des étapes -->
-                <td *ngFor="let axe of axes">
+                <td class="bgLine" *ngFor="let axe of axesService.getAxes()">
                     <app-etape *ngFor="let etape of axe.getEtapesOfLine( ligne.id )" [etape]="etape" ></app-etape>
                     
                 </td>
             </tr>
-
         </table>
-
     </div>
 </div>

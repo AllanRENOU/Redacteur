@@ -20,6 +20,31 @@
                 width: 20vw;
 
             }
+
+            .bgLine{
+                background: linear-gradient(to right, #0000 0%, #0000 49%, #000 49%, #000 51%, #0000 51%);
+            }
+
+            tr:last-child{
+                .bgLine{
+                    padding: 1rem 0 3rem 0;
+                    position: relative;
+
+                    &::after{
+                        width: 2rem;
+                        height: 2rem;
+                        display: block;
+                        background-color: black;
+                        content: "";
+                        border-radius: 1rem;
+                        margin-left: calc( 50% - 1rem );
+                        border-radius: 1rem;
+
+                        position: absolute;
+                        bottom: 0;
+                    }
+                }
+            }
         }
     }
 
