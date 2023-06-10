@@ -1,0 +1,12 @@
+<div [ngClass]="{'plie' : etape && etape.content.length > 80}" class="etape">
+    <p class="titre">
+        <span class="titreContent">
+            {{etape?.title}}
+        </span>
+        <span class="more" (click)="onClickMore( $event )">
+            ...
+            <app-float-menu *ngIf="showMoreMenu" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event )" [values]="MENU_MORE_VALUES"></app-float-menu>
+        </span>
+    </p>
+    <p (click)="showAllEtapeContent($event)" class="content">{{etape?.content}}</p>
+</div>

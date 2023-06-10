@@ -6,6 +6,7 @@ import { Ligne } from './Beans/Ligne';
 import { Axe } from './Beans/Axe';
 import { Etape } from './Beans/Etape';
 import { Ordonable } from '../Utils/Ordonable';
+import { AxesService } from '../Services/axes.service';
 
 @Component({
   selector: 'app-axes',
@@ -17,7 +18,7 @@ export class AxesComponent {
   axes : Axe[] = [];
   lignes :  Ligne[] = [];
 
-  constructor( public projectService : ProjectService, private router: Router, private _location: Location){
+  constructor( public projectService : ProjectService, public axesService : AxesService, private router: Router, private _location: Location){
     
     this.router.events.subscribe((aa : any) => {
       if( aa instanceof ActivationEnd){
@@ -124,14 +125,6 @@ export class AxesComponent {
 
   removeEtape( etape : Etape, idAxe : string ){
     this.getAxe( idAxe )?.removeEtape( etape );
-  }
-
-
-
-
-  showAllEtapeContent( event : MouseEvent){
-    console.log( event.target );
-    ( event.target as HTMLElement).parentElement?.classList.remove( "plie" );
   }
 
 }

@@ -1,0 +1,71 @@
+
+.etape{
+    width: 80%;
+    border: solid 1px black;
+    margin-left: 10%;
+    margin-bottom: 0.3rem;
+    padding: 0.3rem;
+    text-align: center;
+    border-radius: 3px;
+
+    .titre{
+        font-weight: bold;
+        margin: 0;
+        margin-top: 0.5rem;
+        position: relative;
+
+        .titreContent{
+            width: calc( 100% - 2rem );
+            display: block;
+        }
+        
+        
+        .more{
+            color: rgba(0, 0, 0, 0);
+            user-select: none;
+            cursor: pointer;
+            background-image: none;
+            padding: 0 0.5rem;
+            font-size: 1rem;
+            
+            position: absolute;
+            right: 0;
+            top: 0;
+            
+            &:hover{
+                background-image: radial-gradient(circle, var(--light_bg_hover) 50%, transparent 80%, transparent 100%);
+            }
+        }
+
+        &:hover{
+
+            .more{
+                color: rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+
+    .content{
+        margin: 0;
+        margin-top: 1rem;
+    }
+
+    &.plie{
+        .content{
+            background: -webkit-linear-gradient(black, black, var(--light_bg));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            height: 3rem;
+            cursor: pointer;
+
+            &:hover{
+                background: var(--light_bg_hover);
+                overflow: hidden;
+                -webkit-background-clip: initial;
+                -webkit-text-fill-color: initial;
+            }
+        }
+    }
+    
+}
+

@@ -19,41 +19,6 @@
                 padding: 1rem 0;
                 width: 20vw;
 
-                .etape{
-                    width: 80%;
-                    border: solid 1px black;
-                    margin-left: 10%;
-                    margin-bottom: 0.3rem;
-                    padding: 0.3rem;
-                    text-align: center;
-                    border-radius: 3px;
-
-                    span{
-                        font-weight: bold;
-                    }
-
-                    p{
-                        margin: 0;
-                        margin-top: 1rem;
-                    }
-
-                    &.plie{
-                        p{
-                            background: -webkit-linear-gradient(black, black, var(--light_bg));
-                            -webkit-background-clip: text;
-                            -webkit-text-fill-color: transparent;
-                            height: 3rem;
-                            cursor: pointer;
-
-                            &:hover{
-                                background: var(--light_bg_hover);
-                                overflow: hidden;
-                                -webkit-background-clip: initial;
-                                -webkit-text-fill-color: initial;
-                            }
-                        }
-                    }
-                }
             }
         }
     }

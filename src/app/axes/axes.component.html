@@ -18,10 +18,8 @@
 
                 <!-- Case des étapes -->
                 <td *ngFor="let axe of axes">
-                    <div *ngFor="let etape of axe.getEtapesOfLine( ligne.id )" [ngClass]="{'plie' : etape.content.length > 80}" class="etape">
-                        <span>{{etape.title}}</span>
-                        <p (click)="showAllEtapeContent($event)">{{etape.content}}</p>
-                    </div>
+                    <app-etape *ngFor="let etape of axe.getEtapesOfLine( ligne.id )" [etape]="etape" ></app-etape>
+                    
                 </td>
             </tr>
 
