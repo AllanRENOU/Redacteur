@@ -11,7 +11,7 @@
             </tr>
 
             <!-- lignes du tableau -->
-            <tr *ngFor="let ligne of lignes">
+            <tr *ngFor="let ligne of axesService.getLignes()">
 
                 <!-- Case commentaire -->
                 <td>{{ligne.content}}</td>
