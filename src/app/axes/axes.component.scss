@@ -34,6 +34,31 @@
                 text-align: center;
                 border-radius: 3px;
                 background-color: var(--light_bg);
+                position: relative;
+
+                .more{
+                    color: rgba(0, 0, 0, 0);
+                    user-select: none;
+                    cursor: pointer;
+                    background-image: none;
+                    padding: 0 0.5rem;
+                    font-size: 1rem;
+                    
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    
+                    &:hover{
+                        background-image: radial-gradient(circle, var(--light_bg_hover) 50%, transparent 80%, transparent 100%);
+                    }
+                }
+
+                &:hover{
+
+                    .more{
+                        color: rgba(0, 0, 0, 0.5);
+                    }
+                }
             }
 
             .bgLine{
@@ -75,3 +100,4 @@
     }
 
 }
+

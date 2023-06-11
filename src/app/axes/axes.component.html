@@ -9,7 +9,14 @@
                 <th>Notes</th>
                 <th *ngFor="let axe of axesService.getAxes()" >
                     <div class="axeTitle">
-                        {{axe.nom}}
+                        <span>
+                            {{axe.nom}}
+                        </span>
+                        <span class="more" (click)="onClickMore( axe, $event )">
+                            ...
+                            <app-float-menu *ngIf="idBtMore == axe.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event )" [values]="MENU_MORE_VALUES"></app-float-menu>
+                        </span>
+                        
                     </div>
                 </th>
             </tr>
