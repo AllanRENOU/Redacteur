@@ -14,7 +14,7 @@
                         </span>
                         <span class="more" (click)="onClickMore( axe, $event )">
                             ...
-                            <app-float-menu *ngIf="idBtMore == axe.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event )" [values]="MENU_MORE_VALUES"></app-float-menu>
+                            <app-float-menu *ngIf="idBtMore == axe.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event, axe )" [values]="MENU_MORE_VALUES"></app-float-menu>
                         </span>
                         
                     </div>
@@ -42,7 +42,7 @@
 
                 <!-- Case des étapes -->
                 <td class="bgLine" *ngFor="let axe of axesService.getAxes()">
-                    <app-etape *ngFor="let etape of axe.getEtapesOfLine( ligne.id )" [etape]="etape" ></app-etape>
+                    <app-etape *ngFor="let etape of axe.getEtapesOfLine( ligne.id )" [etape]="etape" [axe]="axe" ></app-etape>
                     
                 </td>
             </tr>

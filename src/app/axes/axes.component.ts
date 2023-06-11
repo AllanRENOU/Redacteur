@@ -18,7 +18,9 @@ export class AxesComponent {
   idBtMore="";
   MENU_MORE_VALUES = [
     MenuItem.RENOMMER,
-    MenuItem.ADD_ETAPE
+    MenuItem.ADD_ETAPE,
+    MenuItem.RIGHT,
+    MenuItem.LEFT
   ]
 
   currentEditLine : Ligne | null = null;
@@ -85,7 +87,7 @@ export class AxesComponent {
     this.idBtMore = "";
   }
 
-  onClickMenu( item : MenuItem ){
+  onClickMenu( item : MenuItem, axe : Axe ){
 
     if( MenuItem.ADD_ETAPE == item ){
 
@@ -98,6 +100,12 @@ export class AxesComponent {
         // TODO créer une ligne
       }
       
+    }else if( MenuItem.RIGHT == item  ){
+      Ordonable.up( this.axesService.getAxes(), axe );
+      this.axesService.refreshOrderAxes()
+    }else if( MenuItem.LEFT == item  ){
+      Ordonable.down( this.axesService.getAxes(), axe );
+      this.axesService.refreshOrderAxes()
     }
   }
 

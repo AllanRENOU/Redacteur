@@ -2,6 +2,7 @@
 
  ## Bugs et améliorations
  - [ ] Implémenter la suppression d'une page
+ - [x] Lorsqu'on déplace une etape, l'IHM n'est pas actualisée si l'étape reste dans la même ligne
 
  ### Inputs
  - [x] Lors de la validation, le dernier caractère est tronqué
@@ -21,8 +22,8 @@
  - [x] Mise en place IHM
  - [ ] Editer une étape
  - [ ] Editer le nom de l'axe
- - [ ] Déplacer une étape
- - [ ] Déplacer un axe
+ - [x] Déplacer une étape
+ - [x] Déplacer un axe
  - [x] Ecrire des notes
  
  ### Autre

@@ -88,6 +88,9 @@ export class AxesService {
     return this.axes;
   }
 
+  refreshOrderAxes(){
+    this.axes = Ordonable.sortArray( this.axes );
+  }
 
   // ========== Ligne ==========
   createLigne( id? : string ) : Ligne{

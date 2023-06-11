@@ -10,6 +10,8 @@ export const enum MenuItem{
     UP = "Monter",
     DOWN = "Descendre",
     MOOVE = "Déplacer",
+    RIGHT = "Déplacer à droite",
+    LEFT = "Déplacer à gauche",
 
     ADD_FAV = "Ajouter aux favoris",
     REM_FAV = "Retirer des favoris",

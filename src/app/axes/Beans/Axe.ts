@@ -25,4 +25,8 @@ export class Axe extends Ordonable{
         return this.etapes;
     }
 
+    refreshOrderEtapes(){
+        this.etapes = Ordonable.sortArray( this.etapes );
+    }
+
 }

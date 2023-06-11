@@ -71,7 +71,7 @@ export abstract class Ordonable{
 
     public static last<T extends Ordonable>( list : T[] ) : T | undefined{
         if( list && list.length > 0 ){
-            return list.sort( (aa, bb) => aa.position > bb.position ? 1 : -1 )[ list.length - 1 ];
+            return Ordonable.sortArray(list)[ list.length - 1 ];
         }else{
             return undefined;
         }
@@ -79,8 +79,46 @@ export abstract class Ordonable{
 
     public static first<T extends Ordonable>( list : T[] ) : T | undefined{
         if( list && list.length > 0 ){
-            return list.sort( (aa, bb) => aa.position > bb.position ? 1 : -1 )[ 0 ];
+            return Ordonable.sortArray(list)[ 0 ];
         }else{
+            return undefined;
+        }
+    }
+
+    public static sortArray<T extends Ordonable>( list : T[] ) : T[]{
+        return list.sort( (aa, bb) => aa.position > bb.position ? 1 : -1 );
+    }
+
+    public static getNext<T extends Ordonable>( list : T[], obj : T ) : T | undefined{
+        list =  Ordonable.sortArray(list);
+        let i = list.indexOf( obj );
+
+        if( i != -1 ){
+            if( i < list.length - 1 ){
+                return list[ i + 1 ];
+            }else{
+                console.error( obj, " est déjà le dernier élément de la liste ", list );
+                return undefined;
+            }
+        }else{
+            console.error( "Impossible de trouver ", obj, " dans ", list );
+            return undefined;
+        }
+    }
+    
+    public static getPrevious<T extends Ordonable>( list : T[], obj : T ) : T | undefined{
+        list =  Ordonable.sortArray(list);
+        let i = list.indexOf( obj );
+
+        if( i != -1 ){
+            if( i > 0 ){
+                return list[ i - 1 ];
+            }else{
+                console.error( obj, " est déjà le premier élément de la liste ", list );
+                return undefined;
+            }
+        }else{
+            console.error( "Impossible de trouver ", obj, " dans ", list );
             return undefined;
         }
     }
