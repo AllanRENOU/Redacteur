@@ -25,6 +25,32 @@
 
             }
 
+            .titreLine{
+                font-weight: bold;
+                display: flex;
+
+                .btEditer{
+                    width: 1rem;
+                    height: 1rem;
+                    margin-left: 0.5rem;
+                    cursor: pointer;
+                    background-image: url(/assets/pen-to-square.svg);
+                    opacity: 0;
+                    transition: opacity linear 0.3s;
+                }
+
+                &:hover{
+                    
+                    .btEditer{
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .contentLine{
+
+            }
+
             .axeTitle{
                 width: 80%;
                 border: solid 1px black;
@@ -99,5 +125,34 @@
         }
     }
 
+}
+
+#formLineCont{
+
+    .updateLineTitle{
+        margin-bottom: 1rem;
+        width: calc(100% - 1rem);
+    }
+
+    .updateLineContent{
+        
+    }
+
+    .form-group{
+        position: relative;
+        height: 2rem;
+    }
+
+    .updateLineButton{
+        height: 1.5rem;
+        width: 1.5rem;
+        background-image: url("/assets/check.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 75%;
+        margin: 0;
+        position: absolute;
+        right: 1rem;
+    }
 }
 

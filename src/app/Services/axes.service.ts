@@ -24,6 +24,14 @@ export class AxesService {
     let l1 = this.createLigne( "L1" );
     let l2 = this.createLigne( "L2" );
     let l3 = this.createLigne( "L3" );
+    l1.content = "Contenu de la ligne 1";
+    l1.nom = "Ligne 1"
+    
+    l2.content = "Contenu de la ligne 2";
+    l2.nom = "Ligne 2"
+    
+    l3.content = "Contenu de la ligne 3";
+    l3.nom = "Ligne 3"
 
     let e1 = this.createEtape( "E1", axe1.id, l1.id );
     e1.title = "Etape 1";

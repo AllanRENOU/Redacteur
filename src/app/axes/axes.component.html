@@ -25,7 +25,20 @@
             <tr *ngFor="let ligne of axesService.getLignes()">
 
                 <!-- Case commentaire -->
-                <td>{{ligne.content}}</td>
+                <td>
+                    <div *ngIf="currentEditLine == null || currentEditLine.id != ligne.id">
+                       <div class="titreLine">
+                            <span>{{ligne.nom}}</span>
+                            <span class="btEditer" (click)="onClickEditLine( ligne, $event )"></span>
+                        </div>
+                        <app-autocomplete-reader class="contentLine" [data]="{texte:ligne.content}" (clickLink)="onClickLink( $event )" ></app-autocomplete-reader>
+                        <!--
+                            <app-autocomplete-input class="conentLine"  [texte]="ligne.content" (textChanged)="onTextLineChanged( $event, ligne )"></app-autocomplete-input>
+                        --> 
+                    </div>
+                    
+                    
+                </td>
 
                 <!-- Case des étapes -->
                 <td class="bgLine" *ngFor="let axe of axesService.getAxes()">
@@ -34,5 +47,16 @@
                 </td>
             </tr>
         </table>
+        <div #formLineCont id="formLineCont">
+            
+            <form *ngIf="currentEditLine != null" #formLine (ngSubmit)="onSubmitUpdate()" >
+                <input type="text" required name="titleLine" ngModel [(ngModel)]="titleLine" placeholder="Titre" autocomplete="off" class="updateLineTitle"/>
+                <app-autocomplete-input class="conentLine"  [texte]="currentEditLine.content" (textChanged)="onTextLineChanged( $event )" class="updateLineContent"></app-autocomplete-input>
+                <div class="form-group">
+                    <button type="submit" class="buttonBlack updateLineButton"></button>
+                </div>
+            </form>
+        </div>
+        
     </div>
 </div>

@@ -8,9 +8,11 @@ $timeTransition : 0.5s;
     min-height: 1.1rem;
     transition: background-color $timeTransition, border-color $timeTransition ;
     background-color: transparent;
+    /*
     border: solid transparent 1px;
 
     &:hover{
         border: solid black 1px;
     }
+    */
 }

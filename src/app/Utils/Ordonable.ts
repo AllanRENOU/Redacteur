@@ -68,4 +68,20 @@ export abstract class Ordonable{
             console.warn( "L'élément ", obj, " n'est pas dans la liste ", list );
         }
     }
+
+    public static last<T extends Ordonable>( list : T[] ) : T | undefined{
+        if( list && list.length > 0 ){
+            return list.sort( (aa, bb) => aa.position > bb.position ? 1 : -1 )[ list.length - 1 ];
+        }else{
+            return undefined;
+        }
+    }
+
+    public static first<T extends Ordonable>( list : T[] ) : T | undefined{
+        if( list && list.length > 0 ){
+            return list.sort( (aa, bb) => aa.position > bb.position ? 1 : -1 )[ 0 ];
+        }else{
+            return undefined;
+        }
+    }
 }

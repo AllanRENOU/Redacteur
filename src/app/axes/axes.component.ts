@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivationEnd } from '@angular/router';
 import { ProjectService } from '../Services/project.service';
 import { Location } from '@angular/common';
 import { AxesService } from '../Services/axes.service';
 import { MenuItem } from '../Utils/float-menu/MenuItem';
 import { Axe } from './Beans/Axe';
+import { Ordonable } from '../Utils/Ordonable';
+import { Ligne } from './Beans/Ligne';
 
 @Component({
   selector: 'app-axes',
@@ -15,8 +17,18 @@ export class AxesComponent {
 
   idBtMore="";
   MENU_MORE_VALUES = [
-    MenuItem.ADD
+    MenuItem.RENOMMER,
+    MenuItem.ADD_ETAPE
   ]
+
+  currentEditLine : Ligne | null = null;
+
+  // Formulaire
+  @ViewChild( 'formLineCont' ) form?: ElementRef<HTMLFormElement>;
+
+
+  titleLine : string = "";
+  contentLine : string = "";
 
   constructor( public projectService : ProjectService, public axesService : AxesService, private router: Router, private _location: Location){
     
@@ -28,6 +40,42 @@ export class AxesComponent {
 
   }
 
+  onClickEditLine( ligne : Ligne, event : MouseEvent ){
+    console.log( "Click edit ", ligne );
+
+    // TODO valider modifs
+    let div = (event.target as HTMLElement).parentElement?.parentElement?.parentElement;
+    this.currentEditLine = ligne;
+
+    if( this.form ){
+
+      this.titleLine = ligne.nom;
+      div?.appendChild( this.form.nativeElement );
+      console.log( "div ", div, "form", this.form.nativeElement)
+    }else{
+      console.error( "Formulaire non trouvé" );
+    }
+    
+  }
+
+  onSubmitUpdate(){
+    console.log( "Submit " );
+    if( this.currentEditLine ){
+      this.currentEditLine.content = this.contentLine;
+      this.currentEditLine.nom = this.titleLine;
+      this.currentEditLine = null;
+    }
+  }
+
+  onTextLineChanged( texte : string ){
+    this.contentLine = texte;
+  }
+
+  onClickLink( aa :any){
+    console.log( "Click ", aa );
+  }
+
+
   onClickMore( axe : Axe, event : any ){
     this.idBtMore = axe.id;
     event.stopPropagation();
@@ -35,11 +83,22 @@ export class AxesComponent {
 
   onHideMenu(){
     this.idBtMore = "";
-    //console.log( "onHideMenu" );
   }
 
-  onClickMenu( event : any ){
+  onClickMenu( item : MenuItem ){
 
+    if( MenuItem.ADD_ETAPE == item ){
+
+      let ligne = Ordonable.last(this.axesService.getLignes());
+      if( ligne ){
+        console.log( "create etape : ", "E_" + Date.now(), ", axe ", this.idBtMore, ", ligne ", Ordonable.last(this.axesService.getLignes()) );
+        this.axesService.createEtape( "E_" + Date.now(), this.idBtMore, ligne.id );
+      }else{
+        console.log( "Aucune ligne existante")
+        // TODO créer une ligne
+      }
+      
+    }
   }
 
 
