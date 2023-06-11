@@ -23,7 +23,7 @@
  - [ ] Editer le nom de l'axe
  - [ ] Déplacer une étape
  - [ ] Déplacer un axe
- - [ ] Ecrire des notes
+ - [x] Ecrire des notes
  
  ### Autre
  - [ ] Pages Axes
