@@ -16,9 +16,14 @@
  ### Encyclopédie
  - [ ] Revoir la gestion des popup pour en faire un service
  
- ### Encyclopédie
+ ### Axes
  - [ ] Mise en place serveur
- - [ ] Mise en place IHM
+ - [x] Mise en place IHM
+ - [ ] Editer une étape
+ - [ ] Editer le nom de l'axe
+ - [ ] Déplacer une étape
+ - [ ] Déplacer un axe
+ - [ ] Ecrire des notes
  
  ### Autre
  - [ ] Pages Axes
