@@ -127,8 +127,19 @@ export class AxesComponent {
       Ordonable.down( this.axesService.getAxes(), axe );
       this.axesService.refreshOrderAxes()
     }else if( MenuItem.RENOMMER == item ){
+      this.renameAxe( axe );
+    }
+  }
+
+  private renameAxe(axe : Axe ){
       this.titleAxe = axe.nom;
       this.currentEditAxe = axe;
-    }
+
+  }
+
+  // ========== Bouton ajouter axe ==========
+
+  onClickAddAxe(){
+    this.axesService.createAxe( "Nouvel axe" );
   }
 }

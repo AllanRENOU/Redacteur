@@ -47,6 +47,9 @@
                 </td>
             </tr>
         </table>
+
+        <button id="btAddAxe" title="Ajouter un axe" (click)="onClickAddAxe()">+</button>
+
         <div #formLineCont id="formLineCont">
             
             <form *ngIf="currentEditLine != null" #formLine (ngSubmit)="onSubmitUpdate()" >
@@ -65,6 +68,5 @@
                 <button type="submit" class="buttonBlack updateAxeButton"></button>
             </form>
         </div>
-        
     </div>
 </div>

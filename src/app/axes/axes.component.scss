@@ -5,13 +5,16 @@
     position: relative;
     padding: 1rem;
     margin: 0;
+    overflow: scroll;
 
     #tableContainer{
         height: 100%;
-        width: 100%;
+        width: max-content;
+        display: flex;
 
         table{
             border-collapse: collapse;
+            height: min-content;
 
             th{
                 padding: 0!important;
@@ -165,5 +168,27 @@ form{
         position: absolute;
         right: 1rem;
     }
+}
+
+#btAddAxe{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 1.5rem;
+    font-size: 3rem;
+    line-height: 3rem;
+    font-weight: bold;
+    border: solid var(--light_bg_hover) 1px;
+    padding: 0;
+    background-color: var(--light_bg);
+    color: var(--light_bg_hover);
+    cursor: pointer;
+    margin: 0 2rem;
+
+    &:hover{
+        background-color: var(--light_bg_hover);
+        color: var(--dark_button_bg);
+        border-color: var(--dark_button_bg);
+    }
+    
 }
 

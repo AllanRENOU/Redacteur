@@ -53,11 +53,11 @@ export class EtapeComponent {
       }else if( MenuItem.UP == item ){
 
         if( this.axe ){
-          let lastEtape = Ordonable.getPrevious( this.axe.getEtapes(), this.etape );
-          if( lastEtape ){
+          let prevEtape = Ordonable.getPrevious( this.axe.getEtapes(), this.etape );
+          if( prevEtape ){
 
             // Si le précédent est sur la même ligne, on descend la position
-            if( lastEtape.idLigne == this.etape.idLigne ){
+            if( prevEtape.idLigne == this.etape.idLigne ){
               
               Ordonable.down( this.axe.getEtapes(), this.etape );
               this.axe.refreshOrderEtapes();
@@ -78,9 +78,7 @@ export class EtapeComponent {
                 console.error( "La ligne ", this.etape.idLigne, " n'est pas retrouvée" );
               }
             }
-
           }
-
         }
         
 
@@ -112,9 +110,7 @@ export class EtapeComponent {
                 console.error( "La ligne ", this.etape.idLigne, " n'est pas retrouvée" );
               }
             }
-
           }
-
         }
       }
     }
