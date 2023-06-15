@@ -20,7 +20,7 @@
  ### Axes
  - [ ] Mise en place serveur
  - [x] Mise en place IHM
- - [ ] Editer une étape
+ - [x] Editer une étape
  - [x] Editer le nom de l'axe
  - [x] Déplacer une étape
  - [x] Déplacer un axe

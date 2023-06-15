@@ -8,8 +8,9 @@
     text-align: center;
     border-radius: 3px;
     background-color: var(--light_bg);
+    font-family: sans-serif;
 
-    .titre{
+    .titre,.updateName {
         font-weight: bold;
         margin: 0;
         margin-top: 0.5rem;
@@ -68,5 +69,25 @@
         }
     }
     
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+
+    .updateName{
+        text-align: center;
+    }
+
+    .updateContent{
+        margin-top: 1.5rem;
+    }
+
+    .updateButton{
+        background-image: url(/assets/check.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: auto 90%;
+    }
 }
 

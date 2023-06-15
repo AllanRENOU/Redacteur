@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Etape } from '../Beans/Etape';
 import { MenuItem } from 'src/app/Utils/float-menu/MenuItem';
 import { AxesService } from 'src/app/Services/axes.service';
@@ -10,6 +10,7 @@ import { Axe } from '../Beans/Axe';
   templateUrl: './etape.component.html',
   styleUrls: ['./etape.component.scss']
 })
+
 export class EtapeComponent {
 
   @Input()
@@ -25,8 +26,13 @@ export class EtapeComponent {
   ]
 
   showMoreMenu = false;
+  isUpdate = false;
 
-  constructor( private axesService : AxesService ){
+  // Form
+  nameEtape : string = "";
+  contentEtape : string = "";
+
+  constructor( private axesService : AxesService ){ 
 
   }
 
@@ -48,7 +54,11 @@ export class EtapeComponent {
   onClickMenu(  item : MenuItem ){
     if( this.etape ){
       if( MenuItem.UPDATE == item ){
-        this.etape.content = "Etape modifiée";
+        //this.etape.content = "Etape modifiée";
+        this.nameEtape = this.etape.title;
+        this.contentEtape = this.etape.content;
+        this.isUpdate = true;
+        setTimeout( ()=>this.refreshHeight(), 100 );
       
       }else if( MenuItem.UP == item ){
 
@@ -114,6 +124,31 @@ export class EtapeComponent {
         }
       }
     }
+  }
+
+
+  // ========== Update ==========
+
+  
+  @ViewChild( 'textAreaContentEtape' ) textAreaContent?: ElementRef<HTMLElement>;
+  onTextChanged(){
+    this.refreshHeight();
+  }
+
+  private refreshHeight(){
+    if( this.textAreaContent ){
+      this.textAreaContent.nativeElement.style.height = "auto";
+      this.textAreaContent.nativeElement.style.height = this.textAreaContent.nativeElement.scrollHeight + "px";
+    }
+  }
+
+  onSubmit(){
+    if( this.etape ){
+      this.etape.title = this.nameEtape;
+      this.etape.content = this.contentEtape;
+      this.isUpdate = false;
+    }
+    
   }
 
 }
