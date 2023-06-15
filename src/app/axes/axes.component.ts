@@ -118,7 +118,8 @@ export class AxesComponent {
       let ligne = Ordonable.last(this.axesService.getLignes());
       if( ligne ){
         console.log( "create etape : ", "E_" + Date.now(), ", axe ", this.idBtMore, ", ligne ", Ordonable.last(this.axesService.getLignes()) );
-        this.axesService.createEtape( "E_" + Date.now(), this.idBtMore, ligne.id );
+        let etape = this.axesService.createEtape( "E_" + Date.now(), this.idBtMore, ligne.id );
+        etape.title = "Nouvelle étape";
       }else{
         console.log( "Aucune ligne existante")
         // TODO créer une ligne

@@ -27,7 +27,7 @@
  - [x] Ecrire des notes
  - [x] Créer un axe
  - [x] Créer une ligne
- - [ ] Monter etape si seule dans l'axe
+ - [x] Monter etape si seule dans l'axe
  - [ ] Supprimer un axe
  - [ ] Définir nom axe à la création
  - [ ] Définir nom de ligne à la création
