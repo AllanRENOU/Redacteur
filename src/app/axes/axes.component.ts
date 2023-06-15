@@ -80,7 +80,11 @@ export class AxesComponent {
     console.log( "Click ", aa );
   }
 
-
+  // ========== Bouton ajouter ligne ==========
+  onClickAddLine(){
+    let ligne = this.axesService.createLigne();
+    ligne.nom = "Nouvelle ligne";
+  }
 
   // ========== Edit nom axe ==========
   onSubmitUpdateTitle(){

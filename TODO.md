@@ -26,10 +26,11 @@
  - [x] Déplacer un axe
  - [x] Ecrire des notes
  - [x] Créer un axe
- - [ ] Créer une ligne
+ - [x] Créer une ligne
  - [ ] Monter etape si seule dans l'axe
  - [ ] Supprimer un axe
  - [ ] Définir nom axe à la création
+ - [ ] Définir nom de ligne à la création
  
  ### Autre
  - [ ] Pages Axes

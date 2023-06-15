@@ -16,13 +16,12 @@
                             ...
                             <app-float-menu *ngIf="idBtMore == axe.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event, axe )" [values]="MENU_MORE_VALUES"></app-float-menu>
                         </span>
-                        
                     </div>
                 </th>
             </tr>
 
             <!-- lignes du tableau -->
-            <tr *ngFor="let ligne of axesService.getLignes()">
+            <tr *ngFor="let ligne of axesService.getLignes(); let islast = last;">
 
                 <!-- Case commentaire -->
                 <td>
@@ -36,6 +35,7 @@
                             <app-autocomplete-input class="conentLine"  [texte]="ligne.content" (textChanged)="onTextLineChanged( $event, ligne )"></app-autocomplete-input>
                         --> 
                     </div>
+                    <button *ngIf="islast" id="btAddLine" (click)="onClickAddLine()">Ajouter une ligne</button>
                     
                     
                 </td>
