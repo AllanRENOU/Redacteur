@@ -8,7 +8,7 @@
             <tr>
                 <th>Notes</th>
                 <th *ngFor="let axe of axesService.getAxes()" >
-                    <div class="axeTitle">
+                    <div class="axeTitle" *ngIf="!currentEditAxe || currentEditAxe.id != axe.id">
                         <span>
                             {{axe.nom}}
                         </span>
@@ -55,6 +55,14 @@
                 <div class="form-group">
                     <button type="submit" class="buttonBlack updateLineButton"></button>
                 </div>
+            </form>
+        </div>
+
+        <div #formAxeCont id="formAxeCont">
+            <form *ngIf="currentEditAxe != null" (ngSubmit)="onSubmitUpdateTitle()">
+                
+                <input type="text" required name="titleAxe" ngModel [(ngModel)]="titleAxe" placeholder="Titre" autocomplete="off" class="updateAxeTitle"/>
+                <button type="submit" class="buttonBlack updateAxeButton"></button>
             </form>
         </div>
         

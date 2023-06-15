@@ -24,13 +24,15 @@ export class AxesComponent {
   ]
 
   currentEditLine : Ligne | null = null;
+  currentEditAxe: Axe | null = null;
 
   // Formulaire
   @ViewChild( 'formLineCont' ) form?: ElementRef<HTMLFormElement>;
-
+  @ViewChild( 'formAxeCont' ) formTitleAxe?: ElementRef<HTMLFormElement>;
 
   titleLine : string = "";
   contentLine : string = "";
+  titleAxe : string = "";
 
   constructor( public projectService : ProjectService, public axesService : AxesService, private router: Router, private _location: Location){
     
@@ -41,6 +43,8 @@ export class AxesComponent {
     });
 
   }
+
+  // ========== Edit ligne ==========
 
   onClickEditLine( ligne : Ligne, event : MouseEvent ){
     console.log( "Click edit ", ligne );
@@ -61,7 +65,6 @@ export class AxesComponent {
   }
 
   onSubmitUpdate(){
-    console.log( "Submit " );
     if( this.currentEditLine ){
       this.currentEditLine.content = this.contentLine;
       this.currentEditLine.nom = this.titleLine;
@@ -72,15 +75,32 @@ export class AxesComponent {
   onTextLineChanged( texte : string ){
     this.contentLine = texte;
   }
-
+  
   onClickLink( aa :any){
     console.log( "Click ", aa );
   }
 
 
+
+  // ========== Edit nom axe ==========
+  onSubmitUpdateTitle(){
+    if( this.currentEditAxe ){
+      this.currentEditAxe.nom = this.titleAxe;
+      this.currentEditAxe = null;
+    }
+  }
+  
+  // ========== Bouton more axe ==========
+
   onClickMore( axe : Axe, event : any ){
     this.idBtMore = axe.id;
     event.stopPropagation();
+    this.currentEditAxe = null;
+    let div = (event.target as HTMLElement).parentElement?.parentElement;
+
+    if( this.formTitleAxe ){
+      div?.appendChild( this.formTitleAxe.nativeElement );
+    }
   }
 
   onHideMenu(){
@@ -106,8 +126,9 @@ export class AxesComponent {
     }else if( MenuItem.LEFT == item  ){
       Ordonable.down( this.axesService.getAxes(), axe );
       this.axesService.refreshOrderAxes()
+    }else if( MenuItem.RENOMMER == item ){
+      this.titleAxe = axe.nom;
+      this.currentEditAxe = axe;
     }
   }
-
-
 }

@@ -21,10 +21,12 @@
  - [ ] Mise en place serveur
  - [x] Mise en place IHM
  - [ ] Editer une étape
- - [ ] Editer le nom de l'axe
+ - [x] Editer le nom de l'axe
  - [x] Déplacer une étape
  - [x] Déplacer un axe
  - [x] Ecrire des notes
+ - [ ] Créer un axe
+ - [ ] Créer une ligne
  
  ### Autre
  - [ ] Pages Axes

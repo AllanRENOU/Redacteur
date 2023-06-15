@@ -5,7 +5,7 @@ export class Axe extends Ordonable{
 
     private etapes : Etape[] = [];
 
-    constructor( public id : string, public nom : String ){
+    constructor( public id : string, public nom : string ){
         super();
     }
 
