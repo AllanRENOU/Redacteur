@@ -31,6 +31,7 @@
  - [x] Supprimer un axe
  - [ ] Définir nom axe à la création
  - [ ] Définir nom de ligne à la création
+ - [ ] Pouvoir mettre des liens dans les etapes
  
  ### Autre
  - [ ] Pages Axes
@@ -38,3 +39,4 @@
  - [ ] Pages Rédaction
  - [ ] Gestion d'une timeline
  - [x] Créer une classe Ordonable
+ - [ ] Refonte bouton more( Bouton intégré au composant, bullette flottante, picto, ...)
