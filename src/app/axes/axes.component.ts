@@ -20,7 +20,8 @@ export class AxesComponent {
     MenuItem.RENOMMER,
     MenuItem.ADD_ETAPE,
     MenuItem.RIGHT,
-    MenuItem.LEFT
+    MenuItem.LEFT,
+    MenuItem.REMOVE
   ]
 
   currentEditLine : Ligne | null = null;
@@ -133,6 +134,8 @@ export class AxesComponent {
       this.axesService.refreshOrderAxes()
     }else if( MenuItem.RENOMMER == item ){
       this.renameAxe( axe );
+    }else if( MenuItem.REMOVE ){
+      this.axesService.removeAxe( axe );
     }
   }
 

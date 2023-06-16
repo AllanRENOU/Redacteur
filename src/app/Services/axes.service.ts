@@ -68,8 +68,11 @@ export class AxesService {
     return axe;
   }
 
-  removeAxe( id : string ){
-    Ordonable.removeFromArray( this.axes, this.getAxe( id ) );
+  removeAxe( axe : string  | Axe ){
+    if( typeof axe == "string" ){
+      axe = this.getAxe( axe )
+    }
+    Ordonable.removeFromArray( this.axes, axe );
   }
 
   decalerAxeDroite( axe : Axe ){

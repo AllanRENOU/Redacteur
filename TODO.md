@@ -28,7 +28,7 @@
  - [x] Créer un axe
  - [x] Créer une ligne
  - [x] Monter etape si seule dans l'axe
- - [ ] Supprimer un axe
+ - [x] Supprimer un axe
  - [ ] Définir nom axe à la création
  - [ ] Définir nom de ligne à la création
  
