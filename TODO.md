@@ -30,10 +30,11 @@
  - [x] Monter etape si seule dans l'axe
  - [x] Supprimer un axe
  - [x] Définir nom axe à la création
- - [ ] Définir nom de ligne à la création
+ - [x] Définir nom de ligne à la création
  - [ ] Pouvoir mettre des liens dans les etapes
  - [x] Revoir IHM déplacement axes
  - [ ] Gérer cas tableau axe vide + creation 1er Axe
+ - [ ] Revoir affichage déplacement des étapes
  
  ### Autre
  - [ ] Pages Axes

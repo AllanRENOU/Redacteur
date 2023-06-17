@@ -87,6 +87,17 @@ export class AxesComponent {
   onClickAddLine(){
     let ligne = this.axesService.createLigne();
     ligne.nom = "Nouvelle ligne";
+    console.log( "onClickAddLine")
+    setTimeout( () => {
+      if( this.form ){
+        let tr = this.tableAxe?.nativeElement.lastElementChild?.firstElementChild;
+        this.titleLine = ligne.nom;
+        tr?.appendChild( this.form.nativeElement );
+        this.currentEditLine = ligne;
+      }
+    }, 50 )
+    
+    
   }
   
   // ========== Boutons déplacer ligne ==========
