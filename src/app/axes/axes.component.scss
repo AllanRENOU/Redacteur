@@ -187,6 +187,19 @@ $SIZE_ARROUND_END : 2rem;
                 th{
                     border-bottom:0;
                 }
+
+                /* Première colonne axe*/
+                th:nth-child(2){
+                    .btLeftAxe{
+                        display: none;
+                    }
+                }
+
+                th:last-child{
+                    .btRightAxe{
+                        display: none;
+                    }
+                }
             }
 
             /* Première ligne*/
