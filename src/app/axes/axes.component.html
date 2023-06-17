@@ -9,7 +9,7 @@
                 <th>Notes</th>
                 <th *ngFor="let axe of axesService.getAxes()" >
                     <div class="axeTitle" *ngIf="!currentEditAxe || currentEditAxe.id != axe.id">
-                        <div class="btLeftAxe" (click)="leftAxe( axe )"></div>
+                        <div class="btLeftAxe" (click)="leftAxe( axe )" title="Déplacer à gauche"></div>
                         <span>
                             {{axe.nom}}
                         </span>
@@ -17,7 +17,7 @@
                             ...
                             <app-float-menu *ngIf="idBtMore == axe.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event, axe )" [values]="MENU_MORE_VALUES"></app-float-menu>
                         </span>
-                        <div class="btRightAxe" (click)="rightAxe( axe )"></div>
+                        <div class="btRightAxe" (click)="rightAxe( axe )" title="Déplacer à droite"></div>
                     </div>
                 </th>
             </tr>
@@ -27,7 +27,7 @@
 
                 <!-- Case commentaire -->
                 <td>
-                    <div class="btUpLine" (click)="upLine( ligne )"></div>
+                    <div class="btUpLine" (click)="upLine( ligne )" title="Monter"></div>
 
                     <div *ngIf="currentEditLine == null || currentEditLine.id != ligne.id">
                        <div class="titreLine">
@@ -41,7 +41,7 @@
                     </div>
                     <button *ngIf="islast" id="btAddLine" (click)="onClickAddLine()">Ajouter une ligne</button>
                     
-                    <div class="btDownLine" (click)="downLine( ligne )"></div>
+                    <div class="btDownLine" (click)="downLine( ligne )" title="Descendre"></div>
                     
                 </td>
 

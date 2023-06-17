@@ -33,6 +33,7 @@
  - [ ] Définir nom de ligne à la création
  - [ ] Pouvoir mettre des liens dans les etapes
  - [x] Revoir IHM déplacement axes
+ - [ ] Gérer cas tableau axe vide + creation 1er Axe
  
  ### Autre
  - [ ] Pages Axes
