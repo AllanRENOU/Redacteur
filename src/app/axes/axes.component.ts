@@ -30,6 +30,8 @@ export class AxesComponent {
   // Formulaire
   @ViewChild( 'formLineCont' ) form?: ElementRef<HTMLFormElement>;
   @ViewChild( 'formAxeCont' ) formTitleAxe?: ElementRef<HTMLFormElement>;
+  @ViewChild( 'tableAxe' ) tableAxe?: ElementRef<HTMLFormElement>;
+  
 
   titleLine : string = "";
   contentLine : string = "";
@@ -114,7 +116,7 @@ export class AxesComponent {
     event.stopPropagation();
     this.currentEditAxe = null;
     let div = (event.target as HTMLElement).parentElement?.parentElement;
-
+    
     if( this.formTitleAxe ){
       div?.appendChild( this.formTitleAxe.nativeElement );
     }
@@ -170,6 +172,16 @@ export class AxesComponent {
   // ========== Bouton ajouter axe ==========
 
   onClickAddAxe(){
-    this.axesService.createAxe( "Nouvel axe" );
+    let axe = this.axesService.createAxe( "Nouvel axe", "AXE_" + Date.now() );
+    setTimeout( ()=>{
+      if( this.tableAxe  && this.formTitleAxe ){
+        let lastTh = this.tableAxe.nativeElement.firstElementChild?.lastElementChild;
+        lastTh?.appendChild( this.formTitleAxe.nativeElement );
+        this.renameAxe( axe );
+        console.log( "currentEditAxe" , this.currentEditAxe)
+        console.log( "axes", this.axesService.getAxes())
+      }
+    }, 50 )
+    
   }
 }

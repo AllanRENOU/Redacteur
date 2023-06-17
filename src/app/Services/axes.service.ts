@@ -62,8 +62,12 @@ export class AxesService {
   }
 
   // ========== Axe ==========
-  createAxe( name : string ) : Axe {
-    let axe = new Axe( this.projectService.generateIdFromString( name ), name );
+  createAxe( name : string, id? : string ) : Axe {
+
+    if( !id ){
+      id = this.projectService.generateIdFromString( name )
+    }
+    let axe = new Axe( id, name );
     Ordonable.addInArray( this.axes, axe );
     return axe;
   }

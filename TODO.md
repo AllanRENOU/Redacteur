@@ -29,7 +29,7 @@
  - [x] Créer une ligne
  - [x] Monter etape si seule dans l'axe
  - [x] Supprimer un axe
- - [ ] Définir nom axe à la création
+ - [x] Définir nom axe à la création
  - [ ] Définir nom de ligne à la création
  - [ ] Pouvoir mettre des liens dans les etapes
  - [x] Revoir IHM déplacement axes
