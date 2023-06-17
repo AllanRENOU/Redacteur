@@ -27,7 +27,49 @@ $SIZE_ARROUND_END : 2rem;
                 border-bottom: solid 1px black;
                 padding: 1rem 0;
                 width: 20vw;
+                position: relative;
+            }
 
+            .btUpLine,.btDownLine{
+                height: 1rem;
+                width: 100%;
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: contain;
+                background-color: var(--light_bg_hover);
+
+                &:hover{
+                    opacity: 1;
+                }
+            }
+
+            .btUpLine{
+                top: 0;
+
+                background-image: url(/assets/caret-up.svg);
+
+                &:hover{
+                    background-image: url(/assets/caret-up-white.svg);
+                }
+            }
+
+            .btDownLine{
+                bottom: 0;
+                background-image: url(/assets/caret-down.svg);
+
+                &:hover{
+                    background-image: url(/assets/caret-down-white.svg);
+                }
+            }
+
+            td:hover{
+                .btUpLine:not(:hover),.btDownLine:not(:hover){
+                    opacity: 0.5;
+                }
             }
 
             .titreLine{
@@ -102,6 +144,13 @@ $SIZE_ARROUND_END : 2rem;
                 }
             }
 
+            /* Première ligne*/
+            tr:nth-child(2){
+                .btUpLine{
+                    display: none;
+                }
+            }
+
             tr:last-child{
 
                 td:first-child{
@@ -130,6 +179,10 @@ $SIZE_ARROUND_END : 2rem;
                         position: absolute;
                         bottom: 0;
                     }
+                }
+
+                .btDownLine{
+                    display: none;
                 }
             }
         }

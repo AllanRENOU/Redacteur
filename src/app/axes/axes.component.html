@@ -25,6 +25,8 @@
 
                 <!-- Case commentaire -->
                 <td>
+                    <div class="btUpLine" (click)="upLine( ligne )"></div>
+
                     <div *ngIf="currentEditLine == null || currentEditLine.id != ligne.id">
                        <div class="titreLine">
                             <span>{{ligne.nom}}</span>
@@ -37,6 +39,7 @@
                     </div>
                     <button *ngIf="islast" id="btAddLine" (click)="onClickAddLine()">Ajouter une ligne</button>
                     
+                    <div class="btDownLine" (click)="downLine( ligne )"></div>
                     
                 </td>
 

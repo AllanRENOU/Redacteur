@@ -86,6 +86,18 @@ export class AxesComponent {
     let ligne = this.axesService.createLigne();
     ligne.nom = "Nouvelle ligne";
   }
+  
+  // ========== Boutons déplacer ligne ==========
+
+  upLine( line : Ligne ){
+    this.axesService.downLigne( line );
+    this.axesService.refreshOrderLignes();
+  }
+
+  downLine( line : Ligne ){
+    this.axesService.upLigne( line );
+    this.axesService.refreshOrderLignes();
+  }
 
   // ========== Edit nom axe ==========
   onSubmitUpdateTitle(){

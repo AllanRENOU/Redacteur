@@ -117,6 +117,17 @@ export class AxesService {
     return this.lignes;
   }
 
+  upLigne( ligne : Ligne ){
+    Ordonable.up( this.lignes, ligne );
+  }
+
+  downLigne( ligne : Ligne ){
+    Ordonable.down( this.lignes, ligne );
+  }
+
+  refreshOrderLignes(){
+    this.lignes = Ordonable.sortArray( this.lignes );
+  }
 
 
   // ========== Etape ==========
