@@ -91,6 +91,14 @@ export class AxesService {
     return this.axes;
   }
 
+  upAxe( axe : Axe ){
+    Ordonable.up( this.axes, axe );
+  }
+
+  downAxe( axe : Axe ){
+    Ordonable.down( this.axes, axe );
+  }
+
   refreshOrderAxes(){
     this.axes = Ordonable.sortArray( this.axes );
   }

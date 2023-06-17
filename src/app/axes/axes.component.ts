@@ -139,11 +139,9 @@ export class AxesComponent {
       }
       
     }else if( MenuItem.RIGHT == item  ){
-      Ordonable.up( this.axesService.getAxes(), axe );
-      this.axesService.refreshOrderAxes()
+      this.rightAxe( axe );
     }else if( MenuItem.LEFT == item  ){
-      Ordonable.down( this.axesService.getAxes(), axe );
-      this.axesService.refreshOrderAxes()
+      this.leftAxe( axe );
     }else if( MenuItem.RENOMMER == item ){
       this.renameAxe( axe );
     }else if( MenuItem.REMOVE ){
@@ -154,6 +152,18 @@ export class AxesComponent {
   private renameAxe(axe : Axe ){
       this.titleAxe = axe.nom;
       this.currentEditAxe = axe;
+
+  }
+
+  rightAxe( axe :Axe ){
+
+      this.axesService.upAxe( axe );
+      this.axesService.refreshOrderAxes()
+  }
+
+  leftAxe( axe : Axe ){
+    this.axesService.downAxe( axe );
+    this.axesService.refreshOrderAxes()
 
   }
 
