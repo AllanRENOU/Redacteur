@@ -31,10 +31,11 @@
  - [x] Supprimer un axe
  - [x] Définir nom axe à la création
  - [x] Définir nom de ligne à la création
- - [ ] Pouvoir mettre des liens dans les etapes
+ - [x] Pouvoir mettre des liens dans les etapes
  - [x] Revoir IHM déplacement axes
  - [ ] Gérer cas tableau axe vide + creation 1er Axe
  - [ ] Revoir affichage déplacement des étapes
+ - [ ] Revoir affichage autocomplete-reader et input
  
  ### Autre
  - [ ] Pages Axes

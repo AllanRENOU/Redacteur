@@ -124,7 +124,13 @@ export class EtapeComponent {
 
   // ========== Update ==========
 
-  
+  onDescChanged( texte : string ){
+    this.contentEtape = texte;
+  }
+  onClickLink( link : string ){
+    console.log( "lien : ", link )
+  }
+
   @ViewChild( 'textAreaContentEtape' ) textAreaContent?: ElementRef<HTMLElement>;
   onTextChanged(){
     this.refreshHeight();

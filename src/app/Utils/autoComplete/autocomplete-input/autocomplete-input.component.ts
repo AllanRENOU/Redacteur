@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { ProjectService } from 'src/app/Services/project.service';
 import { AutocompletionPipe } from '../../autocompletion.pipe';
 import { Page } from 'src/app/Services/Beans/Page';
@@ -8,7 +8,7 @@ import { Page } from 'src/app/Services/Beans/Page';
   templateUrl: './autocomplete-input.component.html',
   styleUrls: ['./autocomplete-input.component.scss']
 })
-export class AutocompleteInputComponent implements OnInit {
+export class AutocompleteInputComponent implements AfterViewInit  {
 
 
   @Input()
@@ -32,15 +32,19 @@ export class AutocompleteInputComponent implements OnInit {
     
   }
 
-  ngOnInit(): void {
-    
+  ngAfterViewInit(): void {
+    /*
     setTimeout( ()=>{
       if( this.currentTextArea ){
         this.currentTextArea.nativeElement.style.height = this.calcHeight(this.texte) + "rem";
       }
-    }, 10)
+    }, 10)*/
+    if( this.currentTextArea ){
+      this.refreshHeight( this.currentTextArea.nativeElement );
+      this.textChanged.emit( this.texte );
+      console.log("coucou")
+    }
     
-    this.textChanged.emit( this.texte );
   }
 
 
@@ -49,7 +53,7 @@ export class AutocompleteInputComponent implements OnInit {
     if( this.currentTextArea ){
 
       // Hauteur du textarea
-      this.renderer.setStyle( this.currentTextArea.nativeElement, "height", this.calcHeight( this.texte ) + "rem" );
+      this.refreshHeight( this.currentTextArea.nativeElement );
 
       // Position et contenu de l'autocompletion
       this.manageAutoComplete( this.currentTextArea.nativeElement, ee );
@@ -58,6 +62,16 @@ export class AutocompleteInputComponent implements OnInit {
     }else{
       console.error( "Textarea not linked" );
     }
+    
+  }
+
+  private refreshHeight( element : HTMLElement ){
+
+      //this.renderer.setStyle( element, "height", this.calcHeight( this.texte ) + "rem" );
+    element.style.height = "auto";
+    //setTimeout( ()=>{
+      element.style.height = element.scrollHeight + "px";
+    //}, 50);
     
   }
   
