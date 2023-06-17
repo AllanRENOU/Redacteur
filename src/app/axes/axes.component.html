@@ -9,6 +9,7 @@
                 <th>Notes</th>
                 <th *ngFor="let axe of axesService.getAxes()" >
                     <div class="axeTitle" *ngIf="!currentEditAxe || currentEditAxe.id != axe.id">
+                        <div class="btLeftAxe" (click)="leftAxe( axe )"></div>
                         <span>
                             {{axe.nom}}
                         </span>
@@ -16,6 +17,7 @@
                             ...
                             <app-float-menu *ngIf="idBtMore == axe.id" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event, axe )" [values]="MENU_MORE_VALUES"></app-float-menu>
                         </span>
+                        <div class="btRightAxe" (click)="rightAxe( axe )"></div>
                     </div>
                 </th>
             </tr>
