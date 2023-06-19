@@ -1,11 +1,11 @@
 <div class="globalContainer">
 
-    <div id="tableContainer">
+    <div id="tableContainer"  *ngIf="axesService.getAxes().length > 0">
 
         <table  #tableAxe>
 
             <!-- 1re ligne : nom des axes -->
-            <tr>
+            <tr *ngIf="axesService.getAxes().length > 0">
                 <th>Notes</th>
                 <th *ngFor="let axe of axesService.getAxes()" >
                     <div class="axeTitle" *ngIf="!currentEditAxe || currentEditAxe.id != axe.id">
@@ -55,23 +55,31 @@
 
         <button id="btAddAxe" title="Ajouter un axe" (click)="onClickAddAxe()">+</button>
 
-        <div #formLineCont id="formLineCont">
-            
-            <form *ngIf="currentEditLine != null" #formLine (ngSubmit)="onSubmitUpdate()" >
-                <input type="text" required name="titleLine" ngModel [(ngModel)]="titleLine" placeholder="Titre" autocomplete="off" class="updateLineTitle"/>
-                <app-autocomplete-input class="conentLine"  [texte]="currentEditLine.content" (textChanged)="onTextLineChanged( $event )" class="updateLineContent"></app-autocomplete-input>
-                <div class="form-group">
-                    <button type="submit" class="buttonBlack updateLineButton"></button>
-                </div>
-            </form>
-        </div>
+    </div>
 
-        <div #formAxeCont id="formAxeCont">
-            <form *ngIf="currentEditAxe != null" (ngSubmit)="onSubmitUpdateTitle()">
-                
-                <input type="text" required name="titleAxe" ngModel [(ngModel)]="titleAxe" placeholder="Titre" autocomplete="off" class="updateAxeTitle"/>
-                <button type="submit" class="buttonBlack updateAxeButton"></button>
-            </form>
-        </div>
+    <div id="noAxeMsgContainer" *ngIf="axesService.getAxes().length == 0" >
+
+        <div id="noAxeMsg">Aucun axe présent</div>
+        <button (click)="onClickStart()">Démarrer</button>
+    </div>
+
+    
+    <div #formLineCont id="formLineCont">
+        
+        <form *ngIf="currentEditLine != null" #formLine (ngSubmit)="onSubmitUpdate()" >
+            <input type="text" required name="titleLine" ngModel [(ngModel)]="titleLine" placeholder="Titre" autocomplete="off" class="updateLineTitle"/>
+            <app-autocomplete-input class="conentLine"  [texte]="currentEditLine.content" (textChanged)="onTextLineChanged( $event )" class="updateLineContent"></app-autocomplete-input>
+            <div class="form-group">
+                <button type="submit" class="buttonBlack updateLineButton"></button>
+            </div>
+        </form>
+    </div>
+
+    <div #formAxeCont id="formAxeCont">
+        <form *ngIf="currentEditAxe != null" (ngSubmit)="onSubmitUpdateTitle()">
+            
+            <input type="text" required name="titleAxe" ngModel [(ngModel)]="titleAxe" placeholder="Titre" autocomplete="off" class="updateAxeTitle"/>
+            <button type="submit" class="buttonBlack updateAxeButton"></button>
+        </form>
     </div>
 </div>

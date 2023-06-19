@@ -53,17 +53,8 @@ export class AxesComponent {
     console.log( "Click edit ", ligne );
 
     // TODO valider modifs
-    let div = (event.target as HTMLElement).parentElement?.parentElement?.parentElement;
-    this.currentEditLine = ligne;
-
-    if( this.form ){
-
-      this.titleLine = ligne.nom;
-      div?.appendChild( this.form.nativeElement );
-      console.log( "div ", div, "form", this.form.nativeElement)
-    }else{
-      console.error( "Formulaire non trouvé" );
-    }
+    let div = (event.target as HTMLElement).parentElement?.parentElement?.parentElement as HTMLElement;
+    this.editLine( ligne, div );
     
   }
 
@@ -82,20 +73,38 @@ export class AxesComponent {
   onClickLink( aa :any){
     console.log( "Click ", aa );
   }
+  
+  private editLine( ligne : Ligne, td? : HTMLElement ){
+
+    if( this.form ){
+      if( td ){
+        this.currentEditLine = ligne;
+        this.titleLine = ligne.nom;
+        td.appendChild( this.form.nativeElement );
+      }else{
+        ligne.nom = "Nouvelle ligne";
+        let formLine = this.form.nativeElement;
+        setTimeout( () => {
+          let tr = this.tableAxe?.nativeElement.lastElementChild?.firstElementChild;
+          this.titleLine = ligne.nom;
+          tr?.appendChild( formLine );
+          this.currentEditLine = ligne;
+          
+        }, 50 );
+      }
+      
+    }else{
+      console.error( "Formulaire non trouvé" );
+    }
+    
+  }
 
   // ========== Bouton ajouter ligne ==========
   onClickAddLine(){
     let ligne = this.axesService.createLigne();
-    ligne.nom = "Nouvelle ligne";
-    console.log( "onClickAddLine")
-    setTimeout( () => {
-      if( this.form ){
-        let tr = this.tableAxe?.nativeElement.lastElementChild?.firstElementChild;
-        this.titleLine = ligne.nom;
-        tr?.appendChild( this.form.nativeElement );
-        this.currentEditLine = ligne;
-      }
-    }, 50 )
+
+    this.editLine( ligne );
+    
     
     
   }
@@ -183,7 +192,13 @@ export class AxesComponent {
   // ========== Bouton ajouter axe ==========
 
   onClickAddAxe(){
+
+    if( this.axesService.getLignes().length == 0 ){
+      let line = this.axesService.createLigne();
+      this.editLine( line );
+    }
     let axe = this.axesService.createAxe( "Nouvel axe", "AXE_" + Date.now() );
+
     setTimeout( ()=>{
       if( this.tableAxe  && this.formTitleAxe ){
         let lastTh = this.tableAxe.nativeElement.firstElementChild?.lastElementChild;
@@ -195,4 +210,27 @@ export class AxesComponent {
     }, 50 )
     
   }
+
+  // ========== Bouton démarrer projet ==========
+  onClickStart(){
+
+    let axe = this.axesService.createAxe( "Nouvel axe", "AXE_" + Date.now() );
+
+    setTimeout( ()=>{
+      if( this.tableAxe  && this.formTitleAxe ){
+        let lastTh = this.tableAxe.nativeElement.firstElementChild?.lastElementChild;
+        lastTh?.appendChild( this.formTitleAxe.nativeElement );
+        this.renameAxe( axe );
+        console.log( "currentEditAxe" , this.currentEditAxe)
+        console.log( "axes", this.axesService.getAxes())
+      }
+    }, 50 )
+    
+    if( this.axesService.getLignes().length == 0 ){
+      let line = this.axesService.createLigne();
+      this.editLine( line );
+    }
+  }
 }
+
+
