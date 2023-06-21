@@ -1,25 +1,33 @@
 <div [ngClass]="{'plie' : etape && etape.content.length > 80}" class="etape">
-    <p  *ngIf="!isUpdate" class="titre">
-        <span class="titreContent">
-            {{etape?.title}}
-        </span>
-        <span class="more" (click)="onClickMore( $event )">
-            ...
-            <app-float-menu *ngIf="showMoreMenu" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event )" [values]="MENU_MORE_VALUES"></app-float-menu>
-        </span>
-    </p>
-    <!--
-        <p  *ngIf="!isUpdate" (click)="showAllEtapeContent($event)" class="content">{{etape?.content}}</p>
-    -->
-    
-    <app-autocomplete-reader *ngIf="!isUpdate" [data]="{texte : etape?.content|| ''}" (clickLink)="onClickLink( $event )"></app-autocomplete-reader>
 
-    <form *ngIf="isUpdate" (ngSubmit)="onSubmit()">
-                
-        <input type="text" required name="nameEtape" ngModel [(ngModel)]="nameEtape" placeholder="Nome de l'étape" autocomplete="off" class="updateName"/>
-        <!--<textarea class="updateContent" #textAreaContentEtape name="contentEtape" ngModel [(ngModel)]="contentEtape" (keyup)="onTextChanged()"></textarea>
+    <div class="btUp" (click)="up()"></div>
+
+    <div class="etapeContent">
+         <p  *ngIf="!isUpdate" class="titre">
+            <span class="titreContent">
+                {{etape?.title}}
+            </span>
+            <span class="more" (click)="onClickMore( $event )">
+                ...
+                <app-float-menu *ngIf="showMoreMenu" (toHide)="onHideMenu()" (onClick)="onClickMenu( $event )" [values]="MENU_MORE_VALUES"></app-float-menu>
+            </span>
+        </p>
+        <!--
+            <p  *ngIf="!isUpdate" (click)="showAllEtapeContent($event)" class="content">{{etape?.content}}</p>
         -->
-        <app-autocomplete-input class="updateContent" [texte]="contentEtape" (textChanged)="onDescChanged( $event )"></app-autocomplete-input>
-        <button type="submit" class="buttonBlack updateButton"></button>
-    </form>
+        
+        <app-autocomplete-reader *ngIf="!isUpdate" [data]="{texte : etape?.content|| ''}" (clickLink)="onClickLink( $event )"></app-autocomplete-reader>
+
+        <form *ngIf="isUpdate" (ngSubmit)="onSubmit()">
+                    
+            <input type="text" required name="nameEtape" ngModel [(ngModel)]="nameEtape" placeholder="Nome de l'étape" autocomplete="off" class="updateName"/>
+            <!--<textarea class="updateContent" #textAreaContentEtape name="contentEtape" ngModel [(ngModel)]="contentEtape" (keyup)="onTextChanged()"></textarea>
+            -->
+            <app-autocomplete-input class="updateContent" [texte]="contentEtape" (textChanged)="onDescChanged( $event )"></app-autocomplete-input>
+            <button type="submit" class="buttonBlack updateButton"></button>
+        </form>
+    </div>
+   
+    <div class="btDown" (click)="down()"></div>
+
 </div>

@@ -90,9 +90,29 @@ body, html{
     
 }
 
+/* ========== Axes ========== */
 
+app-axes{
 
+    tr:nth-child(2){
+        app-etape:first-child{
+            .btUp{
+                display: none;
+            }
+        }
+        
+    }
 
+    tr:last-child{
+        app-etape:last-child{
+            .btDown{
+                display: none;
+            }
+        }
+    }
+}
+
+/* ========== Fonts ========== */
 @font-face {
     font-family: absender1;
     src: url(/assets/absender1.ttf);

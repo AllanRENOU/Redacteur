@@ -61,65 +61,14 @@ export class EtapeComponent {
         setTimeout( ()=>this.refreshHeight(), 100 );
       
       }else if( MenuItem.UP == item ){
+        this.up();
 
-        if( this.axe ){
-          let prevEtape = Ordonable.getPrevious( this.axe.getEtapes(), this.etape );
-
-          // Si le précédent est sur la même ligne, on descend la position
-          if( prevEtape && prevEtape.idLigne == this.etape.idLigne ){
-              
-              Ordonable.down( this.axe.getEtapes(), this.etape );
-              this.axe.refreshOrderEtapes();
-              
-          // Sinon, on change le numéo de ligne
-          }else{
-
-            let ligne = this.axesService.getLigne( this.etape.idLigne );
-            if( ligne ){
-              let lignePrev = Ordonable.getPrevious( this.axesService.getLignes(), ligne );
-
-              if( lignePrev ){
-                this.etape.idLigne = lignePrev.id;
-              }else{
-                console.error( "La ligne précédente de ", this.etape.idLigne, " n'est pas retrouvée" );
-              }
-            }else{
-              console.error( "La ligne ", this.etape.idLigne, " n'est pas retrouvée" );
-            }
-          }
-        }
       }else if( MenuItem.DOWN == item ){
-        
-        if( this.axe ){
-          let nextEtape = Ordonable.getNext( this.axe.getEtapes(), this.etape );
-
-
-          // Si le précédent est sur la même ligne, on descend la position
-          if( nextEtape && nextEtape.idLigne == this.etape.idLigne ){
-              
-            Ordonable.up( this.axe.getEtapes(), this.etape );
-            this.axe.refreshOrderEtapes();
-            
-          // Sinon, on change le numéo de ligne
-          }else{
-
-            let ligne = this.axesService.getLigne( this.etape.idLigne );
-            if( ligne ){
-              let ligneNext = Ordonable.getNext( this.axesService.getLignes(), ligne );
-
-              if( ligneNext ){
-                this.etape.idLigne = ligneNext.id;
-              }else{
-                console.error( "La ligne suivante de ", this.etape.idLigne, " n'est pas retrouvée" );
-              }
-            }else{
-              console.error( "La ligne ", this.etape.idLigne, " n'est pas retrouvée" );
-            }
-          }
-        }
+        this.down();
       }
     }
   }
+
 
 
   // ========== Update ==========
@@ -150,6 +99,68 @@ export class EtapeComponent {
       this.isUpdate = false;
     }
     
+  }
+  
+  // ========== Déplacement ==========
+  up( ){
+
+    if( this.axe && this.etape  ){
+      let prevEtape = Ordonable.getPrevious( this.axe.getEtapes(), this.etape );
+
+      // Si le précédent est sur la même ligne, on descend la position
+      if( prevEtape && prevEtape.idLigne == this.etape.idLigne ){
+          
+          Ordonable.down( this.axe.getEtapes(), this.etape );
+          this.axe.refreshOrderEtapes();
+          
+      // Sinon, on change le numéo de ligne
+      }else{
+
+        let ligne = this.axesService.getLigne( this.etape.idLigne );
+        if( ligne ){
+          let lignePrev = Ordonable.getPrevious( this.axesService.getLignes(), ligne );
+
+          if( lignePrev ){
+            this.etape.idLigne = lignePrev.id;
+          }else{
+            console.error( "La ligne précédente de ", this.etape.idLigne, " n'est pas retrouvée" );
+          }
+        }else{
+          console.error( "La ligne ", this.etape.idLigne, " n'est pas retrouvée" );
+        }
+      }
+    }
+  }
+
+  down(){
+
+    if( this.axe && this.etape ){
+      let nextEtape = Ordonable.getNext( this.axe.getEtapes(), this.etape );
+
+
+      // Si le précédent est sur la même ligne, on descend la position
+      if( nextEtape && nextEtape.idLigne == this.etape.idLigne ){
+          
+        Ordonable.up( this.axe.getEtapes(), this.etape );
+        this.axe.refreshOrderEtapes();
+        
+      // Sinon, on change le numéo de ligne
+      }else{
+
+        let ligne = this.axesService.getLigne( this.etape.idLigne );
+        if( ligne ){
+          let ligneNext = Ordonable.getNext( this.axesService.getLignes(), ligne );
+
+          if( ligneNext ){
+            this.etape.idLigne = ligneNext.id;
+          }else{
+            console.error( "La ligne suivante de ", this.etape.idLigne, " n'est pas retrouvée" );
+          }
+        }else{
+          console.error( "La ligne ", this.etape.idLigne, " n'est pas retrouvée" );
+        }
+      }
+    }
   }
 
 }

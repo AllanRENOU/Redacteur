@@ -4,70 +4,117 @@
     border: solid 1px black;
     margin-left: 10%;
     margin-bottom: 0.3rem;
-    padding: 0.3rem;
-    text-align: center;
     border-radius: 3px;
     background-color: var(--light_bg);
     font-family: sans-serif;
 
-    .titre,.updateName {
-        font-weight: bold;
-        margin: 0;
-        margin-top: 0.5rem;
-        position: relative;
-
-        .titreContent{
-            width: calc( 100% - 2rem );
-            display: block;
-        }
-        
-        
-        .more{
-            color: rgba(0, 0, 0, 0);
-            user-select: none;
-            cursor: pointer;
-            background-image: none;
-            padding: 0 0.5rem;
-            font-size: 1rem;
-            
-            position: absolute;
-            right: 0;
-            top: 0;
-            
-            &:hover{
-                background-image: radial-gradient(circle, var(--light_bg_hover) 50%, transparent 80%, transparent 100%);
-            }
-        }
+    .btUp, .btDown{
+        height: 1rem;
+        width: 100%;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        background-color: var(--light_bg_hover);
+        opacity: 0;
 
         &:hover{
+            opacity: 1;
+        }
 
-            .more{
-                color: rgba(0, 0, 0, 0.5);
-            }
+    }
+
+    .btUp{
+        background-image: url(/assets/caret-up.svg);
+
+        &:hover{
+            background-image: url(/assets/caret-up-white.svg);
         }
     }
 
-    .content{
-        margin: 0;
-        margin-top: 1rem;
+    .btDown{
+        background-image: url(/assets/caret-down.svg);
+
+        &:hover{
+            background-image: url(/assets/caret-down-white.svg);
+        }
     }
 
-    &.plie{
-        .content{
-            background: -webkit-linear-gradient(black, black, var(--light_bg));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            height: 3rem;
-            cursor: pointer;
+    
+    &:hover{
+        /*Masquage des fleches aux extrémités dans styles.css*/
+        .btUp:not(:hover),.btDown:not(:hover){
+            opacity: 0.5;
+        }
+    }
+
+    .etapeContent{
+
+
+        width: 100%;
+        padding: 0.3rem;
+        text-align: center;
+
+        .titre,.updateName {
+            font-weight: bold;
+            margin: 0;
+            margin-top: 0.5rem;
+            position: relative;
+
+            .titreContent{
+                width: calc( 100% - 2rem );
+                display: block;
+            }
+            
+            
+            .more{
+                color: rgba(0, 0, 0, 0);
+                user-select: none;
+                cursor: pointer;
+                background-image: none;
+                padding: 0 0.5rem;
+                font-size: 1rem;
+                
+                position: absolute;
+                right: 0;
+                top: 0;
+                
+                &:hover{
+                    background-image: radial-gradient(circle, var(--light_bg_hover) 50%, transparent 80%, transparent 100%);
+                }
+            }
 
             &:hover{
-                background: var(--light_bg_hover);
-                overflow: hidden;
-                -webkit-background-clip: initial;
-                -webkit-text-fill-color: initial;
+
+                .more{
+                    color: rgba(0, 0, 0, 0.5);
+                }
+            }
+        }
+
+        .content{
+            margin: 0;
+            margin-top: 1rem;
+        }
+
+        &.plie{
+            .content{
+                background: -webkit-linear-gradient(black, black, var(--light_bg));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                height: 3rem;
+                cursor: pointer;
+
+                &:hover{
+                    background: var(--light_bg_hover);
+                    overflow: hidden;
+                    -webkit-background-clip: initial;
+                    -webkit-text-fill-color: initial;
+                }
             }
         }
     }
+    
     
 }
 

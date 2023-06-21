@@ -34,8 +34,10 @@
  - [x] Pouvoir mettre des liens dans les etapes
  - [x] Revoir IHM déplacement axes
  - [x] Gérer cas tableau axe vide + creation 1er Axe
- - [ ] Revoir affichage déplacement des étapes
+ - [x] Revoir affichage déplacement des étapes
  - [ ] Revoir affichage autocomplete-reader et input
+ - [ ] Etape en mode update à la création ( + focus )
+ - [ ] Revoir bouton More des étapes
  
  ### Autre
  - [ ] Pages Axes
