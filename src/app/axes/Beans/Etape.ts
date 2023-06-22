@@ -6,7 +6,7 @@ export class Etape extends Ordonable{
     content = "";
     idLigne = "";
     
-    constructor( public id : String ){
+    constructor( public id : string ){
         super();
     }
 }

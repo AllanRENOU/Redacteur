@@ -47,7 +47,7 @@
 
                 <!-- Case des étapes -->
                 <td class="bgLine" *ngFor="let axe of axesService.getAxes()">
-                    <app-etape *ngFor="let etape of axe.getEtapesOfLine( ligne.id )" [etape]="etape" [axe]="axe" ></app-etape>
+                    <app-etape *ngFor="let etape of axe.getEtapesOfLine( ligne.id )" [etape]="etape" [axe]="axe" [isUpdate]="etape.id == etapeToUpdate" ></app-etape>
                     
                 </td>
             </tr>

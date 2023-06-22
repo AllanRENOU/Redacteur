@@ -37,6 +37,8 @@ export class AxesComponent {
   contentLine : string = "";
   titleAxe : string = "";
 
+  etapeToUpdate = "";
+
   constructor( public projectService : ProjectService, public axesService : AxesService, private router: Router, private _location: Location){
     
     this.router.events.subscribe((aa : any) => {
@@ -154,7 +156,10 @@ export class AxesComponent {
       if( ligne ){
         console.log( "create etape : ", "E_" + Date.now(), ", axe ", this.idBtMore, ", ligne ", Ordonable.last(this.axesService.getLignes()) );
         let etape = this.axesService.createEtape( "E_" + Date.now(), this.idBtMore, ligne.id );
+        this.etapeToUpdate = etape.id;
         etape.title = "Nouvelle étape";
+        setTimeout( ()=>this.tableAxe?.nativeElement.scrollIntoView({ behavior: "smooth", block : "end" }), 100 );
+        
       }else{
         console.log( "Aucune ligne existante")
         // TODO créer une ligne

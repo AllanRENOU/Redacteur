@@ -20,7 +20,7 @@
 
         <form *ngIf="isUpdate" (ngSubmit)="onSubmit()">
                     
-            <input type="text" required name="nameEtape" ngModel [(ngModel)]="nameEtape" placeholder="Nome de l'étape" autocomplete="off" class="updateName"/>
+            <input type="text" required name="nameEtape" ngModel [(ngModel)]="nameEtape" autofocus  placeholder="Nome de l'étape" autocomplete="off" class="updateName"/>
             <!--<textarea class="updateContent" #textAreaContentEtape name="contentEtape" ngModel [(ngModel)]="contentEtape" (keyup)="onTextChanged()"></textarea>
             -->
             <app-autocomplete-input class="updateContent" [texte]="contentEtape" (textChanged)="onDescChanged( $event )"></app-autocomplete-input>

@@ -36,7 +36,7 @@
  - [x] Gérer cas tableau axe vide + creation 1er Axe
  - [x] Revoir affichage déplacement des étapes
  - [ ] ~~Revoir affichage autocomplete-reader et input~~
- - [ ] Etape en mode update à la création ( + focus )
+ - [x] Etape en mode update à la création ( + focus )
  - [ ] Revoir bouton More des étapes
  
  ### Autre

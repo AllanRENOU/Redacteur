@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { Etape } from '../Beans/Etape';
 import { MenuItem } from 'src/app/Utils/float-menu/MenuItem';
 import { AxesService } from 'src/app/Services/axes.service';
@@ -11,7 +11,7 @@ import { Axe } from '../Beans/Axe';
   styleUrls: ['./etape.component.scss']
 })
 
-export class EtapeComponent {
+export class EtapeComponent implements OnChanges{
 
   @Input()
   etape? : Etape;
@@ -19,14 +19,16 @@ export class EtapeComponent {
   @Input()
   axe? : Axe;
 
+  @Input()
+  isUpdate? = false;
+
   MENU_MORE_VALUES = [
     MenuItem.UPDATE,
     MenuItem.UP,
     MenuItem.DOWN,
   ]
-
+  
   showMoreMenu = false;
-  isUpdate = false;
 
   // Form
   nameEtape : string = "";
@@ -34,6 +36,13 @@ export class EtapeComponent {
 
   constructor( private axesService : AxesService ){ 
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if( this.isUpdate ){
+      setTimeout( ()=>this.refreshHeight(), 100 );
+    }
   }
 
   showAllEtapeContent( event : MouseEvent){
