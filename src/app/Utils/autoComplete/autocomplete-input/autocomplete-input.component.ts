@@ -28,23 +28,15 @@ export class AutocompleteInputComponent implements AfterViewInit  {
   static LETTRES_END_WORD = [ "\n", " ", ".", ",", "?", "!", "<" ];
   static LETTRES_END_WORD_REGEXP = /\n| |\.|,|\?|!|</g;
   
-  constructor( public projectService : ProjectService,private renderer: Renderer2, private autocompletionPipe : AutocompletionPipe ){
+  constructor( public projectService : ProjectService, private autocompletionPipe : AutocompletionPipe ){
     
   }
 
   ngAfterViewInit(): void {
-    /*
-    setTimeout( ()=>{
-      if( this.currentTextArea ){
-        this.currentTextArea.nativeElement.style.height = this.calcHeight(this.texte) + "rem";
-      }
-    }, 10)*/
     if( this.currentTextArea ){
       this.refreshHeight( this.currentTextArea.nativeElement );
       this.textChanged.emit( this.texte );
-      console.log("coucou")
     }
-    
   }
 
 
@@ -67,12 +59,10 @@ export class AutocompleteInputComponent implements AfterViewInit  {
 
   private refreshHeight( element : HTMLElement ){
 
-      //this.renderer.setStyle( element, "height", this.calcHeight( this.texte ) + "rem" );
     element.style.height = "auto";
-    //setTimeout( ()=>{
+    setTimeout( ()=>{
       element.style.height = element.scrollHeight + "px";
-    //}, 50);
-    
+    }, 50);
   }
   
   calcHeight( value : string ) {
