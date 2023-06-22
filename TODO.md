@@ -37,7 +37,7 @@
  - [x] Revoir affichage déplacement des étapes
  - [ ] ~~Revoir affichage autocomplete-reader et input~~
  - [x] Etape en mode update à la création ( + focus )
- - [ ] Revoir bouton More des étapes
+ - [x] Revoir bouton More des étapes
  
  ### Autre
  - [ ] Pages Axes
