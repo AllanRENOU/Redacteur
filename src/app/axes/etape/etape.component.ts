@@ -21,15 +21,7 @@ export class EtapeComponent implements OnChanges{
 
   @Input()
   isUpdate? = false;
-
-  MENU_MORE_VALUES = [
-    MenuItem.UPDATE,
-    MenuItem.UP,
-    MenuItem.DOWN,
-  ]
   
-  showMoreMenu = false;
-
   // Form
   nameEtape : string = "";
   contentEtape : string = "";
@@ -41,7 +33,7 @@ export class EtapeComponent implements OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
 
     if( this.isUpdate ){
-      setTimeout( ()=>this.refreshHeight(), 100 );
+      this.update();
     }
   }
 
@@ -51,6 +43,7 @@ export class EtapeComponent implements OnChanges{
   }
 
   // ========== Bouton More ==========
+  /*
   onClickMore( event : any ){
     this.showMoreMenu = true;
     event.stopPropagation();
@@ -77,11 +70,20 @@ export class EtapeComponent implements OnChanges{
       }
     }
   }
-
+*/
 
 
   // ========== Update ==========
 
+  update(){
+    if( this.etape ){
+      this.nameEtape = this.etape.title;
+      this.contentEtape = this.etape.content;
+      this.isUpdate = true;
+      setTimeout( ()=>this.refreshHeight(), 500);
+    }
+    
+  }
   onDescChanged( texte : string ){
     this.contentEtape = texte;
   }

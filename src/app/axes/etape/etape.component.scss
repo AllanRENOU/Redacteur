@@ -66,29 +66,32 @@
                 display: block;
             }
             
-            
-            .more{
-                color: rgba(0, 0, 0, 0);
-                user-select: none;
+            .btEdit{
+                height: 1rem;
+                width: 1rem;
+                background-image: url(/assets/pen-to-square.svg);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+
+                opacity: 0;
                 cursor: pointer;
-                background-image: none;
                 padding: 0 0.5rem;
-                font-size: 1rem;
+
                 
                 position: absolute;
                 right: 0;
                 top: 0;
                 
                 &:hover{
-                    background-image: radial-gradient(circle, var(--light_bg_hover) 50%, transparent 80%, transparent 100%);
+                    opacity: 1;
                 }
             }
+        }
 
-            &:hover{
-
-                .more{
-                    color: rgba(0, 0, 0, 0.5);
-                }
+        &:hover{
+            .btEdit:not(:hover){
+                opacity: 0.5;
             }
         }
 
