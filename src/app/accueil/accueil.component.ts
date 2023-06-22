@@ -48,7 +48,7 @@ export class AccueilComponent {
    
     const BT_SIZE = "5rem";
     const OFFSET_DELAY = 1500;//temps transition bouton +
-    const DELAY = 500;
+    const DELAY = 350;
     const COLORS = [ "red", "green", "orange", "yellow", "turquoise", "blue", "violet" ];
     this.projects = [];
     projects.forEach( (pp, ii) =>{
