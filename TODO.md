@@ -6,7 +6,8 @@
  ### Page d'accueil
  - [ ] Faire un formulaire plus jolie pour la création de projet
 
-
+ ### Serveur
+ [ ] Faire un serveur générique
 
  ## Evolutions
 

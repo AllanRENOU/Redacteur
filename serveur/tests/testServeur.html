@@ -121,7 +121,7 @@
 			let titre = $("#NewFicheTitre").val();
 			let desc = $("#NewFicheDesc").val();
 
-			let jsonData = JSON.stringify( { id : id, titre : titre, description : desc } );
+			let jsonData = JSON.stringify( { id : id, titre : titre, description : desc, autreAttribute : "OK" } );
 			post( URL + idProjet + "/fiche/" + id, jsonData, "NewFicheResult" );
 		}
 
