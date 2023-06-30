@@ -7,14 +7,15 @@ app.use(cors({
 }));
 const fs = require('fs');
 
-const DATA_FOLDER = './datasV2';
+const DATA_FOLDER = './datas';
 const FILE_ALL_PROJECTS = DATA_FOLDER + '/projects.json';
 const FILE_NAME_DATA = 'data.json';
 
 const ID_DATA_LIGHT = "data";
 const OBJ_KEY_LIGHT ={
     "default" : [ "id", "code", "name", "titre" ],
-    "fiche" : [ "id", "titre", "description", "isFavoris", "isRemoved" ]
+    "fiche" : [ "id", "titre", "description", "isFavoris", "isRemoved" ],
+    "dossier" : [ "pages", "subContainer", "isRemoved", "id", "titre" ]
 }
 
 //Pour les requetes POST
