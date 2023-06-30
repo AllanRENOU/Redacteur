@@ -65,7 +65,10 @@ app.post( '/newProject', (req,res) => {
 
     loadProjectsFiles();
     // Création du dossier
-    fs.mkdirSync( DATA_FOLDER + "/" + req.body.code );
+    
+    if( !fs.existsSync( DATA_FOLDER + "/" + req.body.code ) ){
+        fs.mkdirSync( DATA_FOLDER + "/" + req.body.code );
+    }
     
     // Sauvegarde dans la liste des projets
     projects.projects.push( req.body );
@@ -131,16 +134,19 @@ app.post( '/:idProj/:dataType', (req,res) => {
     let idProj = req.params.idProj;
     let dataType = req.params.dataType;
     let dataIds = req.body;
+    console.log("Affichage des datas " + JSON.stringify( dataIds ) );
 
-    console.log("Affichage des datas " + dataIds );
-
-    let array = getData( idProj, dataType, ID_DATA_LIGHT ).filter( obj=>{return dataIds.indexOf( obj.id ) != -1 } );
-   /*
-    for (const idData of dataIds) {  
-      console.log( 'Data : ', idData);
-      array.push( loadFiche( idProj, idData ) )
+    let allDataLight = getData( idProj, dataType, ID_DATA_LIGHT );
+    let array = [];
+    console.log( " array : " + JSON.stringify(array) );
+    if( allDataLight ){
+        Object.keys( allDataLight ).forEach( (idObj )=>{
+            if( dataIds.indexOf( idObj ) != -1){
+                array.push( allDataLight[ idObj ] );
+            }
+        });
     }
-*/
+
     res.status( 200 ).json( array );
 });
 

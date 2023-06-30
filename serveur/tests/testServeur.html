@@ -75,6 +75,18 @@
 		<span id="GetFicheResult"></span>
 	</div>
 
+	<div class="container">
+		<p>Afficher d'une liste de fiches</p>
+		<p>Afficher une fiche</p>
+		Id projet : <input type="text" id="GetListFicheIdProjet"/>
+		<br/>
+		liste d'ids : <input type="text" id="GetListFicheId"/>
+		<br/>
+		<input type="button" onclick="onClickGetListFiche()" value="Afficher"></input>
+		<br/>
+		<span id="GetListFicheResult"></span>
+	</div>
+
 	<h2>Les dossiers</h2>
 	<div class="container">
 		<p>Créer un dossier</p>
@@ -136,6 +148,13 @@
 			let idFiche = $("#GetFicheId").val();
 
 			get( URL + idProjet + "/fiche/" + idFiche, "GetFicheResult" );
+		}
+
+		function onClickGetListFiche(){
+			let idProjet = $("#GetListFicheIdProjet").val();
+			let strIdsFiche = $("#GetListFicheId").val();
+			post( URL + idProjet + "/fiche", JSON.stringify( strIdsFiche.split(",") ), "GetListFicheResult" );
+			
 		}
 
 		function onClickAllDossier(){
