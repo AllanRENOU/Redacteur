@@ -4,6 +4,7 @@ import { Etape } from "./Etape";
 export class Axe extends Ordonable{
 
     private etapes : Etape[] = [];
+    public isRemoved = false;
 
     constructor( public id : string, public nom : string ){
         super();
@@ -17,6 +18,10 @@ export class Axe extends Ordonable{
         Ordonable.removeFromArray( this.etapes, etape );
     }
 
+    setEtapes( etapes : Etape[] ){
+        this.etapes = etapes;
+    }
+
     getEtapesOfLine( idLigne : string) : Etape[]{
         return this.etapes.filter( e => e.idLigne == idLigne );
     }
@@ -27,6 +32,15 @@ export class Axe extends Ordonable{
 
     refreshOrderEtapes(){
         this.etapes = Ordonable.sortArray( this.etapes );
+    }
+
+    public static instanciate( obj : {id:string, nom : string, isRemoved?:boolean, position?:number} ) : Axe {
+        let axe = new Axe( obj.id, obj.nom );
+        //if( "isRemoved" in obj ){
+            axe.isRemoved = obj.isRemoved || false;
+        //}
+        axe.position = obj.position || 0;
+        return axe;
     }
 
 }

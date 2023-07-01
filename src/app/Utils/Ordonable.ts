@@ -31,42 +31,50 @@ export abstract class Ordonable{
 
     }
 
-    public static up<T extends Ordonable>( list : T[], obj : T ){
+    public static up<T extends Ordonable>( list : T[], obj : T ) : T[]{
         let i = list.indexOf( obj );
+        let objChanged = [];
 
         if( i != -1 ){
             if( obj.position < list.length - 1){
                 list.forEach( oo => {
                     if( oo.position == obj.position + 1){
                         oo.position = oo.position -1;
+                        objChanged.push( oo );
                     }
                 })
                 obj.position++;
+                objChanged.push( obj );
             }else{
                 console.warn( "L'élément ", obj, " est déjà en bout de file ", list );
             }
         }else{
             console.warn( "L'élément ", obj, " n'est pas dans la liste ", list );
         }
+        return objChanged;
     }
     
-    public static down<T extends Ordonable>( list : T[], obj : T ){
+    public static down<T extends Ordonable>( list : T[], obj : T ) : T[]{
         let i = list.indexOf( obj );
+        let objChanged = [];
 
         if( i != -1 ){
             if( obj.position > 0 ){
                 list.forEach( oo => {
                     if( oo.position == obj.position - 1){
                         oo.position = oo.position +1;
+                        objChanged.push( oo );
                     }
                 })
                 obj.position--;
+                objChanged.push( obj );
             }else{
                 console.warn( "L'élément ", obj, " est déjà en bout de file ", list );
             }
         }else{
             console.warn( "L'élément ", obj, " n'est pas dans la liste ", list );
         }
+        return objChanged
     }
 
     public static last<T extends Ordonable>( list : T[] ) : T | undefined{

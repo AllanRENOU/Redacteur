@@ -29,18 +29,26 @@ export class ProjectService {
   public observableFolderUpdate : Observable<PageConteneur> = new Observable( ( obs:Observer<PageConteneur> )=>{ this.observersFolderUpdate.push( obs ) } );
   private observersFolderUpdate : Observer<PageConteneur>[] = [];
 
+  // Observable project change
+  public observableProject : Observable<{ code : string, name : string }> = new Observable( ( obs:Observer<{ code : string, name : string }> )=>{ this.observersProject.push( obs ) } );
+  private observersProject : Observer<{ code : string, name : string }>[] = [];
+
   constructor( private http: HttpClient ){
     
   }
 
   setProject( newIdProject : string ){
-
+    
     if( this.dataProject.code != newIdProject && newIdProject ){
       console.log( "Chargement projet ", newIdProject );
       this.dataProject.code = newIdProject;
       this.pages = [];
       this.arboPage = [];
       this.reloadAll();
+
+      for( let obs of this.observersProject ){
+        obs.next( this.dataProject );
+      }
     }
   }
 

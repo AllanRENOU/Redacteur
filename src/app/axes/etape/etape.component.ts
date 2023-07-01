@@ -108,6 +108,7 @@ export class EtapeComponent implements OnChanges{
       this.etape.title = this.nameEtape;
       this.etape.content = this.contentEtape;
       this.isUpdate = false;
+      this.axesService.saveEtape( this.etape );
     }
     
   }
@@ -121,7 +122,7 @@ export class EtapeComponent implements OnChanges{
       // Si le précédent est sur la même ligne, on descend la position
       if( prevEtape && prevEtape.idLigne == this.etape.idLigne ){
           
-          Ordonable.down( this.axe.getEtapes(), this.etape );
+          Ordonable.down( this.axe.getEtapes(), this.etape ).forEach( ee => { this.axesService.saveEtape( ee );});
           this.axe.refreshOrderEtapes();
           
       // Sinon, on change le numéo de ligne
@@ -133,6 +134,7 @@ export class EtapeComponent implements OnChanges{
 
           if( lignePrev ){
             this.etape.idLigne = lignePrev.id;
+            this.axesService.saveEtape( this.etape );
           }else{
             console.error( "La ligne précédente de ", this.etape.idLigne, " n'est pas retrouvée" );
           }
@@ -152,7 +154,7 @@ export class EtapeComponent implements OnChanges{
       // Si le précédent est sur la même ligne, on descend la position
       if( nextEtape && nextEtape.idLigne == this.etape.idLigne ){
           
-        Ordonable.up( this.axe.getEtapes(), this.etape );
+        Ordonable.up( this.axe.getEtapes(), this.etape ).forEach( ee => { this.axesService.saveEtape( ee );});
         this.axe.refreshOrderEtapes();
         
       // Sinon, on change le numéo de ligne
@@ -164,6 +166,7 @@ export class EtapeComponent implements OnChanges{
 
           if( ligneNext ){
             this.etape.idLigne = ligneNext.id;
+            this.axesService.saveEtape( this.etape );
           }else{
             console.error( "La ligne suivante de ", this.etape.idLigne, " n'est pas retrouvée" );
           }

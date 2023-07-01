@@ -4,6 +4,8 @@ import { Ligne } from '../axes/Beans/Ligne';
 import { Ordonable } from '../Utils/Ordonable';
 import { Etape } from '../axes/Beans/Etape';
 import { ProjectService } from './project.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +15,22 @@ export class AxesService {
   private axes : Axe[] = [];
   lignes :  Ligne[] = [];
 
-  constructor( public projectService : ProjectService ) {
-    this.init();
+  constructor( public projectService : ProjectService, private http: HttpClient ) {
+
+    if( projectService.getProject().code ){
+      this.init();
+    }
+    projectService.observableProject.subscribe( project =>{
+      this.init();
+    })
+    
+    //this.init();
    }
 
   private init(){
-    
+      this.refreshAxesAsync().subscribe( data =>{ console.log ("Axes loaded", data)})
+      this.refreshLignesAsync().subscribe( data =>{ console.log ("Lines loaded", data)})
+    /*
     let axe1 = this.createAxe( "Axe 1" );
     let axe2 = this.createAxe( "Axe 2" );
     let l1 = this.createLigne( "L1" );
@@ -58,17 +70,19 @@ export class AxesService {
     e6.content=" Lorem ipsum dolor sit amet"
 
     console.log( this.axes )
-    console.log(this.lignes)
+    console.log(this.lignes)*/
   }
 
   // ========== Axe ==========
   createAxe( name : string, id? : string ) : Axe {
-
     if( !id ){
       id = this.projectService.generateIdFromString( name )
     }
     let axe = new Axe( id, name );
     Ordonable.addInArray( this.axes, axe );
+
+    this.updateAxeAsync( axe ).subscribe( data =>{ console.log ("Create saved ", data)});
+
     return axe;
   }
 
@@ -76,15 +90,24 @@ export class AxesService {
     if( typeof axe == "string" ){
       axe = this.getAxe( axe )
     }
+    axe.isRemoved = true;
     Ordonable.removeFromArray( this.axes, axe );
+
+    this.updateAxeAsync( axe ).subscribe( data =>{ console.log ("Remove saved ", data)});
   }
 
   decalerAxeDroite( axe : Axe ){
-    Ordonable.up( this.axes, axe );
+    let axesUpdated = Ordonable.up( this.axes, axe );
+    axesUpdated.forEach( aa => {
+      this.updateAxeAsync( aa );
+    })
   }
 
   decalerAxeGauche( axe : Axe ){
-    Ordonable.up( this.axes, axe );
+    let axesUpdated = Ordonable.down( this.axes, axe );
+    axesUpdated.forEach( aa => {
+      this.updateAxeAsync( aa );
+    })
   }
 
   getAxe( id : string) : Axe{
@@ -95,16 +118,12 @@ export class AxesService {
     return this.axes;
   }
 
-  upAxe( axe : Axe ){
-    Ordonable.up( this.axes, axe );
-  }
-
-  downAxe( axe : Axe ){
-    Ordonable.down( this.axes, axe );
-  }
-
   refreshOrderAxes(){
     this.axes = Ordonable.sortArray( this.axes );
+  }
+
+  saveAxe( axe : Axe ){
+    this.updateAxeAsync( axe )
   }
 
   // ========== Ligne ==========
@@ -114,11 +133,14 @@ export class AxesService {
     }
     let ligne = new Ligne( id );
     Ordonable.addInArray( this.lignes, ligne );
+    this.updateLignesAsync( ligne );
     return ligne;
   }
 
   removeLigne( id : string ){
-    Ordonable.removeFromArray( this.lignes, this.getLigne( id ) );
+    let ligne = this.getLigne( id );
+    Ordonable.removeFromArray( this.lignes, ligne );
+    this.updateLignesAsync( ligne );
   }
 
   getLigne( id : string) : Ligne{
@@ -130,15 +152,26 @@ export class AxesService {
   }
 
   upLigne( ligne : Ligne ){
-    Ordonable.up( this.lignes, ligne );
+    let lignesUpdated = Ordonable.up( this.lignes, ligne );
+    lignesUpdated.forEach( ll => {
+      this.updateLignesAsync( ll );
+    })
+    
   }
 
   downLigne( ligne : Ligne ){
-    Ordonable.down( this.lignes, ligne );
+    let lignesUpdated = Ordonable.down( this.lignes, ligne );
+    lignesUpdated.forEach( ll => {
+      this.updateLignesAsync( ll );
+    })
   }
 
   refreshOrderLignes(){
     this.lignes = Ordonable.sortArray( this.lignes );
+  }
+
+  saveLigne( ligne : Ligne ){
+    this.updateLignesAsync( ligne );
   }
 
 
@@ -147,13 +180,107 @@ export class AxesService {
   createEtape( idEtape : string, idAxe : string, idLigne : string ) : Etape{
     let e = new Etape( idEtape );
 
-    this.getAxe( idAxe )?.addEtape(e);
+    let axe = this.getAxe( idAxe )
+    axe.addEtape(e);
     e.idLigne = idLigne;
+
+    this.updateEtapeAsync( e );
+    this.updateAxeAsync( axe );
     
     return e;
   }
 
   removeEtape( etape : Etape, idAxe : string ){
-    this.getAxe( idAxe )?.removeEtape( etape );
+    let axe = this.getAxe( idAxe );
+
+    if( axe ){
+      axe.removeEtape( etape );
+      this.updateAxeAsync( axe );
+    }
+    
   }
+
+  saveEtape( etape : Etape ){
+    this.updateEtapeAsync( etape );
+  }
+
+
+  // ========== Requetes ==========
+
+  private static DATA_TYPE_AXE = "axes";
+  private static DATA_TYPE_ETAPES = "etapes";
+  private static DATA_TYPE_LIGNES = "lignes";
+
+  // Appel le web service pour récupérer les axes et place le résultat dans axes
+  private refreshAxesAsync() : Observable<any>{
+    let obs : Observable<any> = this.http.get<any>( ProjectService.url + this.projectService.getProject().code + "/" + AxesService.DATA_TYPE_AXE );
+    obs.subscribe( axes => {
+      console.log( "Réception des axes : ", axes );
+      this.axes = [];
+
+      let k: keyof typeof axes;
+      for (k in axes) { 
+        const axe = Axe.instanciate( axes[k] );  
+        if( !axe.isRemoved ){
+          this.axes.push( axe );
+          this.getEtapesAsync( axes[k].etapes ).subscribe( ( etapes : Etape[] ) =>{ axe.setEtapes( etapes ); axe.refreshOrderEtapes() } );
+        }
+      }
+
+      this.refreshOrderAxes();
+
+    } );
+    return obs;
+  }
+
+  // Appel le webservice pour sauvegarder un axe
+  private updateAxeAsync( axe : Axe ) : Observable<Axe>{
+    let tmpAxe : any = Object.assign( {}, axe );
+    tmpAxe.etapes = axe.getEtapes().map( ee => ee.id );
+    let obs = this.http.post<Axe>( ProjectService.url + this.projectService.getProject().code + "/" + AxesService.DATA_TYPE_AXE + "/" + axe.id, tmpAxe );
+    obs.subscribe( aa => { console.log( "Axe ", aa, " sauvegardé")})
+    return obs
+  }
+
+  // Appel le webservice pour sauvegarder une etape
+  private updateEtapeAsync( etape : Etape ): Observable<Etape>{
+    let obs = this.http.post<Etape>( ProjectService.url + this.projectService.getProject().code + "/" + AxesService.DATA_TYPE_ETAPES + "/" + etape.id, etape );
+    obs.subscribe( ee => { console.log( "Etape ", ee, " sauvegardé")})
+    return obs
+  }
+
+  // Appel le web service pour récupérer le détail des id d'étapes donnés en paramètre
+  private getEtapesAsync( etapesId : string[] ) : Observable<Etape[]>{
+    console.log( "get etapes : ", etapesId );
+    return this.http.post<Etape[]>( ProjectService.url + this.projectService.getProject().code + "/" + AxesService.DATA_TYPE_ETAPES, etapesId );
+  }
+  
+  // Appel le web service pour récupérer les lignes et place le résultat dans lignes
+  private refreshLignesAsync() : Observable<any>{
+    let obs : Observable<any> = this.http.get<any>( ProjectService.url + this.projectService.getProject().code + "/" + AxesService.DATA_TYPE_LIGNES );
+    obs.subscribe( lignes => {
+      console.log( "Réception des lignes : ", lignes );
+      this.lignes = [];
+
+      let k: keyof typeof lignes;
+      for (k in lignes) { 
+        const ligne = Ligne.instanciate( lignes[k] );  
+        //if( !axe.isRemoved ){
+          this.lignes.push( ligne );
+        //}
+      }
+
+      this.refreshOrderLignes();
+
+    } );
+    return obs;
+  }
+
+  // Appel le webservice pour sauvegarder une ligne
+  private updateLignesAsync( ligne : Ligne ): Observable<Ligne>{
+    let obs = this.http.post<Ligne>( ProjectService.url + this.projectService.getProject().code + "/" + AxesService.DATA_TYPE_LIGNES + "/" + ligne.id, ligne );
+    obs.subscribe( ee => { console.log( "ligne ", ligne, " sauvegardé")})
+    return obs
+  }
+
 }

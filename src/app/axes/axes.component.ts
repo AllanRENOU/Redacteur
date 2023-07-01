@@ -64,6 +64,7 @@ export class AxesComponent {
     if( this.currentEditLine ){
       this.currentEditLine.content = this.contentLine;
       this.currentEditLine.nom = this.titleLine;
+      this.axesService.saveLigne( this.currentEditLine );
       this.currentEditLine = null;
     }
   }
@@ -127,6 +128,7 @@ export class AxesComponent {
   onSubmitUpdateTitle(){
     if( this.currentEditAxe ){
       this.currentEditAxe.nom = this.titleAxe;
+      this.axesService.saveAxe( this.currentEditAxe );
       this.currentEditAxe = null;
     }
   }
@@ -179,17 +181,16 @@ export class AxesComponent {
   private renameAxe(axe : Axe ){
       this.titleAxe = axe.nom;
       this.currentEditAxe = axe;
-
   }
 
   rightAxe( axe :Axe ){
 
-      this.axesService.upAxe( axe );
-      this.axesService.refreshOrderAxes()
+    this.axesService.decalerAxeDroite( axe );
+    this.axesService.refreshOrderAxes()
   }
 
   leftAxe( axe : Axe ){
-    this.axesService.downAxe( axe );
+    this.axesService.decalerAxeGauche( axe );
     this.axesService.refreshOrderAxes()
 
   }

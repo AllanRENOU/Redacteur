@@ -15,8 +15,9 @@
  - [ ] Revoir la gestion des popup pour en faire un service
  
  ### Axes
-  - [ ] Connexion service au webservice
-  - [ ] Branchement des axes sur un service
+  - [x] Connexion service au webservice
+  - [x] Branchement des axes sur un service
+  - [ ] Les inputs changent de taille quand on écrit
 
  ### Structure
  - [ ] Mise en place d'un service branché au web service

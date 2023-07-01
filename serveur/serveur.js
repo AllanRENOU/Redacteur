@@ -15,7 +15,10 @@ const ID_DATA_LIGHT = "data";
 const OBJ_KEY_LIGHT ={
     "default" : [ "id", "code", "name", "titre" ],
     "fiche" : [ "id", "titre", "description", "isFavoris", "isRemoved" ],
-    "dossier" : [ "pages", "subContainer", "isRemoved", "id", "titre" ]
+    "dossier" : [ "pages", "subContainer", "isRemoved", "id", "titre" ],
+    "axes" : [ "id", "nom", "etapes", "isRemoved", "position" ],
+    "lignes" : [ "id", "content", "nom", "position"],
+    "etapes" : [ "id", "title", "content", "idLigne", "position" ]
 }
 
 //Pour les requetes POST
@@ -336,7 +339,7 @@ function reduceToLightData( dataType, newData ){
     let result = {}
 
     propToKeep.forEach( ( key, i )=>{
-      if( newData[ key ] ){
+      if( newData.hasOwnProperty( key ) ){
         result[ key ] = newData[ key ];
       }  
     } );
