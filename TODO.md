@@ -23,6 +23,8 @@
  - [ ] Mise en place d'un service branché au web service
  - [ ] Connexion au service
  - [ ] Mise en place IHM
+  - [ ] Systeme de bloc
+  - [ ] Conteneur de sous blocs
  - [ ] Action éditer
  - [ ] Action monter / descendre
  - [ ] Action Déplacer vers un autre bloc
