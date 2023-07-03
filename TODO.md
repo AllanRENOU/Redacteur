@@ -2,6 +2,8 @@
 
  ## Bugs et améliorations
  - [ ] Implémenter la suppression d'une page
+ - [ ] Création d'une fiche : bouton Valider tranqué
+ - [ ] Lors d'une saisie sur un autocomplete-input : la taille de la fenetre change
 
  ### Page d'accueil
  - [ ] Faire un formulaire plus jolie pour la création de projet
