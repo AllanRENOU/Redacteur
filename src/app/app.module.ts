@@ -24,6 +24,7 @@ import { AutocompleteReaderComponent } from './Utils/autoComplete/autocomplete-r
 import { PopupSelectComponent } from './Utils/popups/popup-select/popup-select.component';
 import { AxesComponent } from './axes/axes.component';
 import { EtapeComponent } from './axes/etape/etape.component';
+import { StructureComponent } from './structure/structure.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { EtapeComponent } from './axes/etape/etape.component';
     AutocompleteReaderComponent,
     PopupSelectComponent,
     AxesComponent,
-    EtapeComponent
+    EtapeComponent,
+    StructureComponent
   ],
   imports: [
     BrowserModule,
