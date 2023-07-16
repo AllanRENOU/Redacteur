@@ -13,4 +13,12 @@ export class Bloc extends Ordonable{
     getId(){
         return this.id;
     }
+
+    addChild( bloc : Bloc | string ){
+        if(  typeof bloc == "string" ){
+            this.childrens.push( bloc );
+        }else{
+            this.childrens.push( bloc.getId() );
+        }
+    }
 }

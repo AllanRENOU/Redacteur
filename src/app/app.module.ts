@@ -25,6 +25,8 @@ import { PopupSelectComponent } from './Utils/popups/popup-select/popup-select.c
 import { AxesComponent } from './axes/axes.component';
 import { EtapeComponent } from './axes/etape/etape.component';
 import { StructureComponent } from './structure/structure.component';
+import { BlocComponent } from './structure/bloc/bloc.component';
+import { BlocContainerComponent } from './structure/bloc-container/bloc-container.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { StructureComponent } from './structure/structure.component';
     PopupSelectComponent,
     AxesComponent,
     EtapeComponent,
-    StructureComponent
+    StructureComponent,
+    BlocComponent,
+    BlocContainerComponent
   ],
   imports: [
     BrowserModule,

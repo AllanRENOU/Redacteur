@@ -1,0 +1,35 @@
+$SPACE_BLOCS : .3rem;
+$BORDER_SIZE : 2px;
+
+.bloc{
+
+    &:not( :has( + .subBlocContainer ) ){
+        margin-bottom: $SPACE_BLOCS;
+    }
+
+    width: 100%;
+    border: solid $BORDER_SIZE white;
+    border-radius: 5px;
+
+
+    color: var( --dark_textColor );
+    backdrop-filter: blur(3px);
+
+    .blocTitle{
+        width: 100%;
+        margin: .8rem .3rem;
+    }
+
+    .blocContent{
+        width: 100%;
+        margin: .3rem .6rem;
+    }
+}
+
+.subBlocContainer{
+    padding: $SPACE_BLOCS 0 0 1rem;
+    margin-top: calc( -1 * $BORDER_SIZE );
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    border-left: solid 1px white;
+}

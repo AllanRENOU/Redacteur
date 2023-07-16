@@ -1,0 +1,8 @@
+<div *ngIf="_bloc" class="bloc">
+    <h4 class="blocTitle">{{_bloc.title}}</h4>
+    <p class="blocContent">{{_bloc.content}}</p>
+</div>
+<div *ngIf="children.length > 0" class="subBlocContainer">
+    <app-bloc-container [blocs]="children"></app-bloc-container>
+</div>
+
