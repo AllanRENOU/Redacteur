@@ -20,6 +20,8 @@
   - [x] Connexion service au webservice
   - [x] Branchement des axes sur un service
   - [ ] Les inputs changent de taille quand on écrit
+  - [ ] Supprimer une étape
+  - [ ] Revoir focus à la création d'une étape
 
  ### Structure
  - [ ] Mise en place d'un service branché au web service
