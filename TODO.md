@@ -29,6 +29,7 @@
  - [ ] Mise en place IHM
  - [ ] Systeme de bloc
  - [ ] Conteneur de sous blocs
+ - [ ] Création du premer bloc
  - [ ] Action éditer
  - [ ] Action monter / descendre
  - [ ] Action Déplacer vers un autre bloc
